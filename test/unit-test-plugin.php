@@ -3,10 +3,10 @@
 class PluginTest extends TestCase
 {
     public function test_plugin_installed() {
-        activate_plugin( 'disciple-tools-plugin-starter-template/disciple-tools-plugin-starter-template.php' );
+        activate_plugin( 'gospel-ambition-impact-map/gospel-ambition-impact-map.php' );
 
         $this->assertContains(
-            'disciple-tools-plugin-starter-template/disciple-tools-plugin-starter-template.php',
+            'gospel-ambition-impact-map/gospel-ambition-impact-map.php',
             get_option( 'active_plugins' )
         );
     }

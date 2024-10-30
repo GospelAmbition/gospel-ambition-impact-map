@@ -1,41 +1,39 @@
 <?php
 if ( !defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly.
 
-class Disciple_Tools_Plugin_Starter_Template_Endpoints
+class GA_Impact_Map_Endpoints
 {
-    /**
-     * @todo Set the permissions your endpoint needs
-     * @link https://github.com/DiscipleTools/Documentation/blob/master/theme-core/capabilities.md
-     * @var string[]
-     */
-    public $permissions = [ 'access_contacts', 'dt_all_access_contacts', 'view_project_metrics' ];
-
-
-    /**
-     * @todo define the name of the $namespace
-     * @todo define the name of the rest route
-     * @todo defne method (CREATABLE, READABLE)
-     * @todo apply permission strategy. '__return_true' essentially skips the permission check.
-     */
-    //See https://github.com/DiscipleTools/disciple-tools-theme/wiki/Site-to-Site-Link for outside of wordpress authentication
     public function add_api_routes() {
-        $namespace = 'disciple-tools-plugin-starter-template/v1';
+        $namespace = 'gospel-ambition-impact-map/v1';
 
         register_rest_route(
             $namespace, '/endpoint', [
                 'methods'  => 'GET',
                 'callback' => [ $this, 'endpoint' ],
-                'permission_callback' => function( WP_REST_Request $request ) {
-                    return $this->has_permission();
-                },
+                'permission_callback' => '__return_true',
             ]
         );
+
+        self::add_cors_sites();
     }
 
+    public static function add_cors_sites() {
+        add_filter( 'rest_pre_serve_request', function( $value ) {
+            header( 'Access-Control-Allow-Origin: ' . get_http_origin() );
+            header( 'Access-Control-Allow-Methods: GET, POST, HEAD, OPTIONS' );
+            header( 'Access-Control-Allow-Credentials: true' );
+            header( 'Access-Control-Expose-Headers: Link', false );
+            header( 'Access-Control-Allow-Headers: X-WP-Nonce', false );
+
+            return $value;
+        } );
+    }
 
     public function endpoint( WP_REST_Request $request ) {
 
         // @todo run your function here
+
+        dt_write_log(__METHOD__);
 
         return true;
     }
@@ -50,14 +48,5 @@ class Disciple_Tools_Plugin_Starter_Template_Endpoints
     public function __construct() {
         add_action( 'rest_api_init', [ $this, 'add_api_routes' ] );
     }
-    public function has_permission(){
-        $pass = false;
-        foreach ( $this->permissions as $permission ){
-            if ( current_user_can( $permission ) ){
-                $pass = true;
-            }
-        }
-        return $pass;
-    }
 }
-Disciple_Tools_Plugin_Starter_Template_Endpoints::instance();
+GA_Impact_Map_Endpoints::instance();
