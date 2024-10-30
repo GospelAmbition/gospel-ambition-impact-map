@@ -93,7 +93,7 @@ class GA_Impact_Map {
 
         require_once( 'pages/magic-link-map.php' );
         require_once( 'pages/magic-link-home.php' );
-//        require_once( 'maps/loader.php' );
+        require_once( 'maps/loader.php' );
 
 //        $this->i18n();
 
