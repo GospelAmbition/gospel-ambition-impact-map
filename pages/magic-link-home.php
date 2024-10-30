@@ -129,10 +129,10 @@ class GA_Impact_Map_Magic_Home_App extends DT_Magic_Url_Base
             <div class="content">
                 <div class="grid-x grid-padding-x">
                     <div class="cell">
-                        <iframe src="/map/100" style="width:100%; height: 800px; border: none;" frameborder="0"></iframe>
+                        <iframe src="/zume_app/last100_hours" style="width:100%; height: 800px; border: none;" frameborder="0"></iframe>
                     </div>
                     <div class="cell center">
-                        <h2><a href="/map/100">Full Map</a></h2>
+                        <h2><a href="/zume_app/last100_hours">Full Map</a></h2>
                     </div>
                 </div>
             </div>

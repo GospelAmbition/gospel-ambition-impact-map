@@ -4,7 +4,7 @@ if ( !defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly.
 class Zume_Queries {
 
     // this is a reusable query that gets the user_id, post_id (contact_id), stage, and report id (rid) from the reports table.
-    public static $query_for_user_stage = "SELECT r.user_id, r.post_id, r.post_id as contact_id, MAX(r.value) as stage, MAX(r.id) as rid FROM zume_dt_reports r
+    public static $query_for_user_stage = "SELECT r.user_id, r.post_id, r.post_id as contact_id, MAX(r.value) as stage, MAX(r.id) as rid FROM wp_dt_reports r
                                                   WHERE r.type = 'system' and r.subtype = 'current_level'
                                                   GROUP BY r.user_id, r.post_id";
 
@@ -55,7 +55,7 @@ class Zume_Queries {
               $query_for_user_stage
             ) as tb
             LEFT JOIN zume_posts p ON p.ID=tb.post_id
-            LEFT JOIN zume_dt_location_grid_meta lgm ON lgm.post_id=tb.post_id AND lgm.post_type='contacts'
+            LEFT JOIN wp_dt_location_grid_meta lgm ON lgm.post_id=tb.post_id AND lgm.post_type='contacts'
             WHERE tb.stage IN $range;", ARRAY_A );
         // @phpcs:enable
 
@@ -84,7 +84,7 @@ class Zume_Queries {
               $query_for_user_stage
             ) as tb
             LEFT JOIN zume_posts p ON p.ID=tb.post_id
-            LEFT JOIN zume_dt_location_grid_meta lgm ON lgm.post_id=tb.post_id AND lgm.post_type='contacts'
+            LEFT JOIN wp_dt_location_grid_meta lgm ON lgm.post_id=tb.post_id AND lgm.post_type='contacts'
             WHERE tb.stage IN $range
             AND lgm.lat > $south
             AND lgm.lat < $north
@@ -108,7 +108,7 @@ class Zume_Queries {
             "SELECT p.ID as post_id, p.post_title as name, 'groups' as post_type, lgm.grid_id, lgm.lng, lgm.lat, lgm.level, lgm.source, lgm.label
             FROM zume_posts p
             LEFT JOIN zume_postmeta pm ON pm.post_id=p.ID AND pm.meta_key = 'location_grid_meta'
-            LEFT JOIN zume_dt_location_grid_meta lgm ON lgm.grid_meta_id=pm.meta_value
+            LEFT JOIN wp_dt_location_grid_meta lgm ON lgm.grid_meta_id=pm.meta_value
             WHERE p.post_type = 'groups';", ARRAY_A );
         // @phpcs:enable
 
@@ -127,7 +127,7 @@ class Zume_Queries {
             "SELECT p.ID, p.post_title as name, 'groups' as post_type, lgm.grid_id, lgm.lng, lgm.lat, lgm.level, lgm.source, lgm.label
             FROM zume_posts p
             LEFT JOIN zume_postmeta pm ON pm.post_id=p.ID AND pm.meta_key = 'location_grid_meta'
-            LEFT JOIN zume_dt_location_grid_meta lgm ON lgm.grid_meta_id=pm.meta_value
+            LEFT JOIN wp_dt_location_grid_meta lgm ON lgm.grid_meta_id=pm.meta_value
             WHERE p.post_type = 'groups'
             AND lgm.lat > $south
             AND lgm.lat < $north
@@ -156,7 +156,7 @@ class Zume_Queries {
         // @phpcs:disable
         $results = $wpdb->get_results( $wpdb->prepare(
             "SELECT subtype, COUNT(*) as value
-            FROM zume_dt_reports
+            FROM wp_dt_reports
             WHERE type = 'training' AND subtype LIKE '%heard'
             GROUP BY subtype
             " ), ARRAY_A );

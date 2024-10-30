@@ -73,8 +73,6 @@ class Zume_Funnel_Public_Heatmap_100hours_V2 extends DT_Magic_Url_Base {
     public function scripts() {
         wp_enqueue_script( 'last100-hours-js', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'cluster-1-last100.js', [ 'jquery' ],
         filemtime( trailingslashit( plugin_dir_path( __FILE__ ) ) .'cluster-1-last100.js' ), true );
-        wp_register_style( 'vite_bundle_css', plugin_dir_url( __DIR__ ) . 'site/assets/dist/assets/main.css', [], filemtime( plugin_dir_path( __DIR__ ) . 'site/assets/dist/assets/main.css' ) );
-        wp_enqueue_style( 'vite_bundle_css' );
     }
 
     /**
@@ -147,7 +145,7 @@ class Zume_Funnel_Public_Heatmap_100hours_V2 extends DT_Magic_Url_Base {
 
         $params = dt_recursive_sanitize_array( $params );
         $action = sanitize_text_field( wp_unslash( $params['action'] ) );
-        $language_code = zume_current_language(); // @todo get parameter
+        $language_code = 'en';
 
         switch ( $action ) {
             case 'load_geojson':
