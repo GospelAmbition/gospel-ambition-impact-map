@@ -2944,7 +2944,7 @@ class Zume_Funnel_App_Heatmap {
                 continue;
             }
             $language = $zume_languages_by_code[$language_code];
-            dt_write_log($language);
+//            dt_write_log($language);
             $language_name = $language['name'];
             if ( isset( $language['name'] )
                 && isset( $language_code )
@@ -3009,7 +3009,7 @@ class Zume_Funnel_App_Heatmap {
             'types' => $types,
             'total' => $records,
         );
-dt_write_log($new_data);
+//dt_write_log($new_data);
         return $new_data;
     }
 
