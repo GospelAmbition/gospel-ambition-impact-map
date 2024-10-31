@@ -2704,51 +2704,54 @@ class Zume_Funnel_App_Heatmap {
         $languages = [];
         $utc_time = new DateTime( 'now', new DateTimeZone( $filters['timezone'] ) );
         $timezone_offset = $utc_time->format( 'Z' );
-//        switch_to_locale( $zume_languages_by_code[$language_code]['locale'] );
-//        switch_to_locale('en_US');
 
         $training_items = [];
         $records = 0;
 
         $activity_list = self::query_activity_list( $filters, $language_code );
+        $list = [];
 
         foreach ( $activity_list as $record ) {
 
             // time string
-            $time_string = self::_create_time_string( $record['timestamp'], $timezone_offset );
+//            $time_string = self::_create_time_string( $record['time_end'], $timezone_offset );
+            $time_string = self::_time_ago( $record['time_end'] );
+//            $time_string = '';
+//            dt_write_log($time_string);
 
             // language
-            $language_name = self::_create_in_language_string( $record, $zume_languages_by_code );
+//            $language_name = self::_create_in_language_string( $record, $zume_languages_by_code );
 
             // location string
-            $location_name = $record['label'];
+//            $location_name = $record['label'];
 
             // note and type data
-            $note = self::_create_note_data( $record, $language_name, $location_name, $training_items );
-            if ( ! $note ) {
-                continue;
-            }
+//            $note = self::_create_note_data( $record, $language_name, $location_name, $training_items );
+//            $note = $record['note'];
+//            if ( ! $note ) {
+//                continue;
+//            }
 
             $prepared_array = array(
-                'note' => $note['note'],
+                'note' => $record['note'],
                 'time' => $time_string,
-                'type' => $note['type'],
+                'type' => $record['type'],
                 'language' => $record['language_code'],
                 'country' => $record['country_code'],
             );
 
             // COUNTERS FOR TOTALS
             // count types
-            if ( isset( $note['type'] ) && ! empty( $note['type'] ) )
+            if ( isset( $record['type'] ) && ! empty( $record['type'] ) )
             {
-                if ( ! isset( $types[$note['type']] ) ) {
-                    $types[$note['type']] = [
-                        'code' => $note['type'],
-                        'name' => ucwords( $note['type'] ),
+                if ( ! isset( $types[$record['type']] ) ) {
+                    $types[$record['type']] = [
+                        'code' => $record['type'],
+                        'name' => ucwords( $record['type'] ),
                         'count' => 0,
                     ];
                 }
-                $types[$note['type']]['count']++;
+                $types[$record['type']]['count']++;
             }
             // count country
             if ( isset( $record['country_code'] ) && !empty( $record['country_code'] ) && ! isset( $countries[$record['country_name']] ) ) {
@@ -2822,18 +2825,18 @@ class Zume_Funnel_App_Heatmap {
 
         } // end foreach loop
 
-        if ( empty( $list ) ) {
-            return [
-                'list' => [],
-                'count' => 0,
-            ];
-        }
+//        if ( empty( $list ) ) {
+//            return [
+//                'list' => [],
+//                'count' => 0,
+//            ];
+//        }
 
         ksort( $countries );
         ksort( $languages );
 
         $c = array_chunk( $list, 250 );
-        return [
+        $array = [
             'list' => $c[0] ?? $list,
             'count' => count( $list ),
             'countries' => $countries,
@@ -2843,6 +2846,8 @@ class Zume_Funnel_App_Heatmap {
             'types' => $types,
             'total' => $records,
         ];
+//        dt_write_log($array);
+        return $array;
     }
 
     public static function get_activity_grid_id( $grid_id, $timezone_offset, $language_code ) {
@@ -2857,24 +2862,27 @@ class Zume_Funnel_App_Heatmap {
         foreach ( $activity_list as $record ) {
 
             // time string
-            $time_string = self::_create_time_string( $record['timestamp'], $timezone_offset, true );
+//            $time_string = self::_create_time_string( $record['time_end'], $timezone_offset, true );
+            $time_string = self::_time_ago( $record['time_end'] );
+//            $time_string = '';
 
             // language
-            $language_name = self::_create_in_language_string( $record, $zume_languages_by_code );
+//            $language_name = self::_create_in_language_string( $record, $zume_languages_by_code );
 
             // location string
             $location_name = $record['label'];
 
             // note and type data
-            $note = self::_create_note_data( $record, $language_name, $location_name, $training_items );
+//            $note = self::_create_note_data( $record, $language_name, $location_name, $training_items );
+            $note = $record['note'];
             if ( ! $note ) {
                 continue;
             }
 
             $prepared_array = array(
-                'note' => $note['note'],
+                'note' => $record['note'],
                 'time' => $time_string,
-                'type' => $note['type'],
+                'type' => $record['type'],
                 'language' => $record['language_code'],
                 'country' => $record['country_code'],
             );
@@ -2899,11 +2907,12 @@ class Zume_Funnel_App_Heatmap {
     public static function get_activity_geojson( $language_code = 'en' ) {
         global $zume_languages_by_code;
         $list = self::query_activity_geojson( $language_code );
+//        dt_write_log($list);
         if ( empty( $list ) ) {
             $list = [];
         }
 
-        $training_items = [];
+//        $training_items = [];
         $countries = [];
         $languages = [];
         $types = [];
@@ -2911,10 +2920,11 @@ class Zume_Funnel_App_Heatmap {
 
         $features = [];
         foreach ( $list as $record ) {
-            $note = self::_create_note_data( $record, '', '', $training_items );
-            if ( ! $note ) {
-                continue;
-            }
+//            $note = self::_create_note_data( $record, '', '', $training_items );
+//            $note = $record['note'];
+//            if ( ! $note ) {
+//                continue;
+//            }
 
             // count country
             if ( isset( $record['country_code'] ) && !empty( $record['country_code'] ) && ! isset( $countries[$record['country_name']] ) ) {
@@ -2934,6 +2944,7 @@ class Zume_Funnel_App_Heatmap {
                 continue;
             }
             $language = $zume_languages_by_code[$language_code];
+            dt_write_log($language);
             $language_name = $language['name'];
             if ( isset( $language['name'] )
                 && isset( $language_code )
@@ -2950,16 +2961,16 @@ class Zume_Funnel_App_Heatmap {
             }
 
             // count types
-            if ( isset( $note['type'] ) && ! empty( $note['type'] ) )
+            if ( isset( $record['type'] ) && ! empty( $record['type'] ) )
             {
-                if ( ! isset( $types[$note['type']] ) ) {
-                    $types[$note['type']] = [
-                        'code' => $note['type'],
-                        'name' => ucwords( $note['type'] ),
+                if ( ! isset( $types[$record['type']] ) ) {
+                    $types[$record['type']] = [
+                        'code' => $record['type'],
+                        'name' => ucwords( $record['type'] ),
                         'count' => 0,
                     ];
                 }
-                $types[$note['type']]['count']++;
+                $types[$record['type']]['count']++;
             }
 
             $location = self::_create_location_precision( $record['lng'], $record['lat'], $record['label'], $record['country_code'] );
@@ -2967,7 +2978,7 @@ class Zume_Funnel_App_Heatmap {
             $features[] = array(
                 'type' => 'Feature',
                 'properties' => [
-                    'type' => $note['type'],
+                    'type' => $record['type'],
                     'language' => $record['language_code'],
                     'country' => $record['country_code'],
                 ],
@@ -2998,7 +3009,7 @@ class Zume_Funnel_App_Heatmap {
             'types' => $types,
             'total' => $records,
         );
-
+dt_write_log($new_data);
         return $new_data;
     }
 
@@ -3019,14 +3030,14 @@ class Zume_Funnel_App_Heatmap {
         $sql = "
                 SELECT *
                 FROM (
-                SELECT r.type, r.subtype, r.value, r.lng, r.lat, r.grid_id, r.label, r.timestamp, lga0.name as country_name, lga0.country_code, r.language_code, lgn.full_name
+                SELECT r.type, r.subtype, r.payload as note, r.value, r.lng, r.lat, r.grid_id, r.label, r.time_end, lga0.name as country_name, lga0.country_code, r.language_code, lgn.full_name
                 FROM wp_dt_reports r
                 LEFT JOIN wp_dt_location_grid lg ON lg.grid_id=r.grid_id
                 LEFT JOIN wp_dt_location_grid lga0 ON lga0.grid_id=lg.admin0_grid_id
                 LEFT JOIN location_grid_names lgn ON lgn.grid_id=lg.grid_id AND lgn.language_code = '$language_code'
                 WHERE r.type != 'system' AND r.grid_id IN ($prepared_list)
                 ) as tb
-                ORDER BY tb.timestamp DESC
+                ORDER BY tb.time_end DESC
         ";
 
         $list = $wpdb->get_results( $sql, ARRAY_A );
@@ -3064,22 +3075,21 @@ class Zume_Funnel_App_Heatmap {
             $additional_where .= " AND tb.country_code = '" .$filters['country']. "'";
         }
 
-        $timestamp = strtotime( '-100 hours' );
+        $time_end = strtotime( '-100 hours' );
         // @phpcs:disable
         $sql = "
                 SELECT *
                 FROM (
-                SELECT r.type, r.subtype, r.value, r.lng, r.lat, r.label, r.timestamp, lga0.name as country_name, lga0.country_code, r.language_code, lgn.full_name
+                SELECT r.type, r.subtype, r.payload as note, r.value, r.lng, r.lat, r.label, r.time_end, lga0.name as country_name, lga0.country_code, r.language_code, lgn.full_name
                 FROM wp_dt_reports r
                 LEFT JOIN wp_dt_location_grid lg ON lg.grid_id=r.grid_id
                 LEFT JOIN wp_dt_location_grid lga0 ON lga0.grid_id=lg.admin0_grid_id
                 LEFT JOIN location_grid_names lgn ON lgn.grid_id=lg.grid_id AND lgn.language_code = '$language_code'
-                WHERE r.timestamp > $timestamp AND r.type != 'system'
-
+                WHERE r.time_end > $time_end AND r.type != 'system'
                 ) as tb
-                WHERE tb.timestamp > $timestamp
+                WHERE tb.time_end > $time_end
                 $additional_where
-                ORDER BY tb.timestamp DESC
+                ORDER BY tb.time_end DESC
         ";
 
         $results = $wpdb->get_results( $sql, ARRAY_A );
@@ -3093,20 +3103,19 @@ class Zume_Funnel_App_Heatmap {
 
     public static function query_activity_geojson( $language_code = 'en' ) {
         global $wpdb;
-        $timestamp = strtotime( '-100 hours' );
+        $time_end = strtotime( '-100 hours' );
         $results = $wpdb->get_results( $wpdb->prepare( "
                 SELECT *
                 FROM (
-                SELECT r.type, r.subtype, r.value, r.lng, r.lat, r.label, r.timestamp, lga0.name as country_name, lga0.country_code, r.language_code, lgn.full_name
+                SELECT r.type, r.subtype, r.payload as note, r.value, r.lng, r.lat, r.label, r.time_end, lga0.name as country_name, lga0.country_code, r.language_code, lgn.full_name
                 FROM wp_dt_reports r
                 LEFT JOIN wp_dt_location_grid lg ON lg.grid_id=r.grid_id
                 LEFT JOIN wp_dt_location_grid lga0 ON lga0.grid_id=lg.admin0_grid_id
                 LEFT JOIN location_grid_names lgn ON lgn.grid_id=lg.grid_id AND lgn.language_code = %s
-                WHERE r.timestamp > %d AND r.type != 'system'
-
+                WHERE r.time_end > %d AND r.type != 'system'
                 ) as tb
-                ORDER BY tb.timestamp DESC
-                ", $language_code, $timestamp, $language_code, $timestamp), ARRAY_A );
+                ORDER BY tb.time_end DESC
+                ", $language_code, $time_end, $language_code, $time_end), ARRAY_A );
 
         return $results;
     }
@@ -3116,6 +3125,16 @@ class Zume_Funnel_App_Heatmap {
         // training - registration to training completion
         // coaching - request for coach and all mawl and coaching effort
         // practicing - all practitioner actions like reporting and training multiple groups
+
+        // new response
+        $data = [
+            'note' => $record['note'],
+            'type' => $record['type'],
+        ];
+        return $data;
+
+
+        // skip
 
         $type = $record['type'];
         $subtype = $record['subtype'];
@@ -3514,14 +3533,17 @@ class Zume_Funnel_App_Heatmap {
         return $population_division;
     }
 
-    public static function _create_time_string( $timestamp, $timezone_offset, $year = false ): string {
-        $adjusted_time = $timestamp + $timezone_offset;
-        if ( $timestamp > strtotime( '-1 hour' ) ) {
-            $time_string = self::_time_elapsed_string( '@'.$timestamp );
+    public static function _create_time_string( $time_end, $timezone_offset, $year = false ): string {
+
+        $time_string = self::_time_ago( $time_end );
+        return $time_string;
+
+        $adjusted_time = $time_end + $timezone_offset;
+        if ( $time_end > strtotime( '-1 hour' ) ) {
+            $time_string = self::_time_elapsed_string( '@'.$time_end );
             return $time_string;
         }
-
-        if ( $timestamp > strtotime( 'today+00:00' ) + $timezone_offset ) {
+        if ( $time_end > strtotime( 'today+00:00' ) + $timezone_offset ) {
             $time_string = date( 'g:i a', $adjusted_time ); // @phpcs:ignore
             return $time_string;
         }
@@ -3533,9 +3555,103 @@ class Zume_Funnel_App_Heatmap {
         return $time_string;
     }
 
+    public static function _time_ago($time) {
+
+        // Calculate difference between current
+        // time and given timestamp in seconds
+        $diff     = time() - $time;
+
+        // Time difference in seconds
+        $sec     = $diff;
+
+        // Convert time difference in minutes
+        $min     = round($diff / 60 );
+
+        // Convert time difference in hours
+        $hrs     = round($diff / 3600);
+
+        // Convert time difference in days
+        $days     = round($diff / 86400 );
+
+        // Convert time difference in weeks
+        $weeks     = round($diff / 604800);
+
+        // Convert time difference in months
+        $mnths     = round($diff / 2600640 );
+
+        // Convert time difference in years
+        $yrs     = round($diff / 31207680 );
+
+        // Check for seconds
+        if($sec <= 60) {
+            return "$sec seconds ago";
+        }
+
+        // Check for minutes
+        else if($min <= 60) {
+            if($min==1) {
+                return "one minute ago";
+            }
+            else {
+                return "$min minutes ago";
+            }
+        }
+
+        // Check for hours
+        else if($hrs <= 24) {
+            if($hrs == 1) {
+                return "an hour ago";
+            }
+            else {
+                return "$hrs hours ago";
+            }
+        }
+
+        // Check for days
+        else if($days <= 7) {
+            if($days == 1) {
+                return "Yesterday";
+            }
+            else {
+                return "$days days ago";
+            }
+        }
+
+        // Check for weeks
+        else if($weeks <= 4.3) {
+            if($weeks == 1) {
+                return "a week ago";
+            }
+            else {
+                return "$weeks weeks ago";
+            }
+        }
+
+        // Check for months
+        else if($mnths <= 12) {
+            if($mnths == 1) {
+                return "a month ago";
+            }
+            else {
+                return "$mnths months ago";
+            }
+        }
+
+        // Check for years
+        else {
+            if($yrs == 1) {
+                return "one year ago";
+            }
+            else {
+                return "$yrs years ago";
+            }
+        }
+    }
+
     public static function _create_in_language_string( $data, $languages ): string {
-        $language = $languages[$data['language_code']] ?? $languages['en'];
-        return $language['name'];
+        $language = $languages[$data['language_code']] ?? $languages['en'] ?? 'en';
+        return 'English';
+//        return $language['name'] ?? 'English';
     }
 
     public static function _create_location_precision( $lng, $lat, $label, $country_code ) : array {
@@ -3620,12 +3736,12 @@ class Zume_Funnel_App_Heatmap {
 
 
     public static function _time_elapsed_string( $datetime, $full = false ) {
-        $now = new DateTime();
-        $ago = new DateTime( $datetime );
-        $diff = $now->diff( $ago );
+        $now = new DateTime;
+        $then = new DateTime( $datetime );
+        $diff = (array) $now->diff( $then );
 
-        $diff->w = floor( $diff->d / 7 );
-        $diff->d -= $diff->w * 7;
+        $diff['w']  = floor( $diff['d'] / 7 );
+        $diff['d'] -= $diff['w'] * 7;
 
         $string = array(
             'y' => 'year',
@@ -3636,16 +3752,20 @@ class Zume_Funnel_App_Heatmap {
             'i' => 'minute',
             's' => 'second',
         );
-        foreach ( $string as $k => &$v ) {
-            if ( $diff->$k ) {
-                $v = $diff->$k . ' ' . $v . ( $diff->$k > 1 ? 's' : '' );
-            } else {
+
+        foreach( $string as $k => & $v )
+        {
+            if ( $diff[$k] )
+            {
+                $v = $diff[$k] . ' ' . $v .( $diff[$k] > 1 ? 's' : '' );
+            }
+            else
+            {
                 unset( $string[$k] );
             }
         }
 
-        if ( !$full ) { $string = array_slice( $string, 0, 1 );
-        }
+        if ( ! $full ) $string = array_slice( $string, 0, 1 );
         return $string ? implode( ', ', $string ) . ' ago' : 'just now';
     }
 
