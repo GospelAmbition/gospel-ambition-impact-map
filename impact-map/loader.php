@@ -78,8 +78,6 @@ class GA_Impact_Map {
         require_once( 'pages/magic-link-home.php' );
         require_once( 'maps/loader.php' );
 
-//        $this->i18n();
-
         if ( is_admin() ) { // adds links to the plugin description area in the plugin admin list.
             add_filter( 'plugin_row_meta', [ $this, 'plugin_description_links' ], 10, 4 );
         }
