@@ -26,9 +26,6 @@ class GO_Impact_Context_Switcher {
         }
         return self::$instance;
     }
-    public static function plugin_url( $path = '' ) {
-        return plugins_url( $path, __FILE__ );
-    }
     public function __construct(){
         $site = get_bloginfo();
 
@@ -37,14 +34,14 @@ class GO_Impact_Context_Switcher {
             case 'GO Impact Map':
                 require_once( 'impact-map/loader.php' );
                 break;
+
             case 'Prayer Global':
-                require_once( 'remote-trackers/prayer-global/loader.php' );
+                require_once( 'remote-trackers/prayer-global.php' );
                 break;
 
             default:
                 return false;
         }
-        return false;
     }
 }
 
