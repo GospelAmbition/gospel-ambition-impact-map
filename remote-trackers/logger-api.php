@@ -8,7 +8,7 @@ class GO_Impact_Map_Logger
     public function add_api_routes() {
         register_rest_route(
             $this->namespace, '/log', [
-                'methods'  => 'GET, POST',
+                'methods'  => 'POST',
                 'callback' => [ $this, 'log' ],
                 'permission_callback' => '__return_true',
             ]
@@ -18,13 +18,11 @@ class GO_Impact_Map_Logger
         $params = dt_recursive_sanitize_array( $request->get_params() );
 
         dt_write_log(__METHOD__);
+        dt_write_log( $params );
 
-        $array = [
-            'ip_address' => '',
-            'log_key' => ''
-        ];
+        $json_body = [ 'method' => 'POST', 'body' => $params ];
 
-        return wp_remote_get( $this->log_url, $array );
+        return json_decode( wp_remote_retrieve_body ( wp_remote_post( $this->log_url, $json_body ) ), true );
     }
     public function authorize_url( $authorized )
     {
