@@ -18,10 +18,12 @@ class GO_Impact_Map_Endpoints
     public function endpoint( WP_REST_Request $request ) {
         $params = dt_recursive_sanitize_array( $request->get_params() );
 
-        dt_write_log( $this->namespace . ' - ' . __METHOD__ );
-        dt_write_log($params);
+        dt_write_log(  __METHOD__ );
 
-        $params['success'] = __METHOD__;
+        $params['insert'] = GO_Impact_Map_Insert::insert($params);
+
+        dt_write_log(  __METHOD__ );
+        dt_write_log(  $params );
 
         return $params;
     }
@@ -32,7 +34,7 @@ class GO_Impact_Map_Endpoints
             self::$_instance = new self();
         }
         return self::$_instance;
-    } // End instance()
+    }
     public function __construct() {
         add_action( 'rest_api_init', [ $this, 'add_api_routes' ] );
         add_filter( 'dt_allow_rest_access', [$this, 'authorize_url'], 10, 1 );

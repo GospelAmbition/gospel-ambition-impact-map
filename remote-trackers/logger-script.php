@@ -8,13 +8,9 @@ function gospel_ambition_coder_invitation(){
         <script>
             window.addEventListener("load", log_go_impact_map);
             function log_go_impact_map() {
-                console.log('system loaded')
-                let rest_url = '<?php echo rest_url() ?>'
-                let keys = <?php echo json_encode( $movement_keys ) ?>
-
-                fetch( rest_url + 'impact-map/v1/log', {
+                fetch( '<?php echo esc_url( rest_url() ) ?>impact-map/v1/log', {
                     method: "POST",
-                    body: JSON.stringify({ keys: keys }),
+                    body: JSON.stringify( <?php echo json_encode( $movement_keys ) ?> ),
                     headers: {
                         "Content-type": "application/json; charset=UTF-8"
                     }

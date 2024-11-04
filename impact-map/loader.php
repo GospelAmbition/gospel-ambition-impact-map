@@ -71,6 +71,7 @@ class GA_Impact_Map {
         $is_rest = dt_is_rest();
 
         if ( $is_rest && strpos( dt_get_url_path(), 'gospel-ambition-impact-map' ) !== false ) {
+            require_once( 'rest-api/insert.php' ); // adds starter rest api class
             require_once( 'rest-api/rest-api.php' ); // adds starter rest api class
         }
 
