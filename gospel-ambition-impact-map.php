@@ -29,18 +29,24 @@ class GO_Impact_Context_Switcher {
     public function __construct(){
         $site = get_bloginfo();
 
-        switch ( $site ) {
+        if ( 'GO Impact Map' === $site ) {
 
-            case 'GO Impact Map':
-                require_once( 'impact-map/loader.php' );
-                break;
+            require_once( 'impact-map/loader.php' );
 
-            case 'Prayer Global':
-                require_once( 'remote-trackers/prayer-global.php' );
-                break;
+        } else {
 
-            default:
-                return false;
+            require_once( 'remote-trackers/logger-api.php' );
+            require_once( 'remote-trackers/logger-script.php' );
+
+            switch ( $site ) {
+
+                case 'Prayer Global':
+                    require_once( 'remote-trackers/prayer-global.php' );
+                    break;
+
+                default:
+                    return false;
+            }
         }
     }
 }
