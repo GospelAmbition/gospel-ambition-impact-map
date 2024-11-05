@@ -1,16 +1,16 @@
 <?php
 
-add_action( 'wp_head', 'gospel_ambition_coder_invitation' );
-function gospel_ambition_coder_invitation(){
-    $movement_keys =  apply_filters( 'go_log_trigger', [] );
-    if ( ! empty( $movement_keys ) ) {
+add_action( 'wp_head', 'go_send_queue' );
+function go_send_queue(){
+    if ( ! empty( get_log_queue() ) ) {
+        dt_write_log('send_queue');
         ?>
         <script>
             window.addEventListener("load", log_go_impact_map);
             function log_go_impact_map() {
-                fetch( '<?php echo esc_url( rest_url() ) ?>impact-map/v1/log', {
+                fetch( '<?php echo esc_url( rest_url() ) ?>impact-map/v1/send_queue', {
                     method: "POST",
-                    body: JSON.stringify( <?php echo json_encode( $movement_keys ) ?> ),
+                    body: JSON.stringify({}),
                     headers: {
                         "Content-type": "application/json; charset=UTF-8"
                     }

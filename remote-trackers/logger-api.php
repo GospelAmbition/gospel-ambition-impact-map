@@ -11,8 +11,23 @@ class GO_Impact_Map_Logger
                 'permission_callback' => '__return_true',
             ]
         );
+        register_rest_route(
+            $this->namespace, '/send_queue', [
+                'methods'  => 'POST',
+                'callback' => [ $this, '_send_queue' ],
+                'permission_callback' => '__return_true',
+            ]
+        );
     }
     public function _rest_log( WP_REST_Request $request ) {
+        $params = dt_recursive_sanitize_array( $request->get_params() );
+        if ( empty( $params ) ) {
+            return false;
+        }
+        return self::log( $params );
+
+    }
+    public function _send_queue( WP_REST_Request $request ) {
         $params = dt_recursive_sanitize_array( $request->get_params() );
         if ( empty( $params ) ) {
             return false;
@@ -38,21 +53,49 @@ class GO_Impact_Map_Logger
         add_action( 'rest_api_init', [ $this, 'add_api_routes' ] );
         add_filter( 'dt_allow_rest_access', [$this, 'authorize_url'], 10, 1 );
     }
+    public static function logger_url() {
+        return 'https://goimpactmap.com/wp-json/gospel-ambition-impact-map/v1/endpoint';
+    }
 
     public static function log( $params ) {
-        $log_url = 'https://goimpactmap.com/wp-json/gospel-ambition-impact-map/v1/endpoint';
+        $logger_url = self::logger_url();
 
-        dt_write_log(__METHOD__);
+        dt_write_log(__METHOD__ . ': PRE');
         dt_write_log( $params );
 
         $json_body = [ 'method' => 'POST', 'body' => $params ];
 
-        $body = json_decode( wp_remote_retrieve_body( wp_remote_post( $log_url, $json_body ) ), true );
+        $body = json_decode( wp_remote_retrieve_body( wp_remote_post( $logger_url, $json_body ) ), true );
 
-        dt_write_log(__METHOD__);
+        dt_write_log(__METHOD__ . ': POST');
         dt_write_log( $body );
 
         return $body;
+    }
+    public static function send_queue() {
+        $logger_url = self::logger_url();
+
+        dt_write_log(__METHOD__ . ': PRE');
+
+        $queue = get_log_queue();
+        delete_log_queue();
+
+        $json_body = [ 'method' => 'POST', 'body' => $queue ];
+
+        $body = json_decode( wp_remote_retrieve_body( wp_remote_post( $logger_url, $json_body ) ), true );
+
+        dt_write_log(__METHOD__ . ': POST');
+        dt_write_log( $body );
+
+        return $body;
+    }
+    public static function queue( $params ) {
+        $list = get_option( 'go_log_queue' );
+        if ( ! is_array( $list ) ) {
+            $list = [];
+        }
+
+        $list[] = $params;
     }
 }
 GO_Impact_Map_Logger::instance();

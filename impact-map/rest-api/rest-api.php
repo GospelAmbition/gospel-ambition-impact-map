@@ -18,11 +18,11 @@ class GO_Impact_Map_Endpoints
     public function endpoint( WP_REST_Request $request ) {
         $params = dt_recursive_sanitize_array( $request->get_params() );
 
-        dt_write_log(  __METHOD__ );
+        dt_write_log(  __METHOD__ . ': PRE' );
 
         $params['insert'] = GO_Impact_Map_Insert::insert($params);
 
-        dt_write_log(  __METHOD__ );
+        dt_write_log(  __METHOD__ . ': POST' );
         dt_write_log(  $params );
 
         return $params;
