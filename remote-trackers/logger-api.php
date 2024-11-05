@@ -1,39 +1,16 @@
 <?php
 
-class GO_Impact_Map_Logger
+class GO_Impact_Send_Queue
 {
     public $namespace = 'impact-map/v1';
     public function add_api_routes() {
         register_rest_route(
-            $this->namespace, '/log', [
-                'methods'  => 'POST',
-                'callback' => [ $this, '_rest_log' ],
-                'permission_callback' => '__return_true',
-            ]
-        );
-        register_rest_route(
             $this->namespace, '/send_queue', [
                 'methods'  => 'POST',
-                'callback' => [ $this, '_send_queue' ],
+                'callback' => [ $this, 'send_queue' ],
                 'permission_callback' => '__return_true',
             ]
         );
-    }
-    public function _rest_log( WP_REST_Request $request ) {
-        $params = dt_recursive_sanitize_array( $request->get_params() );
-        if ( empty( $params ) ) {
-            return false;
-        }
-        return self::log( $params );
-
-    }
-    public function _send_queue( WP_REST_Request $request ) {
-        $params = dt_recursive_sanitize_array( $request->get_params() );
-        if ( empty( $params ) ) {
-            return false;
-        }
-        return self::log( $params );
-
     }
     public function authorize_url( $authorized )
     {
@@ -53,29 +30,8 @@ class GO_Impact_Map_Logger
         add_action( 'rest_api_init', [ $this, 'add_api_routes' ] );
         add_filter( 'dt_allow_rest_access', [$this, 'authorize_url'], 10, 1 );
     }
-    public static function logger_url() {
-        return 'https://goimpactmap.com/wp-json/gospel-ambition-impact-map/v1/endpoint';
-    }
-
-    public static function log( $params ) {
-        $logger_url = self::logger_url();
-
-        dt_write_log(__METHOD__ . ': PRE');
-        dt_write_log( $params );
-
-        $json_body = [ 'method' => 'POST', 'body' => $params ];
-
-        $body = json_decode( wp_remote_retrieve_body( wp_remote_post( $logger_url, $json_body ) ), true );
-
-        dt_write_log(__METHOD__ . ': POST');
-        dt_write_log( $body );
-
-        return $body;
-    }
     public static function send_queue() {
-        $logger_url = self::logger_url();
-
-        dt_write_log(__METHOD__ . ': PRE');
+        $logger_url = 'https://goimpactmap.com/wp-json/gospel-ambition-impact-map/v1/endpoint';
 
         $queue = get_log_queue();
         delete_log_queue();
@@ -89,13 +45,5 @@ class GO_Impact_Map_Logger
 
         return $body;
     }
-    public static function queue( $params ) {
-        $list = get_option( 'go_log_queue' );
-        if ( ! is_array( $list ) ) {
-            $list = [];
-        }
-
-        $list[] = $params;
-    }
 }
-GO_Impact_Map_Logger::instance();
+GO_Impact_Send_Queue::instance();

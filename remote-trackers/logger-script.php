@@ -10,7 +10,6 @@ function go_send_queue(){
             function log_go_impact_map() {
                 fetch( '<?php echo esc_url( rest_url() ) ?>impact-map/v1/send_queue', {
                     method: "POST",
-                    body: JSON.stringify({}),
                     headers: {
                         "Content-type": "application/json; charset=UTF-8"
                     }

@@ -3,6 +3,7 @@ if ( !defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly.
 
 class GO_Impact_Map_Endpoints
 {
+    private static $_instance = null;
     public $namespace = 'gospel-ambition-impact-map/v1';
     public function add_api_routes() {
         $namespace = $this->namespace;
@@ -18,17 +19,17 @@ class GO_Impact_Map_Endpoints
     public function endpoint( WP_REST_Request $request ) {
         $params = dt_recursive_sanitize_array( $request->get_params() );
 
-        dt_write_log(  __METHOD__ . ': PRE' );
+        if ( ! is_array( $params ) ) {
+            return false;
+        }
 
-        $params['insert'] = GO_Impact_Map_Insert::insert($params);
+        foreach( $params as $log ) {
+            GO_Impact_Map_Insert::insert( $log );
+        }
 
-        dt_write_log(  __METHOD__ . ': POST' );
-        dt_write_log(  $params );
-
-        return $params;
+        return true;
     }
 
-    private static $_instance = null;
     public static function instance() {
         if ( is_null( self::$_instance ) ) {
             self::$_instance = new self();
