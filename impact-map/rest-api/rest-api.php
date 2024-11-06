@@ -17,14 +17,37 @@ class GO_Impact_Map_Endpoints
         );
     }
     public function endpoint( WP_REST_Request $request ) {
-        $params = dt_recursive_sanitize_array( $request->get_params() );
+        $logs = dt_recursive_sanitize_array( $request->get_params() );
 
-        if ( ! is_array( $params ) ) {
+        if ( ! is_array( $logs ) ) {
             return false;
         }
 
-        foreach( $params as $log ) {
-            GO_Impact_Map_Insert::insert( $log );
+        $current_time = time();
+        foreach( $logs as $i => $v ) {
+            $logs[$i]['time'] = $current_time + ( $current_time - (int) $v['time'] );
+        }
+
+        foreach( $logs as $i => $v ) {
+            if ( isset( $v['location'] ) && empty( $v['location'] ) ) {
+                // todo
+            }
+            else if ( $v['ip'] ) {
+                // todo
+            }
+        }
+
+        $needs_location = [];
+
+        // time adjustment
+
+        // if has grid id
+        // if has lng/lat
+        // if has ip
+
+
+        foreach( $logs as $i => $v ) {
+            GO_Impact_Map_Insert::insert( $v );
         }
 
         return true;

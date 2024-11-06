@@ -1,7 +1,11 @@
 <?php
 
-add_action( 'wp_head', 'go_send_queue' );
-function go_send_queue(){
+add_action( 'wp_head', 'go_url_logger' );
+function go_url_logger(){
+    // page load logger
+    do_action( 'go_log_trigger' );
+
+    // lazy load queue
     if ( ! empty( get_log_queue() ) ) {
         dt_write_log('send_queue');
         ?>
@@ -20,4 +24,6 @@ function go_send_queue(){
         </script>
         <?php
     }
+
 }
+
