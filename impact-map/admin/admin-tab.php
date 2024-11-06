@@ -20,12 +20,12 @@ class Impact_Map_Menu {
         add_action( "admin_menu", array( $this, "register_menu" ) );
     }
     public function register_menu() {
-        add_submenu_page( 'dt_extensions', $this->page_title, $this->page_title, 'manage_dt', $this->token, [ $this, 'content' ] );
+        add_submenu_page( 'dt_extensions', $this->page_title, $this->page_title, 'manage_options', $this->token, [ $this, 'content' ] );
     }
     public function extensions_menu() {}
     public function content() {
 
-        if ( !current_user_can( 'manage_dt' ) ) { // manage dt is a permission that is specific to Disciple.Tools and allows admins, strategists and dispatchers into the wp-admin
+        if ( !current_user_can( 'manage_options' ) ) { // manage dt is a permission that is specific to Disciple.Tools and allows admins, strategists and dispatchers into the wp-admin
             wp_die( 'You do not have sufficient permissions to access this page.' );
         }
 
