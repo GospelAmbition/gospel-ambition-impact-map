@@ -13,7 +13,10 @@ add_action('go_log_trigger', function( $keys ) {
             'post_type' => 'prayer_global',
             'subtype' => 'prayer_person_location',
             'time' => time(),
-            'ip' => get_ip_address_for_log(),
+            'language_code' => get_locale(),
+            'location' => [
+                'ip' => get_ip_address_for_log(),
+            ],
         ] );
     }
 
@@ -30,8 +33,11 @@ add_action( 'wp_insert_post', function( $post_ID, $post, $update ) {
         add_log_to_queue( [
             'post_type' => 'prayer_global',
             'subtype' => 'registered',
-            'time' => time(),
-            'ip' => get_ip_address_for_log(),
+            'time' => time(), // time
+            'language_code' => get_locale(), // language
+            'location' => [
+                'ip' => get_ip_address_for_log(),
+            ],
         ] );
     }
 }, 10, 3 );
@@ -46,7 +52,10 @@ add_action( 'updated_post_meta',  function( $meta_id, $object_id, $meta_key, $me
             'post_type' => 'prayer_global',
             'subtype' => 'lap_completed',
             'time' => time(),
-            'ip' => get_ip_address_for_log(),
+            'language_code' => get_locale(),
+            'location' => [
+                'ip' => get_ip_address_for_log(),
+            ],
         ] );
     }
 }, 10, 4 );
@@ -62,9 +71,9 @@ add_action('dt_insert_report', function( $args ) {
             'post_type' => 'prayer_global',
             'subtype' => 'prayer_for_location',
             'time' => time(),
-            'ip' => get_ip_address_for_log(),
+            'language_code' => get_locale(),
             'location' => [
-                'grid_id' => $args['grid_id']
+                'grid_id' => $args['grid_id'],
             ],
         ] );
     }
