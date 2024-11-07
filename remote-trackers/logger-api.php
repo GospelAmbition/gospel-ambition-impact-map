@@ -41,7 +41,7 @@ class GO_Impact_Send_Queue
         $body = json_decode( wp_remote_retrieve_body( wp_remote_post( $logger_url, $json_body ) ), true );
 
         dt_write_log(__METHOD__ . ': POST');
-        dt_write_log( $body );
+//        dt_write_log( $body );
 
         return $body;
     }

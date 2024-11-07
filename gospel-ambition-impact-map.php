@@ -28,6 +28,7 @@ class GO_Impact_Context_Switcher {
     }
     public function __construct(){
         $site = get_bloginfo();
+        $active_plugins = get_option( 'active_plugins' );
 
         if ( 'GO Impact Map' === $site ) {
 
@@ -39,11 +40,14 @@ class GO_Impact_Context_Switcher {
             require_once( 'remote-trackers/logger-queue.php' );
             require_once( 'remote-trackers/logger-script.php' );
 
+            dt_write_log( $active_plugins );
+
             switch ( $site ) {
 
                 case 'Prayer Global':
                     require_once( 'remote-trackers/prayer-global.php' );
                     break;
+
 
                 default:
                     return false;
