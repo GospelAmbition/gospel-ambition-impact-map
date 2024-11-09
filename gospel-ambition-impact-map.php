@@ -40,17 +40,13 @@ class GO_Impact_Context_Switcher {
             require_once( 'remote-trackers/logger-queue.php' );
             require_once( 'remote-trackers/logger-script.php' );
 
-            dt_write_log( $active_plugins );
-
-            switch ( $site ) {
-
-                case 'Prayer Global':
-                    require_once( 'remote-trackers/prayer-global.php' );
-                    break;
-
-
-                default:
-                    return false;
+            // prayer campaign
+            if ( in_array( 'disciple-tools-prayer-campaigns/disciple-tools-prayer-campaigns.php', $active_plugins ) ) {
+                require_once( 'remote-trackers/prayer-campaigns.php' );
+            }
+            // prayer tools
+            if ( in_array( 'prayer-global-porch/prayer-global-porch.php', $active_plugins ) ) {
+                require_once( 'remote-trackers/prayer-global.php' );
             }
         }
     }

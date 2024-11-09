@@ -34,6 +34,7 @@ class GO_Impact_Map_Endpoints
 //        }
 
         // complete location information
+        $ip_list = [];
         $geocoder = new Location_Grid_Geocoder();
         foreach( $logs as $i => $v ) {
             if ( isset( $v['location']['grid_id'] ) && ! empty( $v['location']['grid_id'] ) ) {
@@ -53,14 +54,21 @@ class GO_Impact_Map_Endpoints
                 }
             }
             else if ( isset( $v['location']['ip'] ) && ! empty( $v['location']['ip'] ) ) {
-                $result = DT_Ipstack_API::geocode_ip_address( $v['location']['ip'] );
-                if ( isset( $result['longitude'] ) ) {
-                    $row = DT_Ipstack_API::convert_ip_result_to_location_grid_meta( $result );
-                    if ( ! empty( $row ) ) {
-                        $row['lng'] = $row['lng'];
-                        $row['label'] = $geocoder->_format_full_name( $row );
+                // test if ip address already been retrieved
+                if ( isset( $ip_list[$v['location']['ip']] ) ) {
+                    $row = $ip_list[$v['location']['ip']];
+                }
+                else {
+                    $result = DT_Ipstack_API::geocode_ip_address( $v['location']['ip'] );
+                    if ( isset( $result['longitude'] ) ) {
+                        $row = DT_Ipstack_API::convert_ip_result_to_location_grid_meta( $result );
+                        if ( ! empty( $row ) ) {
+                            $row['label'] = $geocoder->_format_full_name( $row );
+                        }
+                        $ip_list[$v['location']['ip']] = $row;
                     }
                 }
+
             }
             else {
                 $row = [];
@@ -74,7 +82,7 @@ class GO_Impact_Map_Endpoints
         }
 
         foreach( $logs as $i => $v ) {
-            $logs[$i]['type'] = $this->_create_type( $v );
+            $logs[$i]['type'] = $v['type'] ?? $this->_create_type( $v );
             $logs[$i]['payload'] = $this->_create_string( $v );
             $logs[$i]['language_code'] = $this->_create_language_code( $v );
         }
@@ -109,6 +117,11 @@ class GO_Impact_Map_Endpoints
             case 'created_custom_lap':
             case 'lap_completed':
             case 'pg_registered':
+                $string = 'praying';
+                break;
+
+            // PRAYER GLOBAL
+            case 'pt_registered':
                 $string = 'praying';
                 break;
 
@@ -406,9 +419,19 @@ class GO_Impact_Map_Endpoints
             case 'lap_completed':
                 $string = 'One entire prayer lap around the world just completed.';
                 break;
-            case 'registered':
+            case 'pg_registered':
                 $string = 'Someone is joining prayer global.';
                 break;
+
+
+            case 'pt_registered':
+                $string = 'Someone in '.$log['label'].' has joined a strategic prayer campaign.';
+                break;
+            case 'recurring_signup':
+                $string = 'Someone in is praying for a strategic prayer campaign in '.$log['label'].'.';
+                break;
+
+
 
 
             default:

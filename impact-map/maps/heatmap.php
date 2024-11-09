@@ -2702,6 +2702,7 @@ class Zume_Funnel_App_Heatmap {
     public static function get_activity_list( $filters, $limit = false, $language_code = 'en' ) {
         global $zume_languages_by_code;
         $languages = [];
+        $countries = [];
         $utc_time = new DateTime( 'now', new DateTimeZone( $filters['timezone'] ) );
         $timezone_offset = $utc_time->format( 'Z' );
 
@@ -2832,8 +2833,12 @@ class Zume_Funnel_App_Heatmap {
 //            ];
 //        }
 
-        ksort( $countries );
-        ksort( $languages );
+        if ( is_array( $countries ) ) {
+            ksort( $countries );
+        }
+        if ( is_array( $languages ) ) {
+            ksort( $languages );
+        }
 
         $c = array_chunk( $list, 250 );
         $array = [
@@ -3076,6 +3081,7 @@ class Zume_Funnel_App_Heatmap {
         }
 
         $time_end = strtotime( '-100 hours' );
+        $time_begin = time();
         // @phpcs:disable
         $sql = "
                 SELECT *
@@ -3087,7 +3093,7 @@ class Zume_Funnel_App_Heatmap {
                 LEFT JOIN location_grid_names lgn ON lgn.grid_id=lg.grid_id AND lgn.language_code = '$language_code'
                 WHERE r.time_end > $time_end AND r.type != 'system'
                 ) as tb
-                WHERE tb.time_end > $time_end
+                WHERE tb.time_end > $time_end AND tb.time_end < $time_begin
                 $additional_where
                 ORDER BY tb.time_end DESC
         ";
@@ -3104,6 +3110,7 @@ class Zume_Funnel_App_Heatmap {
     public static function query_activity_geojson( $language_code = 'en' ) {
         global $wpdb;
         $time_end = strtotime( '-100 hours' );
+        $time_begin = time();
         $results = $wpdb->get_results( $wpdb->prepare( "
                 SELECT *
                 FROM (
@@ -3112,10 +3119,10 @@ class Zume_Funnel_App_Heatmap {
                 LEFT JOIN wp_dt_location_grid lg ON lg.grid_id=r.grid_id
                 LEFT JOIN wp_dt_location_grid lga0 ON lga0.grid_id=lg.admin0_grid_id
                 LEFT JOIN location_grid_names lgn ON lgn.grid_id=lg.grid_id AND lgn.language_code = %s
-                WHERE r.time_end > %d AND r.type != 'system'
+                WHERE r.time_end > %d AND r.time_end < %d AND r.type != 'system'
                 ) as tb
                 ORDER BY tb.time_end DESC
-                ", $language_code, $time_end, $language_code, $time_end), ARRAY_A );
+                ", $language_code, $time_end, $language_code, $time_end, $time_begin), ARRAY_A );
 
         return $results;
     }

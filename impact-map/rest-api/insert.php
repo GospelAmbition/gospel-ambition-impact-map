@@ -61,8 +61,8 @@ class GO_Impact_Map_Insert
             $args['payload'] = serialize( $args['payload'] );
         }
 
-//        dt_write_log(__METHOD__ . ' PRE-INSERT');
-//        dt_write_log($args);
+        dt_write_log(__METHOD__ . ' PRE-INSERT');
+        dt_write_log($args);
 //        return true;
 
         $wpdb->insert(
