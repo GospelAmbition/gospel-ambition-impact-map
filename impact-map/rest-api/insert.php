@@ -42,10 +42,10 @@ class GO_Impact_Map_Insert
                 $duplicate_found = $wpdb->get_row(
                     $wpdb->prepare(
                         'SELECT
-                                        `id`
-                                    FROM
-                                        wp_dt_reports
-                                    WHERE hash = %s AND hash IS NOT NULL;',
+                                `id`
+                            FROM
+                                wp_dt_reports
+                            WHERE hash = %s AND hash IS NOT NULL;',
                         $args['hash']
                     )
                 );
