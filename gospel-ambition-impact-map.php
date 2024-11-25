@@ -34,8 +34,6 @@ class GO_Impact_Context_Switcher {
             require_once( 'impact-map/loader.php' );
         } else {
 
-            dt_write_log($active_plugins);
-
             require_once( 'remote-trackers/logger-api.php' );
             require_once( 'remote-trackers/logger-queue.php' );
             require_once( 'remote-trackers/logger-script.php' );
@@ -52,9 +50,9 @@ class GO_Impact_Context_Switcher {
             if ( in_array( 'prayer-global-porch/prayer-global-porch.php', $active_plugins ) ) {
                 require_once( 'remote-trackers/prayer-global.php' );
             }
-            // disciple tools
-            if ( in_array( 'prayer-global-porch/prayer-global-porch.php', $active_plugins ) ) {
-                require_once( 'remote-trackers/prayer-global.php' );
+            // // disciple tools
+            if ( in_array( 'dt_usage/dt-usage.php', $active_plugins ) ) {
+                require_once( 'remote-trackers/disciple-tools.php' );
             }
             // zume training
             if ( in_array( 'zume-training-system/zume-training-system.php', $active_plugins ) ) {
@@ -62,7 +60,7 @@ class GO_Impact_Context_Switcher {
             }
             // zume training coaching
             if ( in_array( 'zume-coaching-system/zume-coaching-system.php', $active_plugins ) ) {
-                require_once( 'remote-trackers/zume-training.php' );
+                require_once( 'remote-trackers/zume-training-coaching.php' );
             }
 
         }

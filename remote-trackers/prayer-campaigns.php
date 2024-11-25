@@ -1,4 +1,5 @@
 <?php
+if ( !defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly.
 
 add_action('go_log_trigger', function( $keys ) {
     $url = dt_get_url_path();
