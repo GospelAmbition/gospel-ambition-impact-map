@@ -2,6 +2,7 @@
 if ( !defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly.
 
 add_action( 'wp_head', 'go_url_logger' );
+add_action( 'zume_head', 'go_url_logger' );
 function go_url_logger(){
     // page load logger
     do_action( 'go_log_trigger' );
