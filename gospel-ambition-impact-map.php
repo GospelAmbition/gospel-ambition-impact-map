@@ -27,13 +27,13 @@ class GO_Impact_Context_Switcher {
         return self::$instance;
     }
     public function __construct(){
+        
         $site = get_bloginfo();
-        $active_plugins = get_option( 'active_plugins' );
-
         if ( 'GO Impact Map' === $site ) {
             require_once( 'impact-map/loader.php' );
         } else {
-
+            
+            $active_plugins = get_option( 'active_plugins' );
             require_once( 'remote-trackers/logger-api.php' );
             require_once( 'remote-trackers/logger-queue.php' );
             require_once( 'remote-trackers/logger-script.php' );
