@@ -34,7 +34,6 @@ class GO_Impact_Context_Switcher {
         } else {
             
             $active_plugins = get_option( 'active_plugins' );
-            require_once( 'remote-trackers/logger-api.php' );
             require_once( 'remote-trackers/logger-queue.php' );
             require_once( 'remote-trackers/logger-script.php' );
 
