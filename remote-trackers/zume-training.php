@@ -18,3 +18,7 @@ add_action( 'zume_verify_encouragement_plan',  function( $user_id, $type, $subty
     ] );
 
 }, 10, 4 );
+
+if ( is_rest() && ! empty( get_log_queue() ) ) {
+    GO_Impact_Send_Queue::send_queue();
+}
