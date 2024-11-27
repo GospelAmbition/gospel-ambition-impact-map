@@ -4,7 +4,11 @@ if ( !defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly.
 // build option array with log events
 add_action( 'zume_verify_encouragement_plan',  function( $user_id, $type, $subtype ){
 
-    dt_write_log( 'zume_verify_encouragement_plan' );
+    dt_write_log( 'action: zume_verify_encouragement_plan' );
+
+    if ( 'system' === $type ) {
+        return;
+    }
 
     $profile = zume_get_user_profile( $user_id );
 
@@ -18,7 +22,3 @@ add_action( 'zume_verify_encouragement_plan',  function( $user_id, $type, $subty
     ] );
 
 }, 10, 4 );
-
-if ( is_rest() && ! empty( get_log_queue() ) ) {
-    GO_Impact_Send_Queue::send_queue();
-}

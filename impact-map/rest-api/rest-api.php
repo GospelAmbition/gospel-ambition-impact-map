@@ -23,6 +23,7 @@ class GO_Impact_Map_Endpoints
             return false;
         }
 
+        dt_write_log(get_bloginfo( 'name' ));
         dt_write_log(__METHOD__);
         dt_write_log($logs);
 
@@ -102,8 +103,10 @@ class GO_Impact_Map_Endpoints
                 'language_code' => $v['language_code'] ?? 'en',
             ];
             GO_Impact_Map_Insert::insert( $args );
+
         }
 
+        dt_write_log( __METHOD__ . ' END' );
         return true;
     }
     

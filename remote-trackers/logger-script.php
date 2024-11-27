@@ -2,13 +2,13 @@
 if ( !defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly.
 
 add_action( 'wp_head', 'go_url_logger' );
-add_action( 'zume_head', 'go_url_logger' );
+// add_action( 'zume_head', 'go_url_logger' );
 function go_url_logger(){
     // page load logger
     do_action( 'go_log_trigger' );
 
     // lazy load queue
-    if ( ! empty( get_log_queue() ) ) {
+    if ( ! empty( GO_Impact_Map_Queue::get_queue() ) ) {
         dt_write_log('send_queue');
         ?>
         <script>
