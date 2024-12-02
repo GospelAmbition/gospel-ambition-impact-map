@@ -2700,9 +2700,11 @@ class Zume_Funnel_App_Heatmap {
 
 
     public static function get_activity_list( $filters, $limit = false, $language_code = 'en' ) {
-        global $zume_languages_by_code;
+        
+        $zume_languages_by_code = impact_map_languages();
         $languages = [];
         $countries = [];
+        $types = [];
         $utc_time = new DateTime( 'now', new DateTimeZone( $filters['timezone'] ) );
         $timezone_offset = $utc_time->format( 'Z' );
 
@@ -2715,23 +2717,7 @@ class Zume_Funnel_App_Heatmap {
         foreach ( $activity_list as $record ) {
 
             // time string
-//            $time_string = self::_create_time_string( $record['time_end'], $timezone_offset );
             $time_string = self::_time_ago( $record['time_end'] );
-//            $time_string = '';
-//            dt_write_log($time_string);
-
-            // language
-//            $language_name = self::_create_in_language_string( $record, $zume_languages_by_code );
-
-            // location string
-//            $location_name = $record['label'];
-
-            // note and type data
-//            $note = self::_create_note_data( $record, $language_name, $location_name, $training_items );
-//            $note = $record['note'];
-//            if ( ! $note ) {
-//                continue;
-//            }
 
             $prepared_array = array(
                 'note' => $record['note'],
@@ -2771,10 +2757,9 @@ class Zume_Funnel_App_Heatmap {
             if ( ! isset( $zume_languages_by_code[$language_code] ) ) {
                 continue;
             }
-            $language = $zume_languages_by_code[$language_code];
-            $language_name = $language['name'];
-            if ( isset( $language['name'] )
-                && isset( $language_code )
+            $language_name = $zume_languages_by_code[$language_code];
+            // $language_name = $language['name'];
+            if ( isset( $language_code )
                 && ! isset( $languages[$language_name] )
             ) {
                 $languages[$language_name] = [
@@ -2826,13 +2811,6 @@ class Zume_Funnel_App_Heatmap {
 
         } // end foreach loop
 
-//        if ( empty( $list ) ) {
-//            return [
-//                'list' => [],
-//                'count' => 0,
-//            ];
-//        }
-
         if ( is_array( $countries ) ) {
             ksort( $countries );
         }
@@ -2851,7 +2829,7 @@ class Zume_Funnel_App_Heatmap {
             'types' => $types,
             'total' => $records,
         ];
-//        dt_write_log($array);
+
         return $array;
     }
 
@@ -2910,14 +2888,13 @@ class Zume_Funnel_App_Heatmap {
     }
 
     public static function get_activity_geojson( $language_code = 'en' ) {
-        global $zume_languages_by_code;
+        $languages_by_code = impact_map_languages();
         $list = self::query_activity_geojson( $language_code );
-//        dt_write_log($list);
+
         if ( empty( $list ) ) {
             $list = [];
         }
 
-//        $training_items = [];
         $countries = [];
         $languages = [];
         $types = [];
@@ -2925,11 +2902,6 @@ class Zume_Funnel_App_Heatmap {
 
         $features = [];
         foreach ( $list as $record ) {
-//            $note = self::_create_note_data( $record, '', '', $training_items );
-//            $note = $record['note'];
-//            if ( ! $note ) {
-//                continue;
-//            }
 
             // count country
             if ( isset( $record['country_code'] ) && !empty( $record['country_code'] ) && ! isset( $countries[$record['country_name']] ) ) {
@@ -2945,22 +2917,16 @@ class Zume_Funnel_App_Heatmap {
 
             // count language
             $language_code = $record['language_code'];
-            if ( ! isset( $zume_languages_by_code[$language_code] ) ) {
+            if ( ! isset( $languages_by_code[$language_code] ) ) {
                 continue;
             }
-            $language = $zume_languages_by_code[$language_code];
-//            dt_write_log($language);
-            $language_name = $language['name'];
-            if ( isset( $language['name'] )
-                && isset( $language_code )
-                && ! isset( $languages[$language_name] )
-            ) {
-                $languages[$language_name] = [
-                    'code' => $language_code,
-                    'name' => $language_name,
-                    'count' => 0,
-                ];
-            }
+            $language_name =  $languages_by_code[$language_code];
+            
+            $languages[$language_name] = [
+                'code' => $language_code,
+                'name' => $language_name,
+                'count' => 0,
+            ];
             if ( isset( $language_name ) ) {
                 $languages[$language_name]['count']++;
             }
@@ -3014,7 +2980,7 @@ class Zume_Funnel_App_Heatmap {
             'types' => $types,
             'total' => $records,
         );
-//dt_write_log($new_data);
+
         return $new_data;
     }
 
@@ -3090,7 +3056,7 @@ class Zume_Funnel_App_Heatmap {
                 FROM wp_dt_reports r
                 LEFT JOIN wp_dt_location_grid lg ON lg.grid_id=r.grid_id
                 LEFT JOIN wp_dt_location_grid lga0 ON lga0.grid_id=lg.admin0_grid_id
-                LEFT JOIN location_grid_names lgn ON lgn.grid_id=lg.grid_id AND lgn.language_code = '$language_code'
+                LEFT JOIN location_grid_names lgn ON lgn.grid_id=lg.grid_id AND lgn.language_code = 'en'
                 WHERE r.time_end > $time_end AND r.type != 'system'
                 ) as tb
                 WHERE tb.time_end > $time_end AND tb.time_end < $time_begin
@@ -3118,11 +3084,13 @@ class Zume_Funnel_App_Heatmap {
                 FROM wp_dt_reports r
                 LEFT JOIN wp_dt_location_grid lg ON lg.grid_id=r.grid_id
                 LEFT JOIN wp_dt_location_grid lga0 ON lga0.grid_id=lg.admin0_grid_id
-                LEFT JOIN location_grid_names lgn ON lgn.grid_id=lg.grid_id AND lgn.language_code = %s
+                LEFT JOIN location_grid_names lgn ON lgn.grid_id=lg.grid_id AND lgn.language_code = 'en'
                 WHERE r.time_end > %d AND r.time_end < %d AND r.type != 'system'
                 ) as tb
                 ORDER BY tb.time_end DESC
-                ", $language_code, $time_end, $language_code, $time_end, $time_begin), ARRAY_A );
+                ", $time_end, $time_begin), ARRAY_A );
+
+            
 
         return $results;
     }
@@ -3668,18 +3636,20 @@ class Zume_Funnel_App_Heatmap {
             'label' => $label,
         ];
 
-        $restricted = self::_persecuted_countries();
-
-        if ( in_array( $country_code, $restricted ) ) { // if persecuted country, reduce precision to 111km
-            $location['lng'] = round( $location['lng'], 1 );
-            $location['lat'] = round( $location['lat'], 1 );
-        } else {
-            // reduce lng to 1.1 km
-            $location['lng'] = round( $location['lng'], 2 );
-            $location['lat'] = round( $location['lat'], 2 );
-        }
-
         return $location;
+
+        // $restricted = self::_persecuted_countries();
+
+        // if ( in_array( $country_code, $restricted ) ) { // if persecuted country, reduce precision to 111km
+        //     $location['lng'] = round( $location['lng'], 1 );
+        //     $location['lat'] = round( $location['lat'], 1 );
+        // } else {
+        //     // reduce lng to 1.1 km
+        //     $location['lng'] = round( $location['lng'], 2 );
+        //     $location['lat'] = round( $location['lat'], 2 );
+        // }
+
+        // return $location;
     }
 
     public static function _persecuted_countries(): array {

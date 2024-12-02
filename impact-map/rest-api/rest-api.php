@@ -83,8 +83,8 @@ class GO_Impact_Map_Endpoints
         }
 
         foreach( $logs as $i => $v ) {
-            $logs[$i]['payload'] = $this->_create_string( $v );
             $logs[$i]['language_code'] = $this->_create_language_code( $v );
+            $logs[$i]['payload'] = $this->_create_string( $v );
         }
 
         foreach( $logs as $i => $v ) {
@@ -133,25 +133,33 @@ class GO_Impact_Map_Endpoints
         return $string;
 
     }
+    public function _add_language_string( $log ) {
+        $langauges = impact_map_languages();
+        $string = '';
+        if ( isset( $log['language_code'] ) && ! empty( $log['language_code'] ) && ! in_array( $log['language_code'], ['en', 'en_US', '' ] ) ) {
+            $string = ' in '.$langauges[$log['language_code']];
+        }
+        return $string;
+    }
     public function _strings_for_prayer_global( $log ) {
         $string = '';
         switch( $log['subtype'] ) {
 
             // PRAYER GLOBAL
             case 'prayer_for_location':
-                $string = 'Someone is praying for '.$log['label'].'.';
+                $string = 'Someone is praying for '.$log['label'].$this->_add_language_string( $log ).'.';
                 break;
             case 'prayer_person_location':
-                $string = 'Someone in '.$log['label'].' is praying for global disciple making movement.';
+                $string = 'Someone is praying for global disciple making movements'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
                 break;
             case 'created_custom_lap':
-                $string = 'Someone created a custom prayer lap to mobilize others to pray.';
+                $string = 'Someone created a custom prayer lap to mobilize others to pray'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
                 break;
             case 'lap_completed':
-                $string = 'One entire prayer lap around the world just completed.';
+                $string = 'One entire prayer lap around the world just completed'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
                 break;
             case 'pg_registered':
-                $string = 'Someone is joining prayer global.';
+                $string = 'Someone is joining prayer global'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
                 break;
              default:
                 $string = '';
@@ -165,10 +173,10 @@ class GO_Impact_Map_Endpoints
 
             // PRAYER TOOLS
             case 'pt_registered':
-                $string = 'Someone in '.$log['label'].' has joined a strategic prayer campaign.';
+                $string = 'Someone has joined a strategic prayer campaign'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
                 break;
             case 'recurring_signup':
-                $string = 'Someone in is praying for a strategic prayer campaign in '.$log['label'].'.';
+                $string = 'Someone is praying for a strategic prayer campaign in '.$log['label'].$this->_add_language_string( $log ).'. ('.$log['label'].')';
                 break;
             default:
                 $string = '';
@@ -181,13 +189,13 @@ class GO_Impact_Map_Endpoints
         $string = '';
         switch( $log['subtype'] ) {
             case 'software_downloaded':
-                $string = 'Someone in '.$log['label'].' has downloaded Disciple Tools.';
+                $string = 'Someone has downloaded Disciple Tools software. ('.$log['label'].')';
                 break;
             case 'demo_site_launched':
-                $string = 'Someone in '.$log['label'].' has launched a demo site.';
+                $string = 'Someone has launched a Disciple.Tools demo site. ('.$log['label'].')';
                 break;
             case 'site_report':
-                $string = 'Someone in '.$log['label'].' has submitted a site report.';
+                $string = 'Someone has reported using Disciple Tools for disciple making. ('.$log['label'].')';
                 break;
             default:
                 $string = '';
@@ -199,13 +207,13 @@ class GO_Impact_Map_Endpoints
         $string = '';
         switch( $log['subtype'] ) {
             case 'kt_registered':
-                $string = 'Someone is joining Kingdom Training.';
+                $string = 'Someone is joining Kingdom Training'.$this->_add_language_string( $log ).'.';
                 break;
             case 'kt_completed':
-                $string = 'Someone has completed Kingdom Training.';
+                $string = 'Someone has completed Kingdom Training'.$this->_add_language_string( $log ).'.';
                 break;
             case 'kt_lesson_completed':
-                $string = 'Someone has completed a lesson in Kingdom Training.';
+                $string = 'Someone has completed a lesson in Kingdom Training'.$this->_add_language_string( $log ).'.';
                 break;
             default:
                 $string = '';
@@ -230,42 +238,40 @@ class GO_Impact_Map_Endpoints
             case 'training heard':
             case 'coaching heard':
             case 'studying heard':
-                $string = 'Someone is '.$type.' Zume Training: '.$title.'. ('.$log['label'].')';
+                $string = 'Someone is '.$type.' "'.$title.'"'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
                 break;
 
             case 'training obeyed':
             case 'coaching obeyed':
-                $string = 'Someone reported that they obeyed "'.$title.'" in Zume. ('.$log['label'].')';
+                $string = 'Someone reported that they obeyed "'.$title.'" in Zume'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
                 break;
 
             case 'training shared':
             case 'coaching shared':
-                $string = 'Someone reported that they shared "'.$title.'" from Zume with someone else. ('.$log['label'].')';
+                $string = 'Someone reported that they shared "'.$title.'" with someone else'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
                 break;
 
             case 'training trained':
             case 'coaching trained':
-                $string = 'Someone reported that they trained someone else to share "'.$title.'". ('.$log['label'].')';
+                $string = 'Someone reported that they trained someone else to share "'.$title.'"'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
                 break;
 
             // ZUME - OTHER
             case 'host_completed':
-                $string = 'A trainee has completed their full training and practice of Zume. ('.$log['label'].')';
+                $string = 'A trainee has completed their full training and practice of Zume'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
                 break;
 
             case 'joined_friends_training':
-                $string = 'Someone joined someone elses training.';
+                $string = 'Someone joined someone elses training'.$this->_add_language_string( $log ).'.';
                 break;
-
             case 'joined_online_training':
-
-                $string = 'A trainee has completed their full training and practice of Zume. ('.$log['label'].')';
+                $string = 'A trainee has joined an online Zume training'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
                 break;
             case 'plan_created':
-                $string = 'A trainee has completed their full training and practice of Zume. ('.$log['label'].')';
+                $string = 'A trainee has has created a training plan for Zume'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
                 break;
             case 'registered':
-                $string = 'A trainee has completed their full training and practice of Zume. ('.$log['label'].')';
+                $string = 'A trainee has registered to begin Zume Training'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
                 break;
 
 
@@ -285,6 +291,15 @@ class GO_Impact_Map_Endpoints
             default:
                 break;
         }
+        return $string;
+    }
+    // built from zume_languages
+    public function _convert_locale_to_language_name( $locale ) {
+        $locale_name_array = impact_map_languages();
+        $string = '';
+        if ( isset( $locale_name_array[$locale] ) ) {
+            $string = ' in ' . $locale_name_array[$locale];
+        }   
         return $string;
     }
     // copied from global.php zume.training
@@ -773,9 +788,7 @@ class GO_Impact_Map_Endpoints
             return 'en';
         }
 
-        $lang_array = explode( '_', $log['language_code'] );
-
-        return $lang_array[0] ?? $log['language_code'];
+        return $log['language_code'];
     }
 
     public static function instance() {
@@ -795,6 +808,6 @@ class GO_Impact_Map_Endpoints
         }
         return $authorized;
     }
+   
 }
 GO_Impact_Map_Endpoints::instance();
-
