@@ -382,6 +382,7 @@ jQuery(document).ready(function(){
       `
         <option value="none">${mapObject.translation.all_types}</option>
         <option disabled>---</option>
+        <option value="" class="dd praying">${mapObject.translation.praying}: 0</option>
         <option value="" class="dd studying">${mapObject.translation.studying}: 0</option>
         <option value="" class="dd training">${mapObject.translation.training}: 0</option>
         <option value="" class="dd practicing">${mapObject.translation.practicing}: 0</option>
@@ -390,6 +391,7 @@ jQuery(document).ready(function(){
     )
     stats_list.empty().append(`
     <div>
+        <span class="stats praying">${mapObject.translation.praying}: 0</span><br>
         <span class="stats studying">${mapObject.translation.studying}: 0</span><br>
         <span class="stats training">${mapObject.translation.training}: 0</span><br>
         <span class="stats practicing">${mapObject.translation.practicing}: 0</span><br>

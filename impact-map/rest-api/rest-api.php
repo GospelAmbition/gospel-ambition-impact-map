@@ -46,6 +46,7 @@ class GO_Impact_Map_Endpoints
                     $row['lng'] = $row['longitude'];
                     $row['lat'] = $row['latitude'];
                     $row['level'] = $row['level_name'];
+                    $row['grid_id'] = $row['grid_id'];
                 }
             }
             else if ( isset( $v['location']['lng'] ) && ! empty( $v['location']['lng'] ) ) {
@@ -238,7 +239,7 @@ class GO_Impact_Map_Endpoints
             case 'training heard':
             case 'coaching heard':
             case 'studying heard':
-                $string = 'Someone is '.$type.' "'.$title.'"'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
+                $string = 'Someone is '.$type.' the Zume concept "'.$title.'"'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
                 break;
 
             case 'training obeyed':

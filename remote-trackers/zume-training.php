@@ -1,24 +1,50 @@
 <?php 
 if ( !defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly.
 
-// build option array with log events
-add_action( 'zume_verify_encouragement_plan',  function( $user_id, $type, $subtype ){
-
-    // dt_write_log( 'action: zume_verify_encouragement_plan' );
-
-    if ( 'system' === $type ) {
+add_action('zume_log', function( $args ) {
+    if ( in_array( $args['type'], ['system'] ) ) {
         return;
     }
 
-    $profile = zume_get_user_profile( $user_id );
-
     add_log_to_queue( [
         'post_type' => 'zume',
-        'type' => $type,
-        'subtype' => $subtype,
+        'type' => $args['type'],
+        'subtype' => $args['subtype'],
         'time' => time(),
-        'language_code' => $profile['language']['code'] ?? 'en',
-        'location' => $profile['location'] ?? ['ip' => get_ip_address_for_log()],
+        'language_code' => get_locale() ?? $args['language_code'] ?? 'en',
+        'location' => [ 'ip' => get_ip_address_for_log() ],
     ] );
 
-}, 10, 4 );
+    dt_write_log('zume_log');
+    dt_write_log( [
+        'post_type' => 'zume',
+        'type' => $args['type'],
+        'subtype' => $args['subtype'],
+        'time' => time(),
+        'language_code' => get_locale() ?? $args['language_code'] ?? 'en',
+        'location' => [ 'ip' => get_ip_address_for_log() ],
+    ]  );
+
+}, 10, 1 );
+
+add_action('zume_log_anonymous', function( $args ) {
+    add_log_to_queue( [
+        'post_type' => 'zume',
+        'type' => $args['type'],
+        'subtype' => $args['subtype'],
+        'time' => time(),
+        'language_code' => get_locale() ?? $args['language_code'] ?? 'en',
+        'location' => [ 'ip' => get_ip_address_for_log() ],
+    ] );
+
+    dt_write_log('zume_log_anonymous');
+    dt_write_log( [
+        'post_type' => 'zume',
+        'type' => $args['type'],
+        'subtype' => $args['subtype'],
+        'time' => time(),
+        'language_code' => get_locale() ?? $args['language_code'] ?? 'en',
+        'location' => [ 'ip' => get_ip_address_for_log() ],
+    ]  );
+
+}, 10, 1 );

@@ -26,6 +26,8 @@ function zume_map_translation_strings() : array {
         'training' => __( 'Training', 'zume' ),
         'practicing' => __( 'Practicing', 'zume' ),
         'coaching' => __( 'Coaching', 'zume' ),
+        'praying' => __( 'Praying', 'zume' ),
+
 
         'purpose_of_the_map' => __( 'Purpose of the Map', 'zume' ),
         'last100_hours' => __( 'The Last 100 Hours map shows the Holy Spirit moving his people to disciple making through Zúme around the world. The 100 hours begins now and covers activity over roughly the last 4 days.', 'zume' ),
