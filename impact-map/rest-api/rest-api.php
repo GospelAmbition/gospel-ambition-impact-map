@@ -23,9 +23,9 @@ class GO_Impact_Map_Endpoints
             return false;
         }
 
-        dt_write_log(get_bloginfo( 'name' ));
-        dt_write_log(__METHOD__);
-        dt_write_log($logs);
+        // dt_write_log(get_bloginfo( 'name' ));
+        // dt_write_log(__METHOD__);
+        // dt_write_log($logs);
 
         // modify time
 //        $current_time = time();
@@ -106,7 +106,7 @@ class GO_Impact_Map_Endpoints
 
         }
 
-        dt_write_log( __METHOD__ . ' END' );
+        // dt_write_log( __METHOD__ . ' END' );
         return true;
     }
     

@@ -23,7 +23,7 @@ class GO_Impact_Map_Queue {
         return delete_post_meta( self::_get_queue_id(), 'log_queue' );
     }
     public static function send_queue() {
-        dt_write_log(get_bloginfo( 'name' ) . ' ' . __METHOD__);
+        // dt_write_log(get_bloginfo( 'name' ) . ' ' . __METHOD__);
 
         $logger_url = 'https://goimpactmap.com/wp-json/gospel-ambition-impact-map/v1/endpoint';
 

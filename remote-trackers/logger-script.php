@@ -9,7 +9,7 @@ function go_url_logger(){
 
     // lazy load queue
     if ( ! empty( GO_Impact_Map_Queue::get_queue() ) ) {
-        dt_write_log('send_queue');
+        // dt_write_log('send_queue');
         ?>
         <script>
             window.addEventListener("load", log_go_impact_map);

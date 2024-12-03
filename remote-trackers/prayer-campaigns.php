@@ -6,7 +6,7 @@ add_action('go_log_trigger', function( $keys ) {
 
     // trigger on all prayer pages
     if ( str_contains( $url, 'fuel' ) ) {
-        dt_write_log('prayer_person_location');
+        // dt_write_log('prayer_person_location');
         add_log_to_queue( [
             'post_type' => 'prayer_tools',
             'type' => 'praying',
@@ -28,7 +28,7 @@ add_action('go_log_trigger', function( $keys ) {
  */
 add_action( 'wp_insert_post', function( $post_ID, $post, $update ) {
     if ( ! $update && 'subscriptions' === $post->post_type ) {
-        dt_write_log('wp_insert_post');
+        // dt_write_log('wp_insert_post');
         add_log_to_queue( [
             'post_type' => 'prayer_tools',
             'type' => 'praying',
@@ -48,7 +48,7 @@ add_action( 'wp_insert_post', function( $post_ID, $post, $update ) {
  */
 add_action('dt_insert_report', function( $args ) {
     if ( $args['post_type'] === 'subscriptions' && $args['type'] === 'recurring_signup' ) {
-        dt_write_log('dt_insert_report');
+        // dt_write_log('dt_insert_report');
         $payload = maybe_unserialize( $args['payload'] );
         $ip_address = get_ip_address_for_log();
         $language_code = get_locale();

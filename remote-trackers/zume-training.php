@@ -4,7 +4,7 @@ if ( !defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly.
 // build option array with log events
 add_action( 'zume_verify_encouragement_plan',  function( $user_id, $type, $subtype ){
 
-    dt_write_log( 'action: zume_verify_encouragement_plan' );
+    // dt_write_log( 'action: zume_verify_encouragement_plan' );
 
     if ( 'system' === $type ) {
         return;
