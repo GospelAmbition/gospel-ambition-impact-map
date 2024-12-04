@@ -48,12 +48,16 @@ class GO_Impact_Map_Endpoints
                     $row['level'] = $row['level_name'];
                     $row['grid_id'] = $row['grid_id'];
                 }
+                dt_write_log( 'if grid id' );
+                dt_write_log( $row );
             }
             else if ( isset( $v['location']['lng'] ) && ! empty( $v['location']['lng'] ) ) {
                 $row = $geocoder->get_grid_id_by_lnglat( $v['location']['lng'], $v['location']['lat'] );
                 if ( ! empty( $row ) ) {
                     $row['label'] = $geocoder->_format_full_name( $row );
                 }
+                dt_write_log( 'if lng lat' );
+                dt_write_log( $row );
             }
             else if ( isset( $v['location']['ip'] ) && ! empty( $v['location']['ip'] ) ) {
                 // test if ip address already been retrieved
@@ -70,6 +74,8 @@ class GO_Impact_Map_Endpoints
                         $ip_list[$v['location']['ip']] = $row;
                     }
                 }
+                dt_write_log( 'if ip' );
+                dt_write_log( $row );
 
             }
             else {
@@ -110,7 +116,7 @@ class GO_Impact_Map_Endpoints
         // dt_write_log( __METHOD__ . ' END' );
         return true;
     }
-    
+
     public function _create_string( $log ) {
 
        $string = '';
@@ -142,6 +148,13 @@ class GO_Impact_Map_Endpoints
         }
         return $string;
     }
+    /*
+        *  PRAYER GLOBAL
+        *  PRAYER TOOLS
+        *  DISCIPLE TOOLS
+        *  KINGDOM TRAINING
+        *  ZUME
+        */
     public function _strings_for_prayer_global( $log ) {
         $string = '';
         switch( $log['subtype'] ) {
@@ -166,7 +179,7 @@ class GO_Impact_Map_Endpoints
                 $string = '';
         }
 
-        return $string;   
+        return $string;
     }
     public function _strings_for_prayer_tools( $log ) {
         $string = '';
@@ -184,7 +197,7 @@ class GO_Impact_Map_Endpoints
                 break;
             }
 
-        return $string;   
+        return $string;
     }
     public function _strings_for_disciple_tools( $log ) {
         $string = '';
@@ -202,7 +215,7 @@ class GO_Impact_Map_Endpoints
                 $string = '';
         }
 
-        return $string;   
+        return $string;
     }
     public function _strings_for_kingdom_training( $log ) {
         $string = '';
@@ -220,7 +233,7 @@ class GO_Impact_Map_Endpoints
                 $string = '';
             }
 
-        return $string;   
+        return $string;
     }
     public function _strings_for_zume( $log ) {
         $string = '';
@@ -234,7 +247,7 @@ class GO_Impact_Map_Endpoints
         $type = $log['type'];
 
         switch( $type .' '. $value ) {
-            
+
             // ZUME - TRAINING
             case 'training heard':
             case 'coaching heard':
@@ -284,7 +297,24 @@ class GO_Impact_Map_Endpoints
                 $string = 'A trainee is starting session '.(int) $set_number.' of the Zume Training. ('.$log['label'].')';
                 break;
 
-            
+
+
+            case 'completed_3_month_plan':
+                $string = 'Someone completed their disciple making obedience plan with Zume. ('.$log['label'].')';
+                break;
+
+            case 'requested_a_coach':
+                $string = 'A Zume trainee requested a Zume coach for mentoring. ('.$log['label'].')';
+                break;
+
+            case 'plan_created':
+                $string = 'A Zume trainee created a training plan. ('.$log['label'].')';
+                break;
+
+            case 'connected_to_coach':
+                $string = 'A Zume trainee connected with a Zume coach for mentoring. ('.$log['label'].')';
+                break;
+
             case 'training_completed':
                 $string = 'Someone completed Zume Training. ('.$log['label'].')';
                 break;
@@ -300,12 +330,12 @@ class GO_Impact_Map_Endpoints
         $string = '';
         if ( isset( $locale_name_array[$locale] ) ) {
             $string = ' in ' . $locale_name_array[$locale];
-        }   
+        }
         return $string;
     }
     // copied from global.php zume.training
     public function zume_training_items( $item_number ): array {
-    
+
             $training_items = [
                 '1' => [
                     'key' => 1,
@@ -704,7 +734,7 @@ class GO_Impact_Map_Endpoints
                     'mawl' => true,
                 ],
             ];
-    
+
             $list = [];
             foreach ( $training_items as $training_item ) {
                 $index = $training_item['key'];
@@ -779,7 +809,7 @@ class GO_Impact_Map_Endpoints
                     ] : [],
                 ];
             }
-    
+
             return $list[$item_number] ?? [];
 
     }
@@ -809,6 +839,6 @@ class GO_Impact_Map_Endpoints
         }
         return $authorized;
     }
-   
+
 }
 GO_Impact_Map_Endpoints::instance();
