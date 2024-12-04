@@ -5,7 +5,7 @@ class GO_Impact_Map_Insert
     public static function insert( array $args, bool $save_hash = true, bool $duplicate_check = true )
     {
         // dt_write_log(get_bloginfo( 'name' ) . ' ' . __METHOD__);
-        
+
         global $wpdb;
         if ( !isset( $args['type'] ) ) {
             return false;
@@ -63,8 +63,8 @@ class GO_Impact_Map_Insert
             $args['payload'] = serialize( $args['payload'] );
         }
 
-        // dt_write_log(__METHOD__ . ' PRE-INSERT');
-        // dt_write_log($args);
+        dt_write_log(__METHOD__);
+        dt_write_log($args);
 
 
         $wpdb->insert(
