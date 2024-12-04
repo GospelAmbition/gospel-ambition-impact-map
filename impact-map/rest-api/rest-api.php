@@ -48,16 +48,16 @@ class GO_Impact_Map_Endpoints
                     $row['level'] = $row['level_name'];
                     $row['grid_id'] = $row['grid_id'];
                 }
-                dt_write_log( 'if grid id' );
-                dt_write_log( $row );
+                // dt_write_log( 'if grid id' );
+                // dt_write_log( $row );
             }
             else if ( isset( $v['location']['lng'] ) && ! empty( $v['location']['lng'] ) ) {
                 $row = $geocoder->get_grid_id_by_lnglat( $v['location']['lng'], $v['location']['lat'] );
                 if ( ! empty( $row ) ) {
                     $row['label'] = $geocoder->_format_full_name( $row );
                 }
-                dt_write_log( 'if lng lat' );
-                dt_write_log( $row );
+                // dt_write_log( 'if lng lat' );
+                // dt_write_log( $row );
             }
             else if ( isset( $v['location']['ip'] ) && ! empty( $v['location']['ip'] ) ) {
                 // test if ip address already been retrieved
@@ -74,8 +74,8 @@ class GO_Impact_Map_Endpoints
                         $ip_list[$v['location']['ip']] = $row;
                     }
                 }
-                dt_write_log( 'if ip' );
-                dt_write_log( $row );
+                // dt_write_log( 'if ip' );
+                // dt_write_log( $row );
 
             }
             else {
