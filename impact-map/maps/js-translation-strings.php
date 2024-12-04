@@ -17,6 +17,7 @@ function zume_map_translation_strings() : array {
         'last_100' => __( 'Last 100 Hours of Movement Activity', 'zume' ),
         'countries' => __( 'Countries', 'zume' ),
         'languages' => __( 'Languages', 'zume' ),
+        'all_projects' => __( 'All Projects', 'zume' ),
         'all_types' => __( 'All Types', 'zume' ),
         'all_countries' => __( 'All Countries', 'zume' ),
         'all_languages' => __( 'All Languages', 'zume' ),

@@ -83,7 +83,11 @@ jQuery(document).ready(function(){
         <div class="medium-3 cell">
             <div class="grid-x grid-padding-x" style="margin-top:10px;">
                 <div class="cell">
-
+                    <div>
+                        <select name="type" id="project-dropdown" class="input-filter">
+                            <option value="none">${mapObject.translation.all_projects}</option>
+                        </select>
+                    </div>
                     <div>
                         <select name="type" id="type-dropdown" class="input-filter">
                             <option value="none">${mapObject.translation.all_types}</option>

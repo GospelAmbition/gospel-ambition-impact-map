@@ -149,22 +149,24 @@ class GO_Impact_Map_Endpoints
         return $string;
     }
     /*
-        *  PRAYER GLOBAL
-        *  PRAYER TOOLS
-        *  DISCIPLE TOOLS
-        *  KINGDOM TRAINING
-        *  ZUME
-        */
+    *  PRAYER GLOBAL
+    *  PRAYER TOOLS
+    *  DISCIPLE TOOLS
+    *  KINGDOM TRAINING
+    *  ZUME
+    */
+
+    // PRAYER GLOBAL
     public function _strings_for_prayer_global( $log ) {
         $string = '';
         switch( $log['subtype'] ) {
 
             // PRAYER GLOBAL
             case 'prayer_for_location':
-                $string = 'Someone is praying for '.$log['label'].$this->_add_language_string( $log ).'.';
+                $string = 'A believer is praying for '.$log['label'].$this->_add_language_string( $log ).'.';
                 break;
             case 'prayer_person_location':
-                $string = 'Someone is praying for global disciple making movements'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
+                $string = 'A believer is praying for global disciple making movements'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
                 break;
             case 'created_custom_lap':
                 $string = 'Someone created a custom prayer lap to mobilize others to pray'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
@@ -173,7 +175,7 @@ class GO_Impact_Map_Endpoints
                 $string = 'One entire prayer lap around the world just completed'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
                 break;
             case 'pg_registered':
-                $string = 'Someone is joining prayer global'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
+                $string = 'Someone joined Prayer Global'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
                 break;
              default:
                 $string = '';
@@ -181,6 +183,7 @@ class GO_Impact_Map_Endpoints
 
         return $string;
     }
+    // PRAYER TOOLS
     public function _strings_for_prayer_tools( $log ) {
         $string = '';
         switch( $log['subtype'] ) {
@@ -190,7 +193,7 @@ class GO_Impact_Map_Endpoints
                 $string = 'Someone has joined a strategic prayer campaign'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
                 break;
             case 'recurring_signup':
-                $string = 'Someone is praying for a strategic prayer campaign in '.$log['label'].$this->_add_language_string( $log ).'. ('.$log['label'].')';
+                $string = 'A believer is praying for a strategic prayer campaign in'.$log['label'].$this->_add_language_string( $log ).'. ('.$log['label'].')';
                 break;
             default:
                 $string = '';
@@ -199,6 +202,7 @@ class GO_Impact_Map_Endpoints
 
         return $string;
     }
+    // DISCIPLE TOOLS
     public function _strings_for_disciple_tools( $log ) {
         $string = '';
         switch( $log['subtype'] ) {
@@ -217,6 +221,7 @@ class GO_Impact_Map_Endpoints
 
         return $string;
     }
+    // KINGDOM TRAINING
     public function _strings_for_kingdom_training( $log ) {
         $string = '';
         switch( $log['subtype'] ) {
@@ -235,6 +240,7 @@ class GO_Impact_Map_Endpoints
 
         return $string;
     }
+    // ZUME
     public function _strings_for_zume( $log ) {
         $string = '';
         [ $key, $value ] = explode( '_', $log['subtype'] );
@@ -271,52 +277,65 @@ class GO_Impact_Map_Endpoints
                 break;
 
             // ZUME - OTHER
-            case 'host_completed':
+            case 'training host_completed':
                 $string = 'A trainee has completed their full training and practice of Zume'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
                 break;
 
-            case 'joined_friends_training':
+            case 'training joined_friends_training':
                 $string = 'Someone joined someone elses training'.$this->_add_language_string( $log ).'.';
                 break;
-            case 'joined_online_training':
+            case 'training joined_online_training':
                 $string = 'A trainee has joined an online Zume training'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
                 break;
-            case 'plan_created':
+            case 'training plan_created':
                 $string = 'A trainee has has created a training plan for Zume'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
                 break;
-            case 'registered':
+            case 'training registered':
                 $string = 'A trainee has registered to begin Zume Training'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
                 break;
 
+            case 'training completed_3_month_plan':
+                $string = 'Someone completed their disciple making obedience plan with Zume'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
+                break;
 
+            case 'coaching requested_a_coach':
+                $string = 'A Zume trainee requested a Zume coach for mentoring'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
+                break;
+
+            case 'coaching connected_to_coach':
+                $string = 'A Zume trainee connected with a Zume coach for mentoring'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
+                break;
+
+            case 'training training_completed':
+                $string = 'Someone completed Zume Training'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
+                break;
 
             case 'training a':
             case 'training b':
             case 'training c':
                 [ $set_pre, $set_type, $set_number ] = explode( '_', $log['subtype'] );
-                $string = 'A trainee is starting session '.(int) $set_number.' of the Zume Training. ('.$log['label'].')';
+                $string = 'A trainee is starting session '.(int) $set_number.' of the Zume Training'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
                 break;
 
 
-
-            case 'completed_3_month_plan':
-                $string = 'Someone completed their disciple making obedience plan with Zume. ('.$log['label'].')';
+            case 'downloading guidebook_10':
+                $string = 'Someone downloaded the 10 session Zume Training guidebook'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
+                break;
+            case 'downloading guidebook_20':
+                $string = 'Someone downloaded the 20 session Zume Training guidebook'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
+                break;
+            case 'downloading guidebook_5':
+                $string = 'Someone downloaded the Zume Training guidebook'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
                 break;
 
-            case 'requested_a_coach':
-                $string = 'A Zume trainee requested a Zume coach for mentoring. ('.$log['label'].')';
+            case 'downloading powerpoint_10':
+                $string = 'Someone downloaded the 10 session Zume Training powerpoint'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
                 break;
-
-            case 'plan_created':
-                $string = 'A Zume trainee created a training plan. ('.$log['label'].')';
+            case 'downloading powerpoint_20':
+                $string = 'Someone downloaded the 20 session Zume Training powerpoint'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
                 break;
-
-            case 'connected_to_coach':
-                $string = 'A Zume trainee connected with a Zume coach for mentoring. ('.$log['label'].')';
-                break;
-
-            case 'training_completed':
-                $string = 'Someone completed Zume Training. ('.$log['label'].')';
+            case 'downloading powerpoint_5':
+                $string = 'Someone downloaded the Zume Training powerpoint'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
                 break;
 
             default:
