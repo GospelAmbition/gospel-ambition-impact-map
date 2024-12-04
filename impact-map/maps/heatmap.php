@@ -2700,10 +2700,11 @@ class Zume_Funnel_App_Heatmap {
 
 
     public static function get_activity_list( $filters, $limit = false, $language_code = 'en' ) {
-        
+
         $zume_languages_by_code = impact_map_languages();
         $languages = [];
         $countries = [];
+        $projects = [];
         $types = [];
         $utc_time = new DateTime( 'now', new DateTimeZone( $filters['timezone'] ) );
         $timezone_offset = $utc_time->format( 'Z' );
@@ -2739,6 +2740,18 @@ class Zume_Funnel_App_Heatmap {
                     ];
                 }
                 $types[$record['type']]['count']++;
+            }
+            // count projects
+            if ( isset( $record['project'] ) && ! empty( $record['project'] ) )
+            {
+                if ( ! isset( $projects[$record['project']] ) ) {
+                    $projects[$record['project']] = [
+                        'code' => $record['project'],
+                        'name' => ucwords( $record['project'] ),
+                        'count' => 0,
+                    ];
+                }
+                $projects[$record['project']]['count']++;
             }
             // count country
             if ( isset( $record['country_code'] ) && !empty( $record['country_code'] ) && ! isset( $countries[$record['country_name']] ) ) {
@@ -2827,6 +2840,7 @@ class Zume_Funnel_App_Heatmap {
             'languages' => $languages,
             'languages_count' => count( $languages ),
             'types' => $types,
+            'projects' => $projects,
             'total' => $records,
         ];
 
@@ -2898,6 +2912,7 @@ class Zume_Funnel_App_Heatmap {
         $countries = [];
         $languages = [];
         $types = [];
+        $projects = [];
         $records = 0;
 
         $features = [];
@@ -2921,7 +2936,7 @@ class Zume_Funnel_App_Heatmap {
                 continue;
             }
             $language_name =  $languages_by_code[$language_code];
-            
+
             $languages[$language_name] = [
                 'code' => $language_code,
                 'name' => $language_name,
@@ -2944,11 +2959,26 @@ class Zume_Funnel_App_Heatmap {
                 $types[$record['type']]['count']++;
             }
 
+            // count projects
+            if ( isset( $record['project'] ) && ! empty( $record['project'] ) )
+            {
+                if ( ! isset( $projects[$record['project']] ) ) {
+                    $projects[$record['project']] = [
+                        'code' => $record['project'],
+                        'name' => ucwords( $record['project'] ),
+                        'count' => 0,
+                    ];
+                }
+                $projects[$record['project']]['count']++;
+            }
+
+
             $location = self::_create_location_precision( $record['lng'], $record['lat'], $record['label'], $record['country_code'] );
 
             $features[] = array(
                 'type' => 'Feature',
                 'properties' => [
+                    'project' => $record['project'],
                     'type' => $record['type'],
                     'language' => $record['language_code'],
                     'country' => $record['country_code'],
@@ -2978,6 +3008,7 @@ class Zume_Funnel_App_Heatmap {
             'languages' => $languages,
             'languages_count' => count( $languages ),
             'types' => $types,
+            'projects' => $projects,
             'total' => $records,
         );
 
@@ -3052,7 +3083,7 @@ class Zume_Funnel_App_Heatmap {
         $sql = "
                 SELECT *
                 FROM (
-                SELECT r.type, r.subtype, r.payload as note, r.value, r.lng, r.lat, r.label, r.time_end, lga0.name as country_name, lga0.country_code, r.language_code, lgn.full_name
+                SELECT r.post_type as project, r.type, r.subtype, r.payload as note, r.value, r.lng, r.lat, r.label, r.time_end, lga0.name as country_name, lga0.country_code, r.language_code, lgn.full_name
                 FROM wp_dt_reports r
                 LEFT JOIN wp_dt_location_grid lg ON lg.grid_id=r.grid_id
                 LEFT JOIN wp_dt_location_grid lga0 ON lga0.grid_id=lg.admin0_grid_id
@@ -3080,7 +3111,7 @@ class Zume_Funnel_App_Heatmap {
         $results = $wpdb->get_results( $wpdb->prepare( "
                 SELECT *
                 FROM (
-                SELECT r.type, r.subtype, r.payload as note, r.value, r.lng, r.lat, r.label, r.time_end, lga0.name as country_name, lga0.country_code, r.language_code, lgn.full_name
+                SELECT r.post_type as project, r.type, r.subtype, r.payload as note, r.value, r.lng, r.lat, r.label, r.time_end, lga0.name as country_name, lga0.country_code, r.language_code, lgn.full_name
                 FROM wp_dt_reports r
                 LEFT JOIN wp_dt_location_grid lg ON lg.grid_id=r.grid_id
                 LEFT JOIN wp_dt_location_grid lga0 ON lga0.grid_id=lg.admin0_grid_id
@@ -3089,9 +3120,6 @@ class Zume_Funnel_App_Heatmap {
                 ) as tb
                 ORDER BY tb.time_end DESC
                 ", $time_end, $time_begin), ARRAY_A );
-
-            
-
         return $results;
     }
 

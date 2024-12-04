@@ -222,6 +222,7 @@ jQuery(document).ready(function(){
         load_countries_dropdown()
         load_languages_dropdown()
         load_type_dropdown()
+        load_project_dropdown()
         load_title_stats()
 
       })
@@ -394,16 +395,16 @@ jQuery(document).ready(function(){
         `
     )
     stats_list.empty().append(`
-    <div>
-        <span class="stats praying">${mapObject.translation.praying}: 0</span><br>
-        <span class="stats studying">${mapObject.translation.studying}: 0</span><br>
-        <span class="stats training">${mapObject.translation.training}: 0</span><br>
-        <span class="stats practicing">${mapObject.translation.practicing}: 0</span><br>
-        <span class="stats coaching">${mapObject.translation.coaching}: 0</span><br>
-        <span>Total: ${points.total}</span>
-    </div>
-    <hr>
-    `)
+      <div>
+          <span class="stats praying">${mapObject.translation.praying}: 0</span><br>
+          <span class="stats studying">${mapObject.translation.studying}: 0</span><br>
+          <span class="stats training">${mapObject.translation.training}: 0</span><br>
+          <span class="stats practicing">${mapObject.translation.practicing}: 0</span><br>
+          <span class="stats coaching">${mapObject.translation.coaching}: 0</span><br>
+          <span>Total: ${points.total}</span>
+      </div>
+      <hr>
+      `)
     jQuery.each(points.types, function(i,v){
       add_selected = ''
       if ( v.code === window.selected_type ) {
@@ -416,6 +417,29 @@ jQuery(document).ready(function(){
   function load_title_stats() {
     jQuery('#country_count').html(window.activity_geojson.countries_count)
     jQuery('#languages_count').html(window.activity_geojson.languages_count)
+  }
+  function load_project_dropdown() {
+    let project_dropdown = jQuery('#project-dropdown')
+    let points = window.activity_geojson
+    window.selected_project = project_dropdown.val()
+
+    let add_selected = ''
+    project_dropdown.empty().append(
+      `
+        <option value="none">All Projects</option>
+        <option disabled>---</option>
+        <option value="" class="dd zume">Zume: 0</option>
+        <option value="" class="dd prayer_global">Prayer Global: 0</option>
+        `
+    )
+    jQuery.each(points.projects, function(i,v){
+      add_selected = ''
+      if ( v.code === window.selected_project ) {
+        add_selected = ' selected'
+      }
+      jQuery('.dd.'+v.code).val(v.code).html(`${v.name} (${v.count})`)
+      jQuery('.stats.'+v.code).html(`${v.name}: ${v.count}`)
+    })
   }
 })
 
