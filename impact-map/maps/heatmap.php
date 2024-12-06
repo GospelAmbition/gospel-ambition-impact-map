@@ -2700,8 +2700,10 @@ class Zume_Funnel_App_Heatmap {
 
 
     public static function get_activity_list( $filters, $limit = false, $language_code = 'en' ) {
-dt_write_log( __METHOD__ );
-dt_write_log( $filters );
+
+        // dt_write_log( __METHOD__ );
+        // dt_write_log( $filters );
+
         $zume_languages_by_code = impact_map_languages();
         $languages = [];
         $countries = [];
@@ -2871,29 +2873,12 @@ dt_write_log( $filters );
 
         } // end foreach loop
 
-        if ( is_array( $countries ) ) {
-            ksort( $countries );
-        }
-        if ( is_array( $projects ) ) {
-            ksort( $projects );
-        }
-        if ( is_array( $languages ) ) {
-            ksort( $languages );
-        }
-
         $c = array_chunk( $list, 250 );
         $array = [
             'list' => $c[0] ?? $list,
-            'count' => count( $list ),
-            'countries' => $countries,
-            'countries_count' => count( $countries ),
-            'languages' => $languages,
-            'languages_count' => count( $languages ),
-            'types' => $types,
-            'projects' => $projects,
-            'total' => $records,
         ];
-// dt_write_log($array);
+
+        // dt_write_log($array);
         return $array;
     }
 
@@ -2907,14 +2892,7 @@ dt_write_log( $filters );
         // @phpcs:enable
 
         foreach ( $activity_list as $record ) {
-
-            // time string
-//            $time_string = self::_create_time_string( $record['time_end'], $timezone_offset, true );
             $time_string = self::_time_ago( $record['time_end'] );
-//            $time_string = '';
-
-            // language
-//            $language_name = self::_create_in_language_string( $record, $zume_languages_by_code );
 
             // location string
             $location_name = $record['label'];
@@ -2967,31 +2945,31 @@ dt_write_log( $filters );
         foreach ( $list as $record ) {
 
             // count country
-            if ( isset( $record['country_code'] ) && !empty( $record['country_code'] ) && ! isset( $countries[$record['country_name']] ) ) {
+            if ( empty( $record['country_name'] ) ) {
+                $record['country_name'] = 'No Location Info';
+            }
+            if ( ! isset( $countries[$record['country_name']] ) ) {
                 $countries[$record['country_name']] = [
-                    'code' => $record['country_code'],
+                    'code' => $record['country_code'] ?? 'no_code',
                     'name' => $record['country_name'],
                     'count' => 0,
                 ];
             }
-            if ( isset( $record['country_code'] ) ) {
-                $countries[$record['country_name']]['count']++;
-            }
+            $countries[$record['country_name']]['count']++;
+
 
             // count language
-            $language_code = $record['language_code'];
-            if ( ! isset( $languages_by_code[$language_code] ) ) {
-                continue;
-            }
-            $language_name =  $languages_by_code[$language_code];
+            if ( isset( $languages_by_code[$record['language_code'] ] ) ) {
+                $language_name = $languages_by_code[$record['language_code']];
+                if ( ! isset( $languages[$record['language_code']] ) ) {
+                    $languages[$record['language_code']] = [
+                        'code' => $record['language_code'],
+                        'name' => $language_name,
+                        'count' => 0,
+                    ];
+                }
 
-            $languages[$language_name] = [
-                'code' => $language_code,
-                'name' => $language_name,
-                'count' => 0,
-            ];
-            if ( isset( $language_name ) ) {
-                $languages[$language_name]['count']++;
+                $languages[$record['language_code']]['count']++;
             }
 
             // count types

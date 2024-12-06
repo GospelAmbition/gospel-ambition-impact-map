@@ -67,14 +67,6 @@ jQuery(document).ready(function(){
             <div id="map-wrapper">
                 <div id='map'></div>
                 <div id="map-header">
-                  <button
-                      id="exit-btn"
-                      class="btn outline | d-flex gap--2 px-1 py--2 | absolute under left"
-                      aria-label="${mapObject.translation.close}"
-                      type="button"
-                  >
-                      <span>${mapObject.translation.close}</span><span class="icon z-icon-close"></span>
-                  </button>
                   <h3>${mapObject.translation.last_100}</h3>
                   ${mapObject.translation.countries}: <span id="country_count">0</span> | ${mapObject.translation.languages}: <span id="languages_count">0</span>
                 </div>
