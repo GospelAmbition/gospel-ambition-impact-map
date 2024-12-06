@@ -2700,7 +2700,8 @@ class Zume_Funnel_App_Heatmap {
 
 
     public static function get_activity_list( $filters, $limit = false, $language_code = 'en' ) {
-
+dt_write_log( __METHOD__ );
+dt_write_log( $filters );
         $zume_languages_by_code = impact_map_languages();
         $languages = [];
         $countries = [];
@@ -2725,6 +2726,7 @@ class Zume_Funnel_App_Heatmap {
                 'time' => $time_string,
                 'type' => $record['type'],
                 'language' => $record['language_code'],
+                'project' => $record['project'],
                 'country' => $record['country_code'],
             );
 
@@ -2788,35 +2790,80 @@ class Zume_Funnel_App_Heatmap {
             // APPLY FILTER
             // filter out non selected country
             // no filter set
-            if ( 'none' === $filters['country'] && 'none' === $filters['language'] && 'none' === $filters['type'] ) {
+            if ( 'none' === $filters['project'] && 'none' === $filters['country'] && 'none' === $filters['language'] && 'none' === $filters['type'] ) {
                 $list[] = $prepared_array;
             }
+
             // country set
-            else if ( $prepared_array['country'] === $filters['country'] && 'none' === $filters['language'] && 'none' === $filters['type'] ) {
+            else if ( 'none' === $filters['project'] && $prepared_array['country'] === $filters['country'] && 'none' === $filters['language'] && 'none' === $filters['type'] ) {
+                $list[] = $prepared_array;
+            }
+            // project set
+            else if ( $prepared_array['project'] === $filters['project'] && 'none' === $filters['country'] && 'none' === $filters['language'] && 'none' === $filters['type'] ) {
                 $list[] = $prepared_array;
             }
             // language set
-            else if ( 'none' === $filters['country'] && $prepared_array['language'] === $filters['language'] && 'none' === $filters['type'] ) {
+            else if ( 'none' === $filters['project'] && 'none' === $filters['country'] && $prepared_array['language'] === $filters['language'] && 'none' === $filters['type'] ) {
                 $list[] = $prepared_array;
             }
             // type set
-            else if ( 'none' === $filters['country'] && 'none' === $filters['language'] && $prepared_array['type'] === $filters['type'] ) {
+            else if ( 'none' === $filters['project'] && 'none' === $filters['country'] && 'none' === $filters['language'] && $prepared_array['type'] === $filters['type'] ) {
                 $list[] = $prepared_array;
             }
+
             // language & type set
-            else if ( 'none' === $filters['country'] && $prepared_array['language'] === $filters['language'] && $prepared_array['type'] === $filters['type'] ) {
+            else if ( 'none' === $filters['project'] && 'none' === $filters['country'] && $prepared_array['language'] === $filters['language'] && $prepared_array['type'] === $filters['type'] ) {
                 $list[] = $prepared_array;
             }
             // country & type set
-            else if ( $prepared_array['country'] === $filters['country'] && 'none' === $filters['language'] && $prepared_array['type'] === $filters['type'] ) {
+            else if ('none' === $filters['project'] &&  $prepared_array['country'] === $filters['country'] && 'none' === $filters['language'] && $prepared_array['type'] === $filters['type'] ) {
                 $list[] = $prepared_array;
             }
+            // project & type set
+            else if ( $prepared_array['project'] === $filters['project'] && 'none' === $filters['country'] && 'none' === $filters['language'] && $prepared_array['type'] === $filters['type'] ) {
+                $list[] = $prepared_array;
+            }
+
             // country & language set
-            else if ( $prepared_array['country'] === $filters['country'] && $prepared_array['language'] === $filters['language'] && 'none' === $filters['type'] ) {
+            else if ( 'none' === $filters['project'] && $prepared_array['country'] === $filters['country'] && $prepared_array['language'] === $filters['language'] && 'none' === $filters['type'] ) {
+                $list[] = $prepared_array;
+            }
+            // project & language set
+            else if ( $prepared_array['project'] === $filters['project'] && 'none' === $filters['country'] && $prepared_array['language'] === $filters['language'] && 'none' === $filters['type'] ) {
+                $list[] = $prepared_array;
+            }
+            // type & language set
+            else if ( 'none' === $filters['project'] && 'none' === $filters['country'] && $prepared_array['language'] === $filters['language'] && $prepared_array['type'] === $filters['type'] ) {
+                $list[] = $prepared_array;
+            }
+
+            // language & country set
+            else if ( 'none' === $filters['project'] && $prepared_array['country'] === $filters['country'] && $prepared_array['language'] === $filters['language'] && 'none' === $filters['type'] ) {
+                $list[] = $prepared_array;
+            }
+            // project & country set
+            else if ( $prepared_array['project'] === $filters['project'] && $prepared_array['country'] === $filters['country'] && 'none' === $filters['language'] && 'none' === $filters['type'] ) {
+                $list[] = $prepared_array;
+            }
+            // type & country set
+            else if ( 'none' === $filters['project'] && $prepared_array['country'] === $filters['country'] && 'none' === $filters['language'] && $prepared_array['type'] === $filters['type'] ) {
+                $list[] = $prepared_array;
+            }
+
+            // project & language & type set
+            else if ( $prepared_array['project'] === $filters['project'] && 'none' === $filters['country'] && $prepared_array['language'] === $filters['language'] && $prepared_array['type'] === $filters['type'] ) {
                 $list[] = $prepared_array;
             }
             // country & language & type set
-            else if ( $prepared_array['country'] === $filters['country'] && $prepared_array['language'] === $filters['language'] && $prepared_array['type'] === $filters['type'] ) {
+            else if ( 'none' === $filters['project'] && $prepared_array['country'] === $filters['country'] && $prepared_array['language'] === $filters['language'] && $prepared_array['type'] === $filters['type'] ) {
+                $list[] = $prepared_array;
+            }
+            // country & project & language set
+            else if ( $prepared_array['project'] === $filters['project'] && $prepared_array['country'] === $filters['country'] && $prepared_array['language'] === $filters['language'] && 'none' === $filters['type'] ) {
+                $list[] = $prepared_array;
+            }
+            // country & project & type set
+            else if ( $prepared_array['project'] === $filters['project'] && $prepared_array['country'] === $filters['country'] && 'none' === $filters['language'] && $prepared_array['type'] === $filters['type'] ) {
                 $list[] = $prepared_array;
             }
 
@@ -2826,6 +2873,9 @@ class Zume_Funnel_App_Heatmap {
 
         if ( is_array( $countries ) ) {
             ksort( $countries );
+        }
+        if ( is_array( $projects ) ) {
+            ksort( $projects );
         }
         if ( is_array( $languages ) ) {
             ksort( $languages );
@@ -2843,7 +2893,7 @@ class Zume_Funnel_App_Heatmap {
             'projects' => $projects,
             'total' => $records,
         ];
-
+// dt_write_log($array);
         return $array;
     }
 
@@ -2869,8 +2919,6 @@ class Zume_Funnel_App_Heatmap {
             // location string
             $location_name = $record['label'];
 
-            // note and type data
-//            $note = self::_create_note_data( $record, $language_name, $location_name, $training_items );
             $note = $record['note'];
             if ( ! $note ) {
                 continue;
@@ -2965,7 +3013,7 @@ class Zume_Funnel_App_Heatmap {
                 if ( ! isset( $projects[$record['project']] ) ) {
                     $projects[$record['project']] = [
                         'code' => $record['project'],
-                        'name' => ucwords( $record['project'] ),
+                        'name' => ucwords( str_replace( '_', ' ', $record['project'] ) ),
                         'count' => 0,
                     ];
                 }
@@ -3122,391 +3170,6 @@ class Zume_Funnel_App_Heatmap {
                 ", $time_end, $time_begin), ARRAY_A );
         return $results;
     }
-
-    public static function _create_note_data( $record, $language_name, $location_name, $training_items ) {
-        // studying - anonymous viewing of pieces content
-        // training - registration to training completion
-        // coaching - request for coach and all mawl and coaching effort
-        // practicing - all practitioner actions like reporting and training multiple groups
-
-        // new response
-        $data = [
-            'note' => $record['note'],
-            'type' => $record['type'],
-        ];
-        return $data;
-
-
-        // skip
-
-        $type = $record['type'];
-        $subtype = $record['subtype'];
-
-        $language_name_only = $language_name;
-        if ( 'English' == $language_name ) {
-            $language_name = '';
-        }
-        else {
-            $language_name = '('.$language_name.')';
-        }
-
-        if ( $record['value'] < 4 && $record['value'] > 0 ) {
-            $identity = __( 'trainee', 'zume' );
-        }
-        else if ( $record['value'] > 3 ) { // value = 4+
-            $identity = __( 'practitioner', 'zume' );
-        }
-        else { // value = 0
-            $identity = __( 'visitor', 'zume' );
-        }
-
-        $data = [
-            'note' => $type . ' ' . $subtype,
-            'type' => $type,
-        ];
-
-        switch ( $subtype ) {
-            case 'registered':
-                $data['note'] = sprintf( __( 'A new trainee from %1$s has registered!', 'zume' ), $location_name );
-                $data['type'] = 'training';
-                break;
-            case 'requested_a_coach':
-                $data['note'] = sprintf( __( 'A %1$s in %2$s has requested %3$s coaching!', 'zume' ), $identity, $location_name, $language_name_only );
-                $data['type'] = 'coaching';
-                break;
-            case 'plan_created':
-                $data['note'] = sprintf( __( 'New training group scheduled in %1$s. %2$s', 'zume' ), $location_name, $language_name );
-                $data['type'] = 'training';
-                break;
-
-            case 'set_a_1':
-            case 'set_a_2':
-            case 'set_a_3':
-            case 'set_a_4':
-            case 'set_a_5':
-            case 'set_a_6':
-            case 'set_a_7':
-            case 'set_a_8':
-            case 'set_a_9':
-            case 'set_a_10':
-
-            case 'set_b_1':
-            case 'set_b_2':
-            case 'set_b_3':
-            case 'set_b_4':
-            case 'set_b_5':
-            case 'set_b_6':
-            case 'set_b_7':
-            case 'set_b_8':
-            case 'set_b_9':
-            case 'set_b_10':
-            case 'set_b_11':
-            case 'set_b_12':
-            case 'set_b_13':
-            case 'set_b_14':
-            case 'set_b_15':
-            case 'set_b_16':
-            case 'set_b_17':
-            case 'set_b_18':
-            case 'set_b_19':
-            case 'set_b_20':
-
-            case 'set_c_1':
-            case 'set_c_2':
-            case 'set_c_3':
-            case 'set_c_4':
-            case 'set_c_5':
-                $elements = explode( '_', $subtype );
-                $data['note'] = sprintf( __( 'A %1$s is starting SESSION %2$s in %3$s. %4$s', 'zume' ), $identity, $elements[2], $location_name, $language_name );
-                $data['type'] = 'training';
-                break;
-            case '1_heard':
-            case '2_heard':
-            case '3_heard':
-            case '4_heard':
-            case '5_heard':
-            case '6_heard':
-            case '7_heard':
-            case '8_heard':
-            case '9_heard':
-            case '10_heard':
-            case '11_heard':
-            case '12_heard':
-            case '13_heard':
-            case '14_heard':
-            case '15_heard':
-            case '16_heard':
-            case '17_heard':
-            case '18_heard':
-            case '19_heard':
-            case '20_heard':
-            case '21_heard':
-            case '22_heard':
-            case '23_heard':
-            case '24_heard':
-            case '25_heard':
-            case '26_heard':
-            case '27_heard':
-            case '28_heard':
-            case '29_heard':
-            case '30_heard':
-            case '31_heard':
-            case '32_heard':
-            case '33_heard':
-                $key = str_replace( '_', '', substr( $subtype, 0, 2 ) );
-                $title = $training_items[$key]['video_title'];
-                $data['note'] = sprintf( __( 'A %1$s is studying "%2$s" in %3$s. %4$s', 'zume' ), $identity, $title, $location_name, $language_name );
-                if ( $record['value'] > 0 ) {
-                    $data['type'] = 'training';
-                } else {
-                    $data['type'] = 'studying';
-                }
-                break;
-            case '1_shared':
-            case '2_shared':
-            case '3_shared':
-            case '4_shared':
-            case '5_shared':
-            case '6_shared':
-            case '7_shared':
-            case '8_shared':
-            case '9_shared':
-            case '10_shared':
-            case '11_shared':
-            case '12_shared':
-            case '13_shared':
-            case '14_shared':
-            case '15_shared':
-            case '16_shared':
-            case '17_shared':
-            case '18_shared':
-            case '19_shared':
-            case '20_shared':
-            case '21_shared':
-            case '22_shared':
-            case '23_shared':
-            case '24_shared':
-            case '25_shared':
-            case '26_shared':
-            case '27_shared':
-            case '28_shared':
-            case '29_shared':
-            case '30_shared':
-            case '31_shared':
-            case '32_shared':
-            case '33_shared':
-                $key = str_replace( '_', '', substr( $subtype, 0, 2 ) );
-                $title = $training_items[$key]['video_title'];
-                $data['note'] = sprintf( __( 'A %1$s shared "%2$s" with someone in %3$s. %4$s', 'zume' ), $identity, $title, $location_name, $language_name );
-                $data['type'] = 'practicing';
-                break;
-            case '1_trained':
-            case '2_trained':
-            case '3_trained':
-            case '4_trained':
-            case '5_trained':
-            case '6_trained':
-            case '7_trained':
-            case '8_trained':
-            case '9_trained':
-            case '10_trained':
-            case '11_trained':
-            case '12_trained':
-            case '13_trained':
-            case '14_trained':
-            case '15_trained':
-            case '16_trained':
-            case '17_trained':
-            case '18_trained':
-            case '19_trained':
-            case '20_trained':
-            case '21_trained':
-            case '22_trained':
-            case '23_trained':
-            case '24_trained':
-            case '25_trained':
-            case '26_trained':
-            case '27_trained':
-            case '28_trained':
-            case '29_trained':
-            case '30_trained':
-            case '31_trained':
-            case '32_trained':
-            case '33_trained':
-                $key = str_replace( '_', '', substr( $subtype, 0, 2 ) );
-                $title = $training_items[$key]['video_title'];
-                $data['note'] = sprintf( __( 'A %1$s trained someone to use "%2$s" in %3$s. %4$s', 'zume' ), $identity, $title, $location_name, $language_name );
-                $data['type'] = 'practicing';
-                break;
-
-            case '1_modeling':
-            case '2_modeling':
-            case '3_modeling':
-            case '4_modeling':
-            case '5_modeling':
-            case '6_modeling':
-            case '7_modeling':
-            case '8_modeling':
-            case '9_modeling':
-            case '10_modeling':
-            case '11_modeling':
-            case '12_modeling':
-            case '13_modeling':
-            case '14_modeling':
-            case '15_modeling':
-            case '16_modeling':
-            case '17_modeling':
-            case '18_modeling':
-            case '19_modeling':
-            case '20_modeling':
-            case '21_modeling':
-            case '22_modeling':
-            case '23_modeling':
-            case '24_modeling':
-            case '25_modeling':
-            case '26_modeling':
-            case '27_modeling':
-            case '28_modeling':
-            case '29_modeling':
-            case '30_modeling':
-            case '31_modeling':
-            case '32_modeling':
-            case '33_modeling':
-                $key = str_replace( '_', '', substr( $subtype, 0, 2 ) );
-                $title = $training_items[$key]['video_title'];
-                $data['note'] = sprintf( __( 'A coach is modeling "%1$s" for a trainee in %2$s. %3$s', 'zume' ), $title, $location_name, $language_name );
-                $data['type'] = 'coaching';
-                break;
-
-            case '1_assisting':
-            case '2_assisting':
-            case '3_assisting':
-            case '4_assisting':
-            case '5_assisting':
-            case '6_assisting':
-            case '7_assisting':
-            case '8_assisting':
-            case '9_assisting':
-            case '10_assisting':
-            case '11_assisting':
-            case '12_assisting':
-            case '13_assisting':
-            case '14_assisting':
-            case '15_assisting':
-            case '16_assisting':
-            case '17_assisting':
-            case '18_assisting':
-            case '19_assisting':
-            case '20_assisting':
-            case '21_assisting':
-            case '22_assisting':
-            case '23_assisting':
-            case '24_assisting':
-            case '25_assisting':
-            case '26_assisting':
-            case '27_assisting':
-            case '28_assisting':
-            case '29_assisting':
-            case '30_assisting':
-            case '31_assisting':
-            case '32_assisting':
-            case '33_assisting':
-                $key = str_replace( '_', '', substr( $subtype, 0, 2 ) );
-                $title = $training_items[$key]['video_title'];
-                $data['note'] = sprintf( __( 'A coach is assisting with "%1$s" for a trainee in %2$s. %3$s', 'zume' ), $title, $location_name, $language_name );
-                $data['type'] = 'coaching';
-                break;
-
-            case '1_watching':
-            case '2_watching':
-            case '3_watching':
-            case '4_watching':
-            case '5_watching':
-            case '6_watching':
-            case '7_watching':
-            case '8_watching':
-            case '9_watching':
-            case '10_watching':
-            case '11_watching':
-            case '12_watching':
-            case '13_watching':
-            case '14_watching':
-            case '15_watching':
-            case '16_watching':
-            case '17_watching':
-            case '18_watching':
-            case '19_watching':
-            case '20_watching':
-            case '21_watching':
-            case '22_watching':
-            case '23_watching':
-            case '24_watching':
-            case '25_watching':
-            case '26_watching':
-            case '27_watching':
-            case '28_watching':
-            case '29_watching':
-            case '30_watching':
-            case '31_watching':
-            case '32_watching':
-            case '33_watching':
-                $key = str_replace( '_', '', substr( $subtype, 0, 2 ) );
-                $title = $training_items[$key]['video_title'];
-                $data['note'] = sprintf( __( 'A coach has entered a watching stage for a trainee regarding "%1$s" in %2$s. %3$s', 'zume' ), $title, $location_name, $language_name );
-                $data['type'] = 'coaching';
-                break;
-
-            case '1_launching':
-            case '2_launching':
-            case '3_launching':
-            case '4_launching':
-            case '5_launching':
-            case '6_launching':
-            case '7_launching':
-            case '8_launching':
-            case '9_launching':
-            case '10_launching':
-            case '11_launching':
-            case '12_launching':
-            case '13_launching':
-            case '14_launching':
-            case '15_launching':
-            case '16_launching':
-            case '17_launching':
-            case '18_launching':
-            case '19_launching':
-            case '20_launching':
-            case '21_launching':
-            case '22_launching':
-            case '23_launching':
-            case '24_launching':
-            case '25_launching':
-            case '26_launching':
-            case '27_launching':
-            case '28_launching':
-            case '29_launching':
-            case '30_launching':
-            case '31_launching':
-            case '32_launching':
-            case '33_launching':
-                $key = str_replace( '_', '', substr( $subtype, 0, 2 ) );
-                $title = $training_items[$key]['video_title'];
-                $data['note'] = sprintf( __( 'A coach has fully launched a trainee regarding "%1$s" in %2$s. %3$s', 'zume' ), $title, $location_name, $language_name );
-                $data['type'] = 'coaching';
-                break;
-
-            case 'updated_3_month':
-            case 'made_post_training_plan':
-                $data['note'] = sprintf( __( 'A %1$s created at post training plan in %2$s. %3$s', 'zume' ), $identity, $location_name, $language_name );
-                $data['type'] = 'practicing';
-                break;
-            default:
-                return false;
-        }
-
-        return $data;
-    }
-
 
     /**
      * Function limits counts to no higher than the location need. This keeps from inflating the counts up the levels.

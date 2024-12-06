@@ -5,27 +5,7 @@ if ( !defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly.
  *****************************/
 
 
-add_action('go_log_trigger', function( $keys ) {
-    $url = dt_get_url_path();
 
-    // trigger on all prayer pages
-    if ( str_starts_with( $url, 'prayer_app/global' ) || str_starts_with( $url, 'prayer_app/custom' ) ) {
-        // dt_write_log('prayer_person_location');
-        add_log_to_queue( [
-            'post_type' => 'prayer_global',
-            'type' => 'praying',
-            'subtype' => 'prayer_person_location',
-            'time' => time(),
-            'language_code' => get_locale(),
-            'location' => [
-                'ip' => get_ip_address_for_log(),
-            ],
-        ] );
-    }
-
-    return $keys;
-
-}, 10, 1 );
 
 /**
  * wp_insert_post
@@ -83,4 +63,23 @@ add_action('dt_insert_report', function( $args ) {
             ],
         ] );
     }
+}, 10, 1 );
+
+// trigger on all prayer pages
+add_action('go_log_trigger', function( ) {
+    $url = dt_get_url_path();
+    if ( str_starts_with( $url, 'prayer_app/global' ) || str_starts_with( $url, 'prayer_app/custom' ) ) {
+
+        add_log_to_queue( [
+            'post_type' => 'prayer_global',
+            'type' => 'praying',
+            'subtype' => 'prayer_person_location',
+            'time' => time(),
+            'language_code' => get_locale(),
+            'location' => [
+                'ip' => get_ip_address_for_log(),
+            ],
+        ] );
+    }
+
 }, 10, 1 );

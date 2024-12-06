@@ -258,12 +258,14 @@ jQuery(document).ready(function(){
     let country = jQuery('#country-dropdown').val()
     let language = jQuery('#language-dropdown').val()
     let type = jQuery('#type-dropdown').val()
+    let project = jQuery('#project-dropdown').val()
     return {
       bounds: { 'n_lat': window.current_bounds._ne.lat, 's_lat': window.current_bounds._sw.lat, 'e_lng': window.current_bounds._ne.lng, 'w_lng': window.current_bounds._sw.lng},
       timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
       country: country,
       language: language,
       type: type,
+      project: project,
       zoom: map.getZoom()
     }
   }
@@ -278,37 +280,69 @@ jQuery(document).ready(function(){
 
     jQuery.each( window.activity_geojson.features, function(i,v){
       // none set
-      if ( 'none' === data.type && 'none' === data.language && 'none' === data.country ) {
+      if ( 'none' === data.project && 'none' === data.type && 'none' === data.language && 'none' === data.country ) {
+        geojson.features.push(v)
+      }
+       // country set
+       else if ( 'none' === data.project && 'none' === data.type && 'none' === data.language && v.properties.country === data.country ) {
+        geojson.features.push(v)
+      }
+       // project set
+       else if ( v.properties.project === data.project && 'none' === data.type && 'none' === data.language && 'none' === data.country ) {
         geojson.features.push(v)
       }
       // type set
-      else if ( v.properties.type === data.type && 'none' === data.language && 'none' === data.country ) {
+      else if ( 'none' === data.project && v.properties.type === data.type && 'none' === data.language && 'none' === data.country ) {
         geojson.features.push(v)
       }
       // language set
-      else if ( 'none' === data.type && v.properties.language === data.language && 'none' === data.country ) {
+      else if ( 'none' === data.project && 'none' === data.type && v.properties.language === data.language && 'none' === data.country ) {
         geojson.features.push(v)
       }
-      // country set
-      else if ( 'none' === data.type && 'none' === data.language && v.properties.country === data.country ) {
-        geojson.features.push(v)
-      }
+
       // language & type set
-      else if ( v.properties.type === data.type && v.properties.language === data.language && 'none' === data.country ) {
+      else if ( 'none' === data.project && v.properties.type === data.type && v.properties.language === data.language && 'none' === data.country ) {
         geojson.features.push(v)
       }
       // country & type set
-      else if ( v.properties.type === data.type && 'none' === data.language && v.properties.country === data.country ) {
+      else if ( 'none' === data.project && v.properties.type === data.type && 'none' === data.language && v.properties.country === data.country ) {
         geojson.features.push(v)
       }
       // country & language set
-      else if ( 'none' === data.type && v.properties.language === data.language && v.properties.country === data.country ) {
+      else if ( 'none' === data.project && 'none' === data.type && v.properties.language === data.language && v.properties.country === data.country ) {
         geojson.features.push(v)
       }
+      // project & country set
+      else if ( v.properties.project === data.project && 'none' === data.type && 'none' === data.language && v.properties.country === data.country ) {
+        geojson.features.push(v)
+      }
+      // project & language set
+      else if ( v.properties.project === data.project && 'none' === data.type && v.properties.language === data.language && 'none' === data.country ) {
+        geojson.features.push(v)
+      }
+      // project & type set
+      else if ( v.properties.project === data.project && v.properties.type === data.type && 'none' === data.language && 'none' === data.country ) {
+        geojson.features.push(v)
+      }
+
+
       // country & language & type set
-      else if ( v.properties.type === data.type && v.properties.language === data.language && v.properties.country === data.country ) {
+      else if ( 'none' === data.project && v.properties.type === data.type && v.properties.language === data.language && v.properties.country === data.country ) {
         geojson.features.push(v)
       }
+      // project & country & type set
+      else if ( v.properties.project === data.project && v.properties.type === data.type && 'none' === data.language && v.properties.country === data.country ) {
+        geojson.features.push(v)
+      }
+      // project & country & language set
+      else if ( v.properties.project === data.project && 'none' === data.type && v.properties.language === data.language && v.properties.country === data.country ) {
+        geojson.features.push(v)
+      }
+      // project & language & type set
+      else if ( v.properties.project === data.project && v.properties.type === data.type && v.properties.language === data.language && 'none' === data.country ) {
+        geojson.features.push(v)
+      }
+
 
     })
 
