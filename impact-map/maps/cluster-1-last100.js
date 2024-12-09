@@ -158,9 +158,9 @@ jQuery(document).ready(function(){
           ['get', 'point_count'],
           '#00d9ff',
           20,
-          '#00aeff',
+          '#00d9ff',
           150,
-          '#90C741'
+          '#00d9ff'
         ],
         'circle-radius': [
           'step',
