@@ -338,6 +338,19 @@ class GO_Impact_Map_Endpoints
                 $string = 'Someone reported that they trained someone else to share "'.$title.'"'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
                 break;
 
+            case 'coaching modeling':
+                $string = 'A coach is modeling "'.$title.'"'.$this->_add_language_string( $log ).' for a trainee. ('.$log['label'].')';
+                break;
+            case 'coaching assisting':
+                $string = 'A coach has entered the assisting phase with "'.$title.'"'.$this->_add_language_string( $log ).' for a trainee. ('.$log['label'].')';
+                break;
+            case 'coaching watching':
+                $string = 'A coach has entered the watching phase with a trainee for "'.$title.'"'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
+                break;
+            case 'coaching launching':
+                $string = 'A coach is lauching a trainee for "'.$title.'"'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
+                break;
+
             // ZUME - OTHER
             case 'training host_completed':
                 $string = 'A trainee has completed their full training and practice of Zume'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
