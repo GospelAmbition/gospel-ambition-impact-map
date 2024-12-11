@@ -24,8 +24,8 @@ class GO_Impact_Map_Endpoints
         }
 
         // dt_write_log(get_bloginfo( 'name' ));
-        // dt_write_log(__METHOD__);
-        // dt_write_log($logs);
+        dt_write_log(__METHOD__);
+        dt_write_log($logs);
 
         // modify time
 //        $current_time = time();
@@ -36,8 +36,12 @@ class GO_Impact_Map_Endpoints
 
         // complete location information
         $ip_list = [];
+        $ip_other_list = [];
         $geocoder = new Location_Grid_Geocoder();
         foreach( $logs as $i => $v ) {
+
+            // PRIMARY LOCATION
+            $row = [];
             if ( isset( $v['location']['grid_id'] ) && ! empty( $v['location']['grid_id'] ) ) {
                 // convert grid id in to full lgm
                 $row = Disciple_Tools_Mapping_Queries::get_by_grid_id( $v['location']['grid_id'] );
@@ -48,38 +52,41 @@ class GO_Impact_Map_Endpoints
                     $row['level'] = $row['level_name'];
                     $row['grid_id'] = $row['grid_id'];
                 }
-                // dt_write_log( 'if grid id' );
-                // dt_write_log( $row );
             }
             else if ( isset( $v['location']['lng'] ) && ! empty( $v['location']['lng'] ) ) {
                 $row = $geocoder->get_grid_id_by_lnglat( $v['location']['lng'], $v['location']['lat'] );
+                $row = Disciple_Tools_Mapping_Queries::get_by_grid_id( $v['location']['grid_id'] );
                 if ( ! empty( $row ) ) {
                     $row['label'] = $geocoder->_format_full_name( $row );
+                    $row['lng'] = $row['longitude'];
+                    $row['lat'] = $row['latitude'];
+                    $row['level'] = $row['level_name'];
+                    $row['grid_id'] = $row['grid_id'];
                 }
-                // dt_write_log( 'if lng lat' );
-                // dt_write_log( $row );
             }
             else if ( isset( $v['location']['ip'] ) && ! empty( $v['location']['ip'] ) ) {
                 // test if ip address already been retrieved
                 if ( isset( $ip_list[$v['location']['ip']] ) ) {
+                    // already queried ip address
+                    dt_write_log( 'ip address already been retrieved' );
                     $row = $ip_list[$v['location']['ip']];
                 }
                 else {
+                    // lookup ip address
+                    dt_write_log( 'lookup ip address' );
                     $result = DT_Ipstack_API::geocode_ip_address( $v['location']['ip'] );
-                    if ( isset( $result['longitude'] ) ) {
-                        $row = DT_Ipstack_API::convert_ip_result_to_location_grid_meta( $result );
-                        if ( ! empty( $row ) ) {
-                            $row['label'] = $geocoder->_format_full_name( $row );
-                        }
+                    $lgm = DT_Ipstack_API::convert_ip_result_to_location_grid_meta( $result );
+                    $row = Disciple_Tools_Mapping_Queries::get_by_grid_id( $lgm['grid_id'] );
+                    if ( ! empty( $row ) ) {
+                        $row['label'] = $geocoder->_format_full_name( $row );
+                        $row['lng'] = $row['longitude'];
+                        $row['lat'] = $row['latitude'];
+                        $row['level'] = $row['level_name'];
+                        $row['grid_id'] = $row['grid_id'];
+
                         $ip_list[$v['location']['ip']] = $row;
                     }
                 }
-                // dt_write_log( 'if ip' );
-                // dt_write_log( $row );
-
-            }
-            else {
-                $row = [];
             }
 
             $logs[$i]['lng'] = $row['lng'] ?? null;
@@ -87,12 +94,65 @@ class GO_Impact_Map_Endpoints
             $logs[$i]['level'] = $row['level'] ?? null;
             $logs[$i]['label'] = $row['label'] ?? null;
             $logs[$i]['grid_id'] = $row['grid_id'] ?? null;
+            // END PRIMARY LOCATION
+
+
+            // ADDITIONAL LOCATION
+            if ( isset( $v['data']['location'] ) && ! empty( $v['data']['location'] ) ) {
+                $other_string_location = [];
+                $data_location = $v['data']['location'];
+                if ( isset( $data_location['grid_id'] ) && ! empty( $data_location['grid_id'] ) ) {
+                    // convert grid id in to full lgm
+                    $string_row = Disciple_Tools_Mapping_Queries::get_by_grid_id( $data_location['grid_id'] );
+                    if ( ! empty( $string_row ) ) {
+                        $other_string_location['name'] = $string_row['name'];
+                        $other_string_location['full_name'] = $geocoder->_format_full_name( $string_row );
+                        $elements = explode( ',', $other_string_location['full_name'] );
+                        $other_string_location['country'] = $elements[5] ?? $elements[4] ?? $elements[3] ?? $elements[2] ?? $elements[1] ?? $elements[0];
+                    }
+                }
+                else if ( isset( $data_location['lng'] ) && ! empty( $data_location['lng'] ) ) {
+                    $string_row = $geocoder->get_grid_id_by_lnglat( $data_location['lng'], $data_location['lat'] );
+                    if ( ! empty( $row ) ) {
+                        $other_string_location['name'] = $string_row['name'];
+                        $other_string_location['full_name'] = $geocoder->_format_full_name( $string_row );
+                        $elements = explode( ',', $other_string_location['full_name'] );
+                        $other_string_location['country'] = $elements[5] ?? $elements[4] ?? $elements[3] ?? $elements[2] ?? $elements[1] ?? $elements[0];
+                    }
+                }
+                else if ( isset( $data_location['ip'] ) && ! empty( $data_location['ip'] ) ) {
+                    // test if ip address already been retrieved
+                    if ( isset( $ip_other_list[$data_location['ip']] ) ) {
+                        $other_string_location = $ip_other_list[$data_location['ip']];
+                    }
+                    else {
+                        $result = DT_Ipstack_API::geocode_ip_address( $data_location['ip'] );
+                        if ( isset( $result['longitude'] ) ) {
+                            $lgm = DT_Ipstack_API::convert_ip_result_to_location_grid_meta( $result );
+                            $string_row = Disciple_Tools_Mapping_Queries::get_by_grid_id( $lgm['grid_id'] );
+
+                            if ( ! empty( $string_row ) ) {
+                                $other_string_location['name'] = $string_row['name'];
+                                $other_string_location['full_name'] = $geocoder->_format_full_name( $string_row );
+                                $elements = explode( ',', $other_string_location['full_name'] );
+                                $other_string_location['country'] = $elements[5] ?? $elements[4] ?? $elements[3] ?? $elements[2] ?? $elements[1] ?? $elements[0];
+
+                                $ip_other_list[$data_location['ip']] = $other_string_location;
+                            }
+                        }
+                    }
+                }
+                $logs[$i]['data']['location'] = $other_string_location;
+            }
+            // END ADDITIONAL LOCATION
         }
 
         foreach( $logs as $i => $v ) {
             $logs[$i]['language_code'] = $this->_create_language_code( $v );
             $logs[$i]['payload'] = $this->_create_string( $v );
         }
+
+        dt_write_log( $logs );
 
         foreach( $logs as $i => $v ) {
             $args = [
@@ -110,7 +170,6 @@ class GO_Impact_Map_Endpoints
                 'language_code' => $v['language_code'] ?? 'en',
             ];
             GO_Impact_Map_Insert::insert( $args );
-
         }
 
         // dt_write_log( __METHOD__ . ' END' );
@@ -163,10 +222,10 @@ class GO_Impact_Map_Endpoints
 
             // PRAYER GLOBAL
             case 'prayer_for_location':
-                $string = 'A believer is praying for '.$log['label'].$this->_add_language_string( $log ).'.';
+                $string = 'An intercessor is praying for '.$log['label'].$this->_add_language_string( $log ).'.';
                 break;
             case 'prayer_person_location':
-                $string = 'A believer is praying for global disciple making movements'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
+                $string = 'An intercessor is praying for global disciple making movements'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
                 break;
             case 'created_custom_lap':
                 $string = 'Someone created a custom prayer lap to mobilize others to pray'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
@@ -192,9 +251,12 @@ class GO_Impact_Map_Endpoints
             case 'pt_registered':
                 $string = 'Someone has joined a strategic prayer campaign'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
                 break;
+            case 'actively_praying':
             case 'recurring_signup':
-                $string = 'A believer is praying for a strategic prayer campaign in'.$log['label'].$this->_add_language_string( $log ).'. ('.$log['label'].')';
+                $title = ( isset( $log['data']['title'] ) ) ? ': "'.$log['data']['title'] . '"' : '';
+                $string = 'An intercessor is praying for a strategic prayer campaign'. $title .$this->_add_language_string( $log ).'. ('.$log['label'].')';
                 break;
+
             default:
                 $string = '';
                 break;

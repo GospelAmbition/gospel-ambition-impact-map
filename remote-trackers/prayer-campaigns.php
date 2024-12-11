@@ -48,10 +48,17 @@ add_action( 'wp_insert_post', function( $post_ID, $post, $update ) {
  */
 add_action('dt_insert_report', function( $args ) {
     if ( $args['post_type'] === 'subscriptions' && $args['type'] === 'recurring_signup' ) {
-        // dt_write_log('dt_insert_report');
+
         $payload = maybe_unserialize( $args['payload'] );
-        $ip_address = get_ip_address_for_log();
-        $language_code = get_locale();
+
+        $title = '';
+        if ( class_exists( 'DT_Campaign_Landing_Settings' ) ) {
+            $campaign_fields = DT_Campaign_Landing_Settings::get_campaign();
+            dt_write_log( $campaign_fields );
+
+            $title = $campaign_fields['title'] ?? '';
+        }
+
         if ( isset( $payload['selected_times'] ) ) {
             foreach( $payload['selected_times'] as $time ) {
                 add_log_to_queue( [
@@ -59,9 +66,12 @@ add_action('dt_insert_report', function( $args ) {
                     'type' => 'praying',
                     'subtype' => 'recurring_signup',
                     'time' => $time['time'],
-                    'language_code' => $language_code,
+                    'language_code' => get_locale(),
                     'location' => [
-                        'ip' => $ip_address,
+                        'ip' => get_ip_address_for_log(),
+                    ],
+                    'data' => [
+                        'title' => $title,
                     ],
                 ] );
             }

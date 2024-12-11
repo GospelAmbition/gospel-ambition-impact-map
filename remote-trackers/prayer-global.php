@@ -61,6 +61,11 @@ add_action('dt_insert_report', function( $args ) {
             'location' => [
                 'grid_id' => $args['grid_id'],
             ],
+            'data' => [
+                'location' => [
+                    'ip' => get_ip_address_for_log(),
+                ]
+            ],
         ] );
     }
 }, 10, 1 );
