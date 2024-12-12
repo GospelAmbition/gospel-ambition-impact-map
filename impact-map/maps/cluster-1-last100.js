@@ -456,6 +456,9 @@ jQuery(document).ready(function(){
         <option disabled>---</option>
         <option value="" class="dd zume">Zume: 0</option>
         <option value="" class="dd prayer_global">Prayer Global: 0</option>
+        <option value="" class="dd prayer_tools">Prayer Tools: 0</option>
+        <option value="" class="dd kingdom_training"></option>
+        <option value="" class="dd disciple_tools"></option>
         `
     )
     jQuery.each(points.projects, function(i,v){
