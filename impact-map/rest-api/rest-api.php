@@ -351,40 +351,6 @@ class GO_Impact_Map_Endpoints
                 $string = 'A coach is lauching a trainee for "'.$title.'"'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
                 break;
 
-            // ZUME - OTHER
-            case 'training host_completed':
-                $string = 'A trainee has completed their full training and practice of Zume'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
-                break;
-
-            case 'training joined_friends_training':
-                $string = 'Someone joined someone elses training'.$this->_add_language_string( $log ).'.';
-                break;
-            case 'training joined_online_training':
-                $string = 'A trainee has joined an online Zume training'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
-                break;
-            case 'training plan_created':
-                $string = 'A trainee has has created a training plan for Zume'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
-                break;
-            case 'training registered':
-                $string = 'A trainee has registered to begin Zume Training'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
-                break;
-
-            case 'training completed_3_month_plan':
-                $string = 'Someone completed their disciple making obedience plan with Zume'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
-                break;
-
-            case 'coaching requested_a_coach':
-                $string = 'A Zume trainee requested a Zume coach for mentoring'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
-                break;
-
-            case 'coaching connected_to_coach':
-                $string = 'A Zume trainee connected with a Zume coach for mentoring'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
-                break;
-
-            case 'training training_completed':
-                $string = 'Someone completed Zume Training'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
-                break;
-
             case 'training a':
             case 'training b':
             case 'training c':
@@ -392,30 +358,79 @@ class GO_Impact_Map_Endpoints
                 $string = 'A trainee is starting session '.(int) $set_number.' of the Zume Training'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
                 break;
 
+            default:
+                break;
+        }
 
-            case 'downloading guidebook_10':
+        switch( $log['subtype'] ) {
+
+            case 'guidebook_10':
                 $string = 'Someone downloaded the 10 session Zume Training guidebook'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
                 break;
-            case 'downloading guidebook_20':
+            case 'guidebook_20':
                 $string = 'Someone downloaded the 20 session Zume Training guidebook'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
                 break;
-            case 'downloading guidebook_5':
+            case 'guidebook_5':
                 $string = 'Someone downloaded the Zume Training guidebook'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
                 break;
 
-            case 'downloading powerpoint_10':
+            case 'powerpoint_10':
                 $string = 'Someone downloaded the 10 session Zume Training powerpoint'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
                 break;
-            case 'downloading powerpoint_20':
+            case 'powerpoint_20':
                 $string = 'Someone downloaded the 20 session Zume Training powerpoint'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
                 break;
-            case 'downloading powerpoint_5':
+            case 'powerpoint_5':
                 $string = 'Someone downloaded the Zume Training powerpoint'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
+                break;
+
+            case 'order_print_copy':
+                $string = 'Someone has ordered a printed version of Zume Training'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
+                break;
+
+            case 'join_community':
+                $string = 'Someone has joined the Zume Community'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
+                break;
+
+                // ZUME - OTHER
+            case 'host_completed':
+                $string = 'A trainee has completed their full training and practice of Zume'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
+                break;
+            case 'joined_friends_training':
+                $string = 'Someone joined someone elses training'.$this->_add_language_string( $log ).'.';
+                break;
+            case 'joined_online_training':
+                $string = 'A trainee has joined an online Zume training'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
+                break;
+            case 'made_post_training_plan':
+            case 'plan_created':
+                $string = 'A trainee has has created a training plan for Zume'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
+                break;
+            case 'registered':
+                $string = 'A trainee has registered to begin Zume Training'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
+                break;
+            case 'completed_3_month_plan':
+                $string = 'Someone completed their disciple making obedience plan with Zume'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
+                break;
+            case 'requested_a_coach':
+                $string = 'A Zume trainee requested a Zume coach for mentoring'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
+                break;
+            case 'connected_to_coach':
+                $string = 'A Zume trainee connected with a Zume coach for mentoring'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
+                break;
+            case 'training_completed':
+            case 'host_completed':
+                $string = 'Someone completed Zume Training'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
+                break;
+
+            case 'new_church':
+                $string = 'Someone has reported a new church planted'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
                 break;
 
             default:
                 break;
         }
+
         return $string;
     }
     // built from zume_languages
