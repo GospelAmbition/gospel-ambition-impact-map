@@ -112,11 +112,6 @@ jQuery(document).ready(function(){
             <div class="grid-x grid-padding-x" style="margin-top:10px;">
                 <div class="cell">
                     <div>
-                        <select name="type" id="project-dropdown" class="input-filter">
-                            <option value="none">${mapObject.translation.all_projects}</option>
-                        </select>
-                    </div>
-                    <div>
                         <select name="type" id="type-dropdown" class="input-filter">
                             <option value="none">${mapObject.translation.all_types}</option>
                         </select>
@@ -129,6 +124,11 @@ jQuery(document).ready(function(){
                     <div>
                         <select name="language" id="language-dropdown" class="input-filter">
                             <option value="none">${mapObject.translation.all_languages}</option>
+                        </select>
+                    </div>
+                     <div>
+                        <select name="type" id="project-dropdown" class="input-filter">
+                            <option value="none">${mapObject.translation.all_projects}</option>
                         </select>
                     </div>
                     <div id="stats-list"></div>
