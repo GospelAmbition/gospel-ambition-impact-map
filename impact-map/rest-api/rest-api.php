@@ -222,7 +222,7 @@ class GO_Impact_Map_Endpoints
 
             // PRAYER GLOBAL
             case 'prayer_for_location':
-                $string = 'An intercessor is praying for '.$log['label'].$this->_add_language_string( $log ).'.';
+                $string = $log['label'].' is receiving prayer.';
                 break;
             case 'prayer_person_location':
                 $string = 'An intercessor is praying for global disciple making movements'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
