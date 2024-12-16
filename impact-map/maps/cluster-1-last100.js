@@ -536,9 +536,9 @@ jQuery(document).ready(function(){
           map.getSource('layer-source-geojson-coaching').setData(window.activity_geojson_coaching);
         }
 
+        load_type_dropdown( )
         load_countries_dropdown()
         load_languages_dropdown()
-        load_type_dropdown()
         load_project_dropdown()
         load_title_stats()
 
@@ -594,18 +594,122 @@ jQuery(document).ready(function(){
       "type": "FeatureCollection",
       "features": []
     }
+    let praying = {
+      "type": "FeatureCollection",
+      "features": []
+    }
+    let studying = {
+      "type": "FeatureCollection",
+      "features": []
+    }
+    let training = {
+      "type": "FeatureCollection",
+      "features": []
+    }
+    let practicing = {
+      "type": "FeatureCollection",
+      "features": []
+    }
+    let coaching = {
+      "type": "FeatureCollection",
+      "features": []
+    }
 
-    jQuery.each( window.activity_geojson.features, function(i,v){
+    jQuery.each( window.activity_geojson_praying.features, function(i,v){
+       praying = _build_geojson(praying, v)
+     })
+     jQuery.each( window.activity_geojson_studying.features, function(i,v){
+      studying = _build_geojson(studying, v)
+    })
+    jQuery.each( window.activity_geojson_training.features, function(i,v){
+      training = _build_geojson(training, v)
+    })
+    jQuery.each( window.activity_geojson_practicing.features, function(i,v){
+      practicing = _build_geojson(practicing, v)
+    })
+    jQuery.each( window.activity_geojson_coaching.features, function(i,v){
+      coaching = _build_geojson(coaching, v)
+    })
+
+    // jQuery.each( window.activity_geojson.features, function(i,v){
+
+    //   // none set
+    //   if ( 'none' === data.project && 'none' === data.type && 'none' === data.language && 'none' === data.country ) {
+    //     geojson.features.push(v)
+    //   }
+    //    // country set
+    //    else if ( 'none' === data.project && 'none' === data.type && 'none' === data.language && v.properties.country === data.country ) {
+    //     geojson.features.push(v)
+    //   }
+    //    // project set
+    //    else if ( v.properties.project === data.project && 'none' === data.type && 'none' === data.language && 'none' === data.country ) {
+    //     geojson.features.push(v)
+    //   }
+    //   // type set
+    //   else if ( 'none' === data.project && v.properties.type === data.type && 'none' === data.language && 'none' === data.country ) {
+    //     geojson.features.push(v)
+    //   }
+    //   // language set
+    //   else if ( 'none' === data.project && 'none' === data.type && v.properties.language === data.language && 'none' === data.country ) {
+    //     geojson.features.push(v)
+    //   }
+
+    //   // language & type set
+    //   else if ( 'none' === data.project && v.properties.type === data.type && v.properties.language === data.language && 'none' === data.country ) {
+    //     geojson.features.push(v)
+    //   }
+    //   // country & type set
+    //   else if ( 'none' === data.project && v.properties.type === data.type && 'none' === data.language && v.properties.country === data.country ) {
+    //     geojson.features.push(v)
+    //   }
+    //   // country & language set
+    //   else if ( 'none' === data.project && 'none' === data.type && v.properties.language === data.language && v.properties.country === data.country ) {
+    //     geojson.features.push(v)
+    //   }
+    //   // project & country set
+    //   else if ( v.properties.project === data.project && 'none' === data.type && 'none' === data.language && v.properties.country === data.country ) {
+    //     geojson.features.push(v)
+    //   }
+    //   // project & language set
+    //   else if ( v.properties.project === data.project && 'none' === data.type && v.properties.language === data.language && 'none' === data.country ) {
+    //     geojson.features.push(v)
+    //   }
+    //   // project & type set
+    //   else if ( v.properties.project === data.project && v.properties.type === data.type && 'none' === data.language && 'none' === data.country ) {
+    //     geojson.features.push(v)
+    //   }
+
+
+    //   // country & language & type set
+    //   else if ( 'none' === data.project && v.properties.type === data.type && v.properties.language === data.language && v.properties.country === data.country ) {
+    //     geojson.features.push(v)
+    //   }
+    //   // project & country & type set
+    //   else if ( v.properties.project === data.project && v.properties.type === data.type && 'none' === data.language && v.properties.country === data.country ) {
+    //     geojson.features.push(v)
+    //   }
+    //   // project & country & language set
+    //   else if ( v.properties.project === data.project && 'none' === data.type && v.properties.language === data.language && v.properties.country === data.country ) {
+    //     geojson.features.push(v)
+    //   }
+    //   // project & language & type set
+    //   else if ( v.properties.project === data.project && v.properties.type === data.type && v.properties.language === data.language && 'none' === data.country ) {
+    //     geojson.features.push(v)
+    //   }
+
+
+    // })
+    function _build_geojson( geojson, v ){
       // none set
       if ( 'none' === data.project && 'none' === data.type && 'none' === data.language && 'none' === data.country ) {
         geojson.features.push(v)
       }
-       // country set
-       else if ( 'none' === data.project && 'none' === data.type && 'none' === data.language && v.properties.country === data.country ) {
+      // country set
+      else if ( 'none' === data.project && 'none' === data.type && 'none' === data.language && v.properties.country === data.country ) {
         geojson.features.push(v)
       }
-       // project set
-       else if ( v.properties.project === data.project && 'none' === data.type && 'none' === data.language && 'none' === data.country ) {
+      // project set
+      else if ( v.properties.project === data.project && 'none' === data.type && 'none' === data.language && 'none' === data.country ) {
         geojson.features.push(v)
       }
       // type set
@@ -659,15 +763,18 @@ jQuery(document).ready(function(){
       else if ( v.properties.project === data.project && v.properties.type === data.type && v.properties.language === data.language && 'none' === data.country ) {
         geojson.features.push(v)
       }
-
-
-    })
+      return geojson;
+    }
 
     var mapSource= map.getSource('layer-source-geojson');
     if(typeof mapSource === 'undefined') {
       load_geojson()
     } else {
-      map.getSource('layer-source-geojson').setData(geojson);
+      map.getSource('layer-source-geojson-praying').setData(praying);
+      map.getSource('layer-source-geojson-studying').setData(studying);
+      map.getSource('layer-source-geojson-training').setData(training);
+      map.getSource('layer-source-geojson-practicing').setData(practicing);
+      map.getSource('layer-source-geojson-coaching').setData(coaching);
     }
   }
 
@@ -727,7 +834,7 @@ jQuery(document).ready(function(){
       language_dropdown.append(`<option value="${v.code}" ${add_selected}>${v.name} (${v.count})</option>`)
     })
   }
-  function load_type_dropdown() {
+  function load_type_dropdown( ) {
     let type_dropdown = jQuery('#type-dropdown')
     let stats_list = jQuery('#stats-list')
     let points = window.activity_geojson
@@ -764,6 +871,70 @@ jQuery(document).ready(function(){
       jQuery('.dd.'+v.code).val(v.code).html(`${v.name} (${v.count})`)
       jQuery('.stats.'+v.code).html(`${v.name}: ${v.count}`)
     })
+
+    let ids = [
+      'clusters-praying',
+      'cluster-count-praying',
+      'unclustered-point-prayer',
+      'clusters-studying',
+      'cluster-count-studying',
+      'unclustered-point-studying',
+      'clusters-training',
+      'cluster-count-training',
+      'unclustered-point-training',
+      'clusters-practicing',
+      'cluster-count-practicing',
+      'unclustered-point-practicing',
+      'clusters-coaching',
+      'cluster-count-coaching',
+      'unclustered-point-coaching'
+    ]
+    jQuery.each(ids, function(i,v){
+      map.setLayoutProperty(v, 'visibility', 'none');
+    })
+    console.log(window.selected_type)
+    if ( 'praying' === window.selected_type ) {
+      map.setLayoutProperty('clusters-praying', 'visibility', 'visible');
+      map.setLayoutProperty('cluster-count-praying', 'visibility', 'visible');
+      map.setLayoutProperty('unclustered-point-prayer', 'visibility', 'visible');
+    }
+    else if ( 'studying' === window.selected_type ) {
+      map.setLayoutProperty('clusters-studying', 'visibility', 'visible');
+      map.setLayoutProperty('cluster-count-studying', 'visibility', 'visible');
+      map.setLayoutProperty('unclustered-point-studying', 'visibility', 'visible');
+    }
+    else if ( 'training' === window.selected_type ) {
+      map.setLayoutProperty('clusters-training', 'visibility', 'visible');
+      map.setLayoutProperty('cluster-count-training', 'visibility', 'visible');
+      map.setLayoutProperty('unclustered-point-training', 'visibility', 'visible');
+    }
+    else if ( 'practicing' === window.selected_type ) {
+      map.setLayoutProperty('clusters-practicing', 'visibility', 'visible');
+      map.setLayoutProperty('cluster-count-practicing', 'visibility', 'visible');
+      map.setLayoutProperty('unclustered-point-practicing', 'visibility', 'visible');
+    }
+    else if ( 'coaching' === window.selected_type ) {
+      map.setLayoutProperty('clusters-coaching', 'visibility', 'visible');
+      map.setLayoutProperty('cluster-count-coaching', 'visibility', 'visible');
+      map.setLayoutProperty('unclustered-point-coaching', 'visibility', 'visible');
+    }
+    else {
+      map.setLayoutProperty('clusters-praying', 'visibility', 'visible');
+      map.setLayoutProperty('cluster-count-praying', 'visibility', 'visible');
+      map.setLayoutProperty('unclustered-point-prayer', 'visibility', 'visible');
+      map.setLayoutProperty('clusters-studying', 'visibility', 'visible');
+      map.setLayoutProperty('cluster-count-studying', 'visibility', 'visible');
+      map.setLayoutProperty('unclustered-point-studying', 'visibility', 'visible');
+      map.setLayoutProperty('clusters-training', 'visibility', 'visible');
+      map.setLayoutProperty('cluster-count-training', 'visibility', 'visible');
+      map.setLayoutProperty('unclustered-point-training', 'visibility', 'visible');
+      map.setLayoutProperty('clusters-practicing', 'visibility', 'visible');
+      map.setLayoutProperty('cluster-count-practicing', 'visibility', 'visible');
+      map.setLayoutProperty('unclustered-point-practicing', 'visibility', 'visible');
+      map.setLayoutProperty('clusters-coaching', 'visibility', 'visible');
+      map.setLayoutProperty('cluster-count-coaching', 'visibility', 'visible');
+      map.setLayoutProperty('unclustered-point-coaching', 'visibility', 'visible');
+    }
   }
   function load_title_stats() {
     jQuery('#country_count').html(window.activity_geojson.countries_count)
