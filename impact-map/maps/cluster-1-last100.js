@@ -12,6 +12,26 @@ jQuery(document).ready(function(){
     "type": "FeatureCollection",
     "features": []
   }
+  window.activity_geojson_praying = {
+    "type": "FeatureCollection",
+    "features": []
+  }
+  window.activity_geojson_studying = {
+    "type": "FeatureCollection",
+    "features": []
+  }
+  window.activity_geojson_training = {
+    "type": "FeatureCollection",
+    "features": []
+  }
+  window.activity_geojson_practicing = {
+    "type": "FeatureCollection",
+    "features": []
+  }
+  window.activity_geojson_coaching = {
+    "type": "FeatureCollection",
+    "features": []
+  }
 
   // Add html and map
   let map_height = window.innerHeight
@@ -48,19 +68,35 @@ jQuery(document).ready(function(){
           #map {
               height: ${map_height}px !important;
           }
-           #map-header {
-                position: absolute;
-                top:10px;
-                left:10px;
-                z-index: 20;
-                background-color: white;
-                padding:1em;
-                opacity: 0.8;
-                border-radius: 5px;
-            }
-           .mapboxgl-ctrl-geocoder.mapboxgl-ctrl {
-                display: ${mobile_show};
-           }
+          #map-header {
+              position: absolute;
+              top:10px;
+              left:10px;
+              z-index: 20;
+              background-color: white;
+              padding:1em;
+              opacity: 0.8;
+              border-radius: 5px;
+          }
+          .mapboxgl-ctrl-geocoder.mapboxgl-ctrl {
+              display: ${mobile_show};
+          }
+
+          .stats.praying {
+              color: green;
+          }
+          .stats.studying {
+              color: orange;
+          }
+          .stats.training {
+              color: red;
+          }
+          .stats.practicing {
+              color: blue;
+          }
+          .stats.coaching {
+              color: purple;
+          }
       </style>
       <div class="grid-x">
         <div class="medium-9 cell">
@@ -140,27 +176,39 @@ jQuery(document).ready(function(){
   })
 
   function initialize_cluster_map() {
-    map.addSource('layer-source-contacts', {
+    // full geojson source
+    map.addSource('layer-source-geojson', {
       type: 'geojson',
       data: window.activity_geojson,
       cluster: true,
       clusterMaxZoom: 20,
       clusterRadius: 50
     });
+
+
+
+    // prayer geojson source and cluster
+    map.addSource('layer-source-geojson-praying', {
+      type: 'geojson',
+      data: window.activity_geojson_praying,
+      cluster: true,
+      clusterMaxZoom: 20,
+      clusterRadius: 50
+    });
     map.addLayer({
-      id: 'clusters',
+      id: 'clusters-praying',
       type: 'circle',
-      source: 'layer-source-contacts',
+      source: 'layer-source-geojson-praying',
       filter: ['has', 'point_count'],
       paint: {
         'circle-color': [
           'step',
           ['get', 'point_count'],
-          '#00d9ff',
+          'green',
           20,
-          '#00d9ff',
+          'green',
           150,
-          '#00d9ff'
+          'green'
         ],
         'circle-radius': [
           'step',
@@ -174,9 +222,9 @@ jQuery(document).ready(function(){
       }
     });
     map.addLayer({
-      id: 'cluster-count-contacts',
+      id: 'cluster-count-praying',
       type: 'symbol',
-      source: 'layer-source-contacts',
+      source: 'layer-source-geojson-praying',
       filter: ['has', 'point_count'],
       layout: {
         'text-field': '{point_count_abbreviated}',
@@ -185,17 +233,254 @@ jQuery(document).ready(function(){
       }
     });
     map.addLayer({
-      id: 'unclustered-point-contacts',
+      id: 'unclustered-point-prayer',
       type: 'circle',
-      source: 'layer-source-contacts',
-      filter: ['!', ['has', 'point_count']],
+      source: 'layer-source-geojson-praying',
+      filter: ['!', ['has', 'point_count'] ],
       paint: {
-        'circle-color': '#00d9ff',
+        'circle-color': 'green',
         'circle-radius':12,
         'circle-stroke-width': 1,
         'circle-stroke-color': '#fff'
       }
     });
+
+
+    // studying geojson source and cluster
+    map.addSource('layer-source-geojson-studying', {
+      type: 'geojson',
+      data: window.activity_geojson_studying,
+      cluster: true,
+      clusterMaxZoom: 20,
+      clusterRadius: 50
+    });
+    map.addLayer({
+      id: 'clusters-studying',
+      type: 'circle',
+      source: 'layer-source-geojson-studying',
+      filter: ['has', 'point_count'],
+      paint: {
+        'circle-color': [
+          'step',
+          ['get', 'point_count'],
+          'orange',
+          20,
+          'orange',
+          150,
+          'orange'
+        ],
+        'circle-radius': [
+          'step',
+          ['get', 'point_count'],
+          20,
+          100,
+          30,
+          750,
+          40
+        ]
+      }
+    });
+    map.addLayer({
+      id: 'cluster-count-studying',
+      type: 'symbol',
+      source: 'layer-source-geojson-studying',
+      filter: ['has', 'point_count'],
+      layout: {
+        'text-field': '{point_count_abbreviated}',
+        'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
+        'text-size': 12
+      }
+    });
+    map.addLayer({
+      id: 'unclustered-point-studying',
+      type: 'circle',
+      source: 'layer-source-geojson-studying',
+      filter: ['!', ['has', 'point_count'] ],
+      paint: {
+        'circle-color': 'orange',
+        'circle-radius':12,
+        'circle-stroke-width': 1,
+        'circle-stroke-color': '#fff'
+      }
+    });
+
+
+    // practicing geojson source and cluster
+    map.addSource('layer-source-geojson-training', {
+      type: 'geojson',
+      data: window.activity_geojson_training,
+      cluster: true,
+      clusterMaxZoom: 20,
+      clusterRadius: 50
+    });
+    map.addLayer({
+      id: 'clusters-training',
+      type: 'circle',
+      source: 'layer-source-geojson-training',
+      filter: ['has', 'point_count'],
+      paint: {
+        'circle-color': [
+          'step',
+          ['get', 'point_count'],
+          'red',
+          20,
+          'red',
+          150,
+          'red'
+        ],
+        'circle-radius': [
+          'step',
+          ['get', 'point_count'],
+          20,
+          100,
+          30,
+          750,
+          40
+        ]
+      }
+    });
+    map.addLayer({
+      id: 'cluster-count-training',
+      type: 'symbol',
+      source: 'layer-source-geojson-training',
+      filter: ['has', 'point_count'],
+      layout: {
+        'text-field': '{point_count_abbreviated}',
+        'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
+        'text-size': 12
+      }
+    });
+    map.addLayer({
+      id: 'unclustered-point-training',
+      type: 'circle',
+      source: 'layer-source-geojson-training',
+      filter: ['!', ['has', 'point_count'] ],
+      paint: {
+        'circle-color': 'red',
+        'circle-radius':12,
+        'circle-stroke-width': 1,
+        'circle-stroke-color': '#fff'
+      }
+    });
+
+
+    map.addSource('layer-source-geojson-practicing', {
+      type: 'geojson',
+      data: window.activity_geojson_practicing,
+      cluster: true,
+      clusterMaxZoom: 20,
+      clusterRadius: 50
+    });
+    map.addLayer({
+      id: 'clusters-practicing',
+      type: 'circle',
+      source: 'layer-source-geojson-practicing',
+      filter: ['has', 'point_count'],
+      paint: {
+        'circle-color': [
+          'step',
+          ['get', 'point_count'],
+          'blue',
+          20,
+          'blue',
+          150,
+          'blue'
+        ],
+        'circle-radius': [
+          'step',
+          ['get', 'point_count'],
+          20,
+          100,
+          30,
+          750,
+          40
+        ]
+      }
+    });
+    map.addLayer({
+      id: 'cluster-count-practicing',
+      type: 'symbol',
+      source: 'layer-source-geojson-practicing',
+      filter: ['has', 'point_count'],
+      layout: {
+        'text-field': '{point_count_abbreviated}',
+        'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
+        'text-size': 12
+      }
+    });
+    map.addLayer({
+      id: 'unclustered-point-practicing',
+      type: 'circle',
+      source: 'layer-source-geojson-practicing',
+      filter: ['!', ['has', 'point_count'] ],
+      paint: {
+        'circle-color': 'blue',
+        'circle-radius':12,
+        'circle-stroke-width': 1,
+        'circle-stroke-color': '#fff'
+      }
+    });
+
+
+    map.addSource('layer-source-geojson-coaching', {
+      type: 'geojson',
+      data: window.activity_geojson_coaching,
+      cluster: true,
+      clusterMaxZoom: 20,
+      clusterRadius: 50
+    });
+    map.addLayer({
+      id: 'clusters-coaching',
+      type: 'circle',
+      source: 'layer-source-geojson-coaching',
+      filter: ['has', 'point_count'],
+      paint: {
+        'circle-color': [
+          'step',
+          ['get', 'point_count'],
+          'purple',
+          20,
+          'purple',
+          150,
+          'purple'
+        ],
+        'circle-radius': [
+          'step',
+          ['get', 'point_count'],
+          20,
+          100,
+          30,
+          750,
+          40
+        ]
+      }
+    });
+    map.addLayer({
+      id: 'cluster-count-coaching',
+      type: 'symbol',
+      source: 'layer-source-geojson-coaching',
+      filter: ['has', 'point_count'],
+      layout: {
+        'text-field': '{point_count_abbreviated}',
+        'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
+        'text-size': 12
+      }
+    });
+    map.addLayer({
+      id: 'unclustered-point-coaching',
+      type: 'circle',
+      source: 'layer-source-geojson-coaching',
+      filter: ['!', ['has', 'point_count'] ],
+      paint: {
+        'circle-color': 'purple',
+        'circle-radius':12,
+        'circle-stroke-width': 1,
+        'circle-stroke-color': '#fff'
+      }
+    });
+
+
+
   }
 
   function load_geojson(){
@@ -205,10 +490,50 @@ jQuery(document).ready(function(){
         console.log('loaded_geojson')
         console.log(data)
         "use strict";
+
         window.activity_geojson = data
-        var mapSource= map.getSource('layer-source-contacts');
+        data.features.forEach( (v) => {
+          if ( 'praying' === v.properties.type ) {
+            window.activity_geojson_praying.features.push(v)
+          }
+          else if ( 'studying' === v.properties.type ) {
+            window.activity_geojson_studying.features.push(v)
+          }
+          else if ( 'training' === v.properties.type ) {
+            window.activity_geojson_training.features.push(v)
+          }
+          else if ( 'practicing' === v.properties.type ) {
+            window.activity_geojson_practicing.features.push(v)
+          }
+          else if ( 'coaching' === v.properties.type ) {
+            window.activity_geojson_coaching.features.push(v)
+          }
+        })
+
+        var mapSource = map.getSource('layer-source-geojson');
+        var mapSourcePraying = map.getSource('layer-source-geojson-praying');
+        var mapSourceStudying = map.getSource('layer-source-geojson-studying');
+        var mapSourceTraining = map.getSource('layer-source-geojson-training');
+        var mapSourcePracticing = map.getSource('layer-source-geojson-practicing');
+        var mapSourceCoaching = map.getSource('layer-source-geojson-coaching');
+
         if( typeof mapSource !== 'undefined') {
-          map.getSource('layer-source-contacts').setData(window.activity_geojson);
+          map.getSource('layer-source-geojson').setData(window.activity_geojson);
+        }
+        if( typeof mapSourcePraying !== 'undefined') {
+          map.getSource('layer-source-geojson-praying').setData(window.activity_geojson_praying);
+        }
+        if( typeof mapSourceStudying !== 'undefined') {
+          map.getSource('layer-source-geojson-studying').setData(window.activity_geojson_studying);
+        }
+        if( typeof mapSourceTraining !== 'undefined') {
+          map.getSource('layer-source-geojson-training').setData(window.activity_geojson_training);
+        }
+        if( typeof mapSourcePracticing !== 'undefined') {
+          map.getSource('layer-source-geojson-practicing').setData(window.activity_geojson_practicing);
+        }
+        if( typeof mapSourceCoaching !== 'undefined') {
+          map.getSource('layer-source-geojson-coaching').setData(window.activity_geojson_coaching);
         }
 
         load_countries_dropdown()
@@ -338,11 +663,11 @@ jQuery(document).ready(function(){
 
     })
 
-    var mapSource= map.getSource('layer-source-contacts');
+    var mapSource= map.getSource('layer-source-geojson');
     if(typeof mapSource === 'undefined') {
       load_geojson()
     } else {
-      map.getSource('layer-source-contacts').setData(geojson);
+      map.getSource('layer-source-geojson').setData(geojson);
     }
   }
 
