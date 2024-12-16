@@ -24,8 +24,8 @@ class GO_Impact_Map_Endpoints
         }
 
         // dt_write_log(get_bloginfo( 'name' ));
-        dt_write_log(__METHOD__);
-        dt_write_log($logs);
+        // dt_write_log(__METHOD__);
+        // dt_write_log($logs);
 
         // modify time
 //        $current_time = time();
@@ -68,12 +68,12 @@ class GO_Impact_Map_Endpoints
                 // test if ip address already been retrieved
                 if ( isset( $ip_list[$v['location']['ip']] ) ) {
                     // already queried ip address
-                    dt_write_log( 'ip address already been retrieved' );
+                    // dt_write_log( 'ip address already been retrieved' );
                     $row = $ip_list[$v['location']['ip']];
                 }
                 else {
                     // lookup ip address
-                    dt_write_log( 'lookup ip address' );
+                    // dt_write_log( 'lookup ip address' );
                     $result = DT_Ipstack_API::geocode_ip_address( $v['location']['ip'] );
                     $lgm = DT_Ipstack_API::convert_ip_result_to_location_grid_meta( $result );
                     $row = Disciple_Tools_Mapping_Queries::get_by_grid_id( $lgm['grid_id'] );
@@ -152,7 +152,7 @@ class GO_Impact_Map_Endpoints
             $logs[$i]['payload'] = $this->_create_string( $v );
         }
 
-        dt_write_log( $logs );
+        // dt_write_log( $logs );
 
         foreach( $logs as $i => $v ) {
             $args = [
@@ -222,7 +222,7 @@ class GO_Impact_Map_Endpoints
 
             // PRAYER GLOBAL
             case 'prayer_for_location':
-                $string = $log['label'].' is receiving prayer.';
+                $string = $log['label'].' is being covered in prayer.';
                 break;
             case 'prayer_person_location':
                 $string = 'An intercessor is praying for global disciple making movements'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
