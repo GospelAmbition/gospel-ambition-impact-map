@@ -631,74 +631,6 @@ jQuery(document).ready(function(){
       coaching = _build_geojson(coaching, v)
     })
 
-    // jQuery.each( window.activity_geojson.features, function(i,v){
-
-    //   // none set
-    //   if ( 'none' === data.project && 'none' === data.type && 'none' === data.language && 'none' === data.country ) {
-    //     geojson.features.push(v)
-    //   }
-    //    // country set
-    //    else if ( 'none' === data.project && 'none' === data.type && 'none' === data.language && v.properties.country === data.country ) {
-    //     geojson.features.push(v)
-    //   }
-    //    // project set
-    //    else if ( v.properties.project === data.project && 'none' === data.type && 'none' === data.language && 'none' === data.country ) {
-    //     geojson.features.push(v)
-    //   }
-    //   // type set
-    //   else if ( 'none' === data.project && v.properties.type === data.type && 'none' === data.language && 'none' === data.country ) {
-    //     geojson.features.push(v)
-    //   }
-    //   // language set
-    //   else if ( 'none' === data.project && 'none' === data.type && v.properties.language === data.language && 'none' === data.country ) {
-    //     geojson.features.push(v)
-    //   }
-
-    //   // language & type set
-    //   else if ( 'none' === data.project && v.properties.type === data.type && v.properties.language === data.language && 'none' === data.country ) {
-    //     geojson.features.push(v)
-    //   }
-    //   // country & type set
-    //   else if ( 'none' === data.project && v.properties.type === data.type && 'none' === data.language && v.properties.country === data.country ) {
-    //     geojson.features.push(v)
-    //   }
-    //   // country & language set
-    //   else if ( 'none' === data.project && 'none' === data.type && v.properties.language === data.language && v.properties.country === data.country ) {
-    //     geojson.features.push(v)
-    //   }
-    //   // project & country set
-    //   else if ( v.properties.project === data.project && 'none' === data.type && 'none' === data.language && v.properties.country === data.country ) {
-    //     geojson.features.push(v)
-    //   }
-    //   // project & language set
-    //   else if ( v.properties.project === data.project && 'none' === data.type && v.properties.language === data.language && 'none' === data.country ) {
-    //     geojson.features.push(v)
-    //   }
-    //   // project & type set
-    //   else if ( v.properties.project === data.project && v.properties.type === data.type && 'none' === data.language && 'none' === data.country ) {
-    //     geojson.features.push(v)
-    //   }
-
-
-    //   // country & language & type set
-    //   else if ( 'none' === data.project && v.properties.type === data.type && v.properties.language === data.language && v.properties.country === data.country ) {
-    //     geojson.features.push(v)
-    //   }
-    //   // project & country & type set
-    //   else if ( v.properties.project === data.project && v.properties.type === data.type && 'none' === data.language && v.properties.country === data.country ) {
-    //     geojson.features.push(v)
-    //   }
-    //   // project & country & language set
-    //   else if ( v.properties.project === data.project && 'none' === data.type && v.properties.language === data.language && v.properties.country === data.country ) {
-    //     geojson.features.push(v)
-    //   }
-    //   // project & language & type set
-    //   else if ( v.properties.project === data.project && v.properties.type === data.type && v.properties.language === data.language && 'none' === data.country ) {
-    //     geojson.features.push(v)
-    //   }
-
-
-    // })
     function _build_geojson( geojson, v ){
       // none set
       if ( 'none' === data.project && 'none' === data.type && 'none' === data.language && 'none' === data.country ) {
@@ -953,8 +885,8 @@ jQuery(document).ready(function(){
         <option value="" class="dd prayer_global">Prayer Global: 0</option>
         <option value="" class="dd prayer_tools">Prayer Tools: 0</option>
         <option value="" class="dd zume">Zume: 0</option>
-        <option value="" class="dd disciple_tools"></option>
         <option value="" class="dd kingdom_training"></option>
+        <option value="" class="dd disciple_tools"></option>
         `
     )
     jQuery.each(points.projects, function(i,v){
