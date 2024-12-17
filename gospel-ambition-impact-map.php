@@ -27,12 +27,12 @@ class GO_Impact_Context_Switcher {
         return self::$instance;
     }
     public function __construct(){
-        
+
         $site = get_bloginfo();
         if ( 'GO Impact Map' === $site ) {
             require_once( 'impact-map/loader.php' );
         } else {
-            
+
             $active_plugins = get_option( 'active_plugins' );
             require_once( 'remote-trackers/logger-queue.php' );
             require_once( 'remote-trackers/logger-script.php' );
@@ -46,10 +46,10 @@ class GO_Impact_Context_Switcher {
                 require_once( 'remote-trackers/prayer-global.php' );
             }
             // kingdom training
-            if ( in_array( 'prayer-global-porch/prayer-global-porch.php', $active_plugins ) ) {
-                require_once( 'remote-trackers/prayer-global.php' );
+            if ( 'Kingdom Training' === $site ) {
+                require_once( 'remote-trackers/kingdom-training.php' );
             }
-            // // disciple tools
+            // disciple tools
             if ( in_array( 'dt_usage/dt-usage.php', $active_plugins ) ) {
                 require_once( 'remote-trackers/disciple-tools.php' );
             }

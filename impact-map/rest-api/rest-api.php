@@ -168,6 +168,7 @@ class GO_Impact_Map_Endpoints
                 'grid_id' => $v['grid_id'],
                 'time_end' => $v['time'] ?? time(),
                 'language_code' => $v['language_code'] ?? 'en',
+
             ];
             GO_Impact_Map_Insert::insert( $args );
         }
@@ -288,13 +289,13 @@ class GO_Impact_Map_Endpoints
         $string = '';
         switch( $log['subtype'] ) {
             case 'kt_registered':
-                $string = 'Someone is joining Kingdom Training'.$this->_add_language_string( $log ).'.';
+                $string = 'Someone is joining Kingdom Training'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
                 break;
-            case 'kt_completed':
-                $string = 'Someone has completed Kingdom Training'.$this->_add_language_string( $log ).'.';
+            case 'course_completed':
+                $string = 'Someone completed the Kingdom Training course: "'.$log['data']['title'].'"'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
                 break;
-            case 'kt_lesson_completed':
-                $string = 'Someone has completed a lesson in Kingdom Training'.$this->_add_language_string( $log ).'.';
+            case 'lesson_completed':
+                $string = 'Someone completed the Kingdom Training lesson "'.$log['data']['title'].'" in the course "'.$log['data']['course'].'"'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
                 break;
             default:
                 $string = '';

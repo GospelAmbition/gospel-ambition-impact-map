@@ -12,7 +12,7 @@ function get_ip_address_for_log() {
 }
 
 class GO_Impact_Map_Queue {
-   
+
     public static function get_queue() {
         return get_post_meta( self::_get_queue_id(), 'log_queue' );
     }
@@ -37,6 +37,8 @@ class GO_Impact_Map_Queue {
 
         $body = json_decode( wp_remote_retrieve_body( wp_remote_post( $logger_url, $json_body ) ), true );
 
+        
+
         return $body;
     }
 
@@ -51,8 +53,8 @@ class GO_Impact_Map_Queue {
     public static function _setup_queue() {
         global $wpdb;
         $queue_id = 0;
-        
-        // insert special queue post type record 
+
+        // insert special queue post type record
         $wpdb->insert(
             $wpdb->prefix . 'posts',
             [
@@ -69,10 +71,10 @@ class GO_Impact_Map_Queue {
             ]
         );
         $queue_id = $wpdb->insert_id;
-        
+
         // store id to option table
         update_option( 'go_logger_queue_id', $queue_id );
-        
+
         return $queue_id;
     }
     public static function _get_ip_address_for_log() {
@@ -80,17 +82,17 @@ class GO_Impact_Map_Queue {
         if ( ! empty( $_SERVER['HTTP_CLIENT_IP'] ) )   //check ip from share internet
         {
             $ip = sanitize_text_field( wp_unslash( $_SERVER['HTTP_CLIENT_IP'] ) );
-        } 
+        }
         else if ( ! empty( $_SERVER['HTTP_X_FORWARDED_FOR'] ) )   //to check ip is pass from proxy
         {
             $ip = sanitize_text_field( wp_unslash( $_SERVER['HTTP_X_FORWARDED_FOR'] ) );
-        } 
+        }
         else if ( ! empty( $_SERVER['REMOTE_ADDR'] ) ) {
             $ip = sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) );
         }
-    
+
         $ip = apply_filters( 'get_real_ip_address', $ip );
-    
+
         return filter_var( $ip, FILTER_VALIDATE_IP );
     }
 
