@@ -14,7 +14,7 @@ add_action( 'user_register', function( $user_id ) {
                 'ip' => get_ip_address_for_log(),
             ],
         ]);
-        dt_write_log('registered');
+        // dt_write_log('registered');
     }
 });
 // log courses completed
@@ -35,9 +35,9 @@ add_action( "learndash_course_completed", function ( $data ) {
             'title' => get_the_title( $course_id ),
         ],
     ]);
-    dt_write_log('course completed');
-    dt_write_log( get_the_title( $course_id ) );
-    dt_write_log( $course_id );
+    // dt_write_log('course completed');
+    // dt_write_log( get_the_title( $course_id ) );
+    // dt_write_log( $course_id );
 
 }, 5, 1 );
 // log course completed
@@ -60,10 +60,10 @@ add_action( "learndash_lesson_completed", function ( $data ) {
             'course' => get_the_title( $course_id ),
         ],
     ]);
-    dt_write_log('lesson completed');
-    dt_write_log( get_the_title( $lesson_id ) );
-    dt_write_log( get_the_title( $course_id ) );
-    dt_write_log( $lesson_id );
+    // dt_write_log('lesson completed');
+    // dt_write_log( get_the_title( $lesson_id ) );
+    // dt_write_log( get_the_title( $course_id ) );
+    // dt_write_log( $lesson_id );
 
 }, 5, 1 );
 // log coaching requests
