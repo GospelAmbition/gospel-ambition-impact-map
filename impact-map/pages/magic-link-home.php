@@ -35,6 +35,20 @@ class GA_Impact_Map_Magic_Home_App extends DT_Magic_Url_Base
         $url = dt_get_url_path();
         if ( empty( $url ) && ! dt_is_rest() ) { // this filter is looking for the root site url without params.
 
+            /**
+             * Redirect to the Impact Map
+             */
+            $redirect_url = 'https://goimpactmap.com/zume_app/last100_hours';
+            if ( wp_redirect( $redirect_url ) ) {
+                exit;
+            }
+            /**
+             * End Redirect
+             */
+
+
+
+
             // register url and access
             add_action( 'template_redirect', [ $this, 'theme_redirect' ] );
             add_filter( 'dt_blank_access', function (){ return true;
@@ -98,6 +112,7 @@ class GA_Impact_Map_Magic_Home_App extends DT_Magic_Url_Base
     }
 
     public function header_style(){
+
         ?>
         <style>
             body {

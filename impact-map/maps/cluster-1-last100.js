@@ -33,6 +33,13 @@ jQuery(document).ready(function(){
     "features": []
   }
 
+  // colors
+  window.color_praying = '#FF3131'
+  window.color_studying = '#FFBF00'
+  window.color_training = '#98FB98'
+  window.color_practicing = '#7CFC00'
+  window.color_coaching = '#4CBB17'
+
   // Add html and map
   let map_height = window.innerHeight
   let mobile_show = 'inherit'
@@ -83,19 +90,55 @@ jQuery(document).ready(function(){
           }
 
           .stats.praying {
-              color: green;
+              float: left;
+              margin-left: 10px;
           }
           .stats.studying {
-              color: orange;
+              float: left;
+              margin-left: 10px;
           }
           .stats.training {
-              color: red;
+              float: left;
+              margin-left: 10px;
           }
           .stats.practicing {
-              color: blue;
+              float: left;
+              margin-left: 10px;
           }
           .stats.coaching {
-              color: purple;
+              float: left;
+              margin-left: 10px;
+          }
+
+          .color-block.praying {
+              background-color: ${window.color_praying};
+              width: 20px;
+              height: 20px;
+              float: left;
+          }
+          .color-block.studying {
+              background-color: ${window.color_studying};
+              width: 20px;
+              height: 20px;
+              float: left;
+          }
+          .color-block.training {
+              background-color: ${window.color_training};
+              width: 20px;
+              height: 20px;
+              float: left;
+          }
+          .color-block.practicing {
+              background-color: ${window.color_practicing};
+              width: 20px;
+              height: 20px;
+              float: left;
+          }
+          .color-block.coaching {
+              background-color: ${window.color_coaching};
+              width: 20px;
+              height: 20px;
+              float: left;
           }
       </style>
       <div class="grid-x">
@@ -204,11 +247,11 @@ jQuery(document).ready(function(){
         'circle-color': [
           'step',
           ['get', 'point_count'],
-          'green',
+          window.color_praying,
           20,
-          'green',
+          window.color_praying,
           150,
-          'green'
+          window.color_praying
         ],
         'circle-radius': [
           'step',
@@ -238,7 +281,7 @@ jQuery(document).ready(function(){
       source: 'layer-source-geojson-praying',
       filter: ['!', ['has', 'point_count'] ],
       paint: {
-        'circle-color': 'green',
+        'circle-color': window.color_praying,
         'circle-radius':12,
         'circle-stroke-width': 1,
         'circle-stroke-color': '#fff'
@@ -263,11 +306,11 @@ jQuery(document).ready(function(){
         'circle-color': [
           'step',
           ['get', 'point_count'],
-          'orange',
+          window.color_studying,
           20,
-          'orange',
+          window.color_studying,
           150,
-          'orange'
+          window.color_studying
         ],
         'circle-radius': [
           'step',
@@ -297,7 +340,7 @@ jQuery(document).ready(function(){
       source: 'layer-source-geojson-studying',
       filter: ['!', ['has', 'point_count'] ],
       paint: {
-        'circle-color': 'orange',
+        'circle-color': window.color_studying,
         'circle-radius':12,
         'circle-stroke-width': 1,
         'circle-stroke-color': '#fff'
@@ -322,11 +365,11 @@ jQuery(document).ready(function(){
         'circle-color': [
           'step',
           ['get', 'point_count'],
-          'red',
+          window.color_training,
           20,
-          'red',
+          window.color_training,
           150,
-          'red'
+          window.color_training
         ],
         'circle-radius': [
           'step',
@@ -356,7 +399,7 @@ jQuery(document).ready(function(){
       source: 'layer-source-geojson-training',
       filter: ['!', ['has', 'point_count'] ],
       paint: {
-        'circle-color': 'red',
+        'circle-color': window.color_training,
         'circle-radius':12,
         'circle-stroke-width': 1,
         'circle-stroke-color': '#fff'
@@ -380,11 +423,11 @@ jQuery(document).ready(function(){
         'circle-color': [
           'step',
           ['get', 'point_count'],
-          'blue',
+          window.color_practicing,
           20,
-          'blue',
+          window.color_practicing,
           150,
-          'blue'
+          window.color_practicing
         ],
         'circle-radius': [
           'step',
@@ -414,7 +457,7 @@ jQuery(document).ready(function(){
       source: 'layer-source-geojson-practicing',
       filter: ['!', ['has', 'point_count'] ],
       paint: {
-        'circle-color': 'blue',
+        'circle-color': window.color_practicing,
         'circle-radius':12,
         'circle-stroke-width': 1,
         'circle-stroke-color': '#fff'
@@ -438,11 +481,11 @@ jQuery(document).ready(function(){
         'circle-color': [
           'step',
           ['get', 'point_count'],
-          'purple',
+          window.color_coaching,
           20,
-          'purple',
+          window.color_coaching,
           150,
-          'purple'
+          window.color_coaching
         ],
         'circle-radius': [
           'step',
@@ -472,14 +515,12 @@ jQuery(document).ready(function(){
       source: 'layer-source-geojson-coaching',
       filter: ['!', ['has', 'point_count'] ],
       paint: {
-        'circle-color': 'purple',
+        'circle-color': window.color_coaching,
         'circle-radius':12,
         'circle-stroke-width': 1,
         'circle-stroke-color': '#fff'
       }
     });
-
-
 
   }
 
@@ -786,12 +827,13 @@ jQuery(document).ready(function(){
     )
     stats_list.empty().append(`
       <div>
-          <span class="stats praying">${mapObject.translation.praying}: 0</span><br>
-          <span class="stats studying">${mapObject.translation.studying}: 0</span><br>
-          <span class="stats training">${mapObject.translation.training}: 0</span><br>
-          <span class="stats practicing">${mapObject.translation.practicing}: 0</span><br>
-          <span class="stats coaching">${mapObject.translation.coaching}: 0</span><br>
-          <span>Total: ${points.total}</span>
+          <div class="color-block praying"></div> <span class="stats praying">${mapObject.translation.praying}: 0</span><br>
+          <div class="color-block studying"></div> <span class="stats studying">${mapObject.translation.studying}: 0</span><br>
+          <div class="color-block training"></div> <span class="stats training">${mapObject.translation.training}: 0</span><br>
+          <div class="color-block practicing"></div> <span class="stats practicing">${mapObject.translation.practicing}: 0</span><br>
+          <div class="color-block coaching"></div> <span class="stats coaching">${mapObject.translation.coaching}: 0</span><br>
+          <br>
+          <span>Total Activities: ${points.total}</span>
       </div>
       <hr>
       `)
