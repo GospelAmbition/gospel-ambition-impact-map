@@ -54,11 +54,11 @@ jQuery(document).ready(function(){
                 padding: 0;
             }
           #activity-wrapper {
-              height: ${window.innerHeight - 200}px !important;
+              height: ${window.innerHeight - 400}px !important;
               overflow: scroll;
           }
           #activity-list{
-              height: ${window.innerHeight - 200}px !important;
+              height: ${window.innerHeight - 450}px !important;
               overflow: scroll;
           }
           #activity-list li {
@@ -89,26 +89,11 @@ jQuery(document).ready(function(){
               display: ${mobile_show};
           }
 
-          .stats.praying {
+          .stats, .onscreen {
               float: left;
               margin-left: 10px;
           }
-          .stats.studying {
-              float: left;
-              margin-left: 10px;
-          }
-          .stats.training {
-              float: left;
-              margin-left: 10px;
-          }
-          .stats.practicing {
-              float: left;
-              margin-left: 10px;
-          }
-          .stats.coaching {
-              float: left;
-              margin-left: 10px;
-          }
+
 
           .color-block.praying {
               background-color: ${window.color_praying};
@@ -297,6 +282,8 @@ jQuery(document).ready(function(){
       clusterMaxZoom: 20,
       clusterRadius: 50
     });
+    console.log('geojson_studying')
+    console.log(window.activity_geojson_studying)
     map.addLayer({
       id: 'clusters-studying',
       type: 'circle',
@@ -504,9 +491,12 @@ jQuery(document).ready(function(){
       source: 'layer-source-geojson-coaching',
       filter: ['has', 'point_count'],
       layout: {
-        'text-field': '{point_count_abbreviated}',
-        'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
-        'text-size': 12
+      'text-field': '{point_count_abbreviated}',
+      'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
+      'text-size': 12,
+      },
+      paint: {
+          'text-color': '#FFF'
       }
     });
     map.addLayer({
@@ -538,15 +528,19 @@ jQuery(document).ready(function(){
             window.activity_geojson_praying.features.push(v)
           }
           else if ( 'studying' === v.properties.type ) {
+            // v.geometry.coordinates[0] = v.geometry.coordinates[0] + 0.45
             window.activity_geojson_studying.features.push(v)
           }
           else if ( 'training' === v.properties.type ) {
+            // v.geometry.coordinates[0] = v.geometry.coordinates[0] - 0.45
             window.activity_geojson_training.features.push(v)
           }
           else if ( 'practicing' === v.properties.type ) {
+            // v.geometry.coordinates[0] = v.geometry.coordinates[1] + 0.45
             window.activity_geojson_practicing.features.push(v)
           }
           else if ( 'coaching' === v.properties.type ) {
+            // v.geometry.coordinates[0] = v.geometry.coordinates[1] - 0.45
             window.activity_geojson_coaching.features.push(v)
           }
         })
@@ -582,6 +576,7 @@ jQuery(document).ready(function(){
         load_languages_dropdown()
         load_project_dropdown()
         load_title_stats()
+        load_map_activity()
 
       })
   }
@@ -604,7 +599,7 @@ jQuery(document).ready(function(){
       })
   }
   load_geojson()
-  load_map_activity()
+
 
   jQuery('.input-filter').on('change', function(e){
     load_map_activity()
@@ -755,6 +750,38 @@ jQuery(document).ready(function(){
     container.empty()
     let spinner = jQuery('.loading-spinner')
 
+
+    jQuery('#stats-list').empty().append(`
+      <div class="grid-x">
+        <div class="cell">
+          <strong>ACTIVITIES</strong>
+        </div>
+        <div class="cell medium-6">
+          <span><strong>Onscreen:</strong></span><br>
+          <div class="color-block praying"></div> <span class="onscreen praying">${mapObject.translation.praying}: 0</span><br>
+          <div class="color-block studying"></div> <span class="onscreen studying">${mapObject.translation.studying}: 0</span><br>
+          <div class="color-block training"></div> <span class="onscreen training">${mapObject.translation.training}: 0</span><br>
+          <div class="color-block practicing"></div> <span class="onscreen practicing">${mapObject.translation.practicing}: 0</span><br>
+          <div class="color-block coaching"></div> <span class="onscreen coaching">${mapObject.translation.coaching}: 0</span><br>
+        </div>
+        <div class="cell medium-6">
+          <span><strong>Total:</strong> ${window.activity_geojson.total}</span><br>
+          <div class="color-block praying"></div> <span class="stats praying">${mapObject.translation.praying}: 0</span><br>
+          <div class="color-block studying"></div> <span class="stats studying">${mapObject.translation.studying}: 0</span><br>
+          <div class="color-block training"></div> <span class="stats training">${mapObject.translation.training}: 0</span><br>
+          <div class="color-block practicing"></div> <span class="stats practicing">${mapObject.translation.practicing}: 0</span><br>
+          <div class="color-block coaching"></div> <span class="stats coaching">${mapObject.translation.coaching}: 0</span><br>
+        </div>
+      </div>
+      <hr>
+      `)
+    jQuery.each(window.activity_geojson.types, function(i,v){
+      jQuery('.stats.'+v.code).html(`${v.name}: ${v.count}`)
+    })
+    jQuery.each(window.activity_list.types, function(i,v){
+      jQuery('.onscreen.'+v.code).html(`${v.name}: ${v.count}`)
+    })
+
     jQuery.each( window.activity_list.list, function(i,v){
       if ( '' === v.note ) {
         return
@@ -769,6 +796,8 @@ jQuery(document).ready(function(){
     if ( window.activity_list.count > 250 ) {
       container.append(`<hr><li><strong>${window.activity_list.count - 250} ${mapObject.translation.additional_records}</strong></li><br><br>`)
     }
+
+
 
     spinner.removeClass('active')
   }
@@ -825,26 +854,6 @@ jQuery(document).ready(function(){
         <option value="" class="dd coaching">${mapObject.translation.coaching}: 0</option>
         `
     )
-    stats_list.empty().append(`
-      <div>
-          <div class="color-block praying"></div> <span class="stats praying">${mapObject.translation.praying}: 0</span><br>
-          <div class="color-block studying"></div> <span class="stats studying">${mapObject.translation.studying}: 0</span><br>
-          <div class="color-block training"></div> <span class="stats training">${mapObject.translation.training}: 0</span><br>
-          <div class="color-block practicing"></div> <span class="stats practicing">${mapObject.translation.practicing}: 0</span><br>
-          <div class="color-block coaching"></div> <span class="stats coaching">${mapObject.translation.coaching}: 0</span><br>
-          <br>
-          <span>Total Activities: ${points.total}</span>
-      </div>
-      <hr>
-      `)
-    jQuery.each(points.types, function(i,v){
-      add_selected = ''
-      if ( v.code === window.selected_type ) {
-        add_selected = ' selected'
-      }
-      jQuery('.dd.'+v.code).val(v.code).html(`${v.name} (${v.count})`)
-      jQuery('.stats.'+v.code).html(`${v.name}: ${v.count}`)
-    })
 
     let ids = [
       'clusters-praying',

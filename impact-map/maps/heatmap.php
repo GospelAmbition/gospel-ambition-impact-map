@@ -2714,6 +2714,11 @@ class Zume_Funnel_App_Heatmap {
 
         $training_items = [];
         $records = 0;
+        // $praying_count = 0;
+        // $studying_count = 0;
+        // $training_count = 0;
+        // $practicing_count = 0;
+        // $coaching_count = 0;
 
         $activity_list = self::query_activity_list( $filters, $language_code );
         $list = [];
@@ -2876,7 +2881,14 @@ class Zume_Funnel_App_Heatmap {
         $c = array_chunk( $list, 250 );
         $array = [
             'list' => $c[0] ?? $list,
+            'countries_count' => count( $countries ),
+            'languages_count' => count( $languages ),
+            'types_count' => count( $types ),
+            'projects_count' => count( $projects ),
+            'projects' => $projects,
+            'types' => $types,
         ];
+
 
         // dt_write_log($array);
         return $array;
