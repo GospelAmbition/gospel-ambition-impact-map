@@ -37,8 +37,8 @@ jQuery(document).ready(function(){
   window.color_praying = '#FF3131'
   window.color_studying = '#FFBF00'
   window.color_training = '#98FB98'
-  window.color_practicing = '#7CFC00'
-  window.color_coaching = '#4CBB17'
+  window.color_practicing = '#4CBB17'
+  window.color_coaching = '#355E3B'
 
   // Add html and map
   let map_height = window.innerHeight
