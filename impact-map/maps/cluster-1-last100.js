@@ -765,7 +765,7 @@ jQuery(document).ready(function(){
           <div class="color-block coaching"></div> <span class="onscreen coaching">${mapObject.translation.coaching}: 0</span><br>
         </div>
         <div class="cell medium-6">
-          <span><strong>Total:</strong> ${window.activity_geojson.total}</span><br>
+          <span><strong>Total</strong> (${window.activity_geojson.total})</span><br>
           <div class="color-block praying"></div> <span class="stats praying">${mapObject.translation.praying}: 0</span><br>
           <div class="color-block studying"></div> <span class="stats studying">${mapObject.translation.studying}: 0</span><br>
           <div class="color-block training"></div> <span class="stats training">${mapObject.translation.training}: 0</span><br>
