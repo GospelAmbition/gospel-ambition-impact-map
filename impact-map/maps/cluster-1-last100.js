@@ -838,8 +838,6 @@ jQuery(document).ready(function(){
   }
   function load_type_dropdown( ) {
     let type_dropdown = jQuery('#type-dropdown')
-    let stats_list = jQuery('#stats-list')
-    let points = window.activity_geojson
     window.selected_type = type_dropdown.val()
 
     let add_selected = ''
@@ -854,6 +852,15 @@ jQuery(document).ready(function(){
         <option value="" class="dd coaching">${mapObject.translation.coaching}: 0</option>
         `
     )
+
+    jQuery.each(window.activity_geojson.types, function(i,v){
+      add_selected = ''
+      if ( v.code === window.selected_type ) {
+        add_selected = ' selected'
+      }
+      jQuery('.dd.'+v.code).val(v.code).html(`${v.name} (${v.count})`)
+    })
+
 
     let ids = [
       'clusters-praying',
