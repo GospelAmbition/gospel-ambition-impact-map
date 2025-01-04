@@ -23,7 +23,7 @@ jobs:
       - name: Build project
         run: |
           mkdir gospel-ambition-impact-map
-          cp -r gospel-ambition-impact-map.php rest-api impact-map remote-trackers version-control.json gospel-ambition-impact-map/
+          cp -r gospel-ambition-impact-map.php impact-map remote-trackers version-control.json gospel-ambition-impact-map/
           zip -r gospel-ambition-impact-map.zip gospel-ambition-impact-map
       - name: Create Release
         id: create_release
