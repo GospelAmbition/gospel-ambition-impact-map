@@ -528,19 +528,19 @@ jQuery(document).ready(function(){
             window.activity_geojson_praying.features.push(v)
           }
           else if ( 'studying' === v.properties.type ) {
-            // v.geometry.coordinates[0] = v.geometry.coordinates[0] + 0.45
+            v.geometry.coordinates[0] = v.geometry.coordinates[0] + 0.002 // layer shift so that they don't overlap
             window.activity_geojson_studying.features.push(v)
           }
           else if ( 'training' === v.properties.type ) {
-            // v.geometry.coordinates[0] = v.geometry.coordinates[0] - 0.45
+            v.geometry.coordinates[0] = v.geometry.coordinates[0] - 0.002 // layer shift so that they don't overlap
             window.activity_geojson_training.features.push(v)
           }
           else if ( 'practicing' === v.properties.type ) {
-            // v.geometry.coordinates[0] = v.geometry.coordinates[1] + 0.45
+            v.geometry.coordinates[1] = v.geometry.coordinates[1] + 0.002 // layer shift so that they don't overlap
             window.activity_geojson_practicing.features.push(v)
           }
           else if ( 'coaching' === v.properties.type ) {
-            // v.geometry.coordinates[0] = v.geometry.coordinates[1] - 0.45
+            v.geometry.coordinates[1] = v.geometry.coordinates[1] - 0.002 // layer shift so that they don't overlap
             window.activity_geojson_coaching.features.push(v)
           }
         })
