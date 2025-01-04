@@ -10,7 +10,7 @@
  * GitHub Plugin URI: https://github.com/GospelAmbition/gospel-ambition-impact-map
  * Requires at least: 4.7.0
  * (Requires 4.7+ because of the integration of the REST API at 4.7 and the security requirements of this milestone version.)
- * Tested up to: 6.2
+ * Tested up to: 6.3
  *
  * @package Disciple_Tools
  * @link    https://github.com/GospelAmbition
