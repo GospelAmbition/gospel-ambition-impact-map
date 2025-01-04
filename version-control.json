@@ -1,7 +1,7 @@
 {
   "name": "Gospel Ambition - Impact Map",
-  "version": "0.1",
-  "last_updated": "2024-03",
+  "version": "0.2",
+  "last_updated": "2025-01",
   "author": "Disciple.Tools",
   "author_homepage": "https://gospelambition.org",
   "git_owner": "GospelAmbition",
@@ -23,8 +23,8 @@
   },
   "icon": "https://raw.githubusercontent.com/GospelAmbition/gospel-ambition-impact-map/master/documentation/icon.png",
   "sections": {
-    "description": "Kick start your Disciple.Tools plugin project with this template! This plugin is a collection of our best practices and code bases for creating Disciple.Tools plugins. ",
-    "installation": "(Required) You must have Disciple.Tools Theme installed before using this plugin. Once Disciple.Tools is installed, you can use the normal Plugin system to install the plugin.",
+    "description": "This plugin adds an Impact Map to the Disciple.Tools Theme. The Impact Map is a visual representation of the relationships between people and groups in your ministry. It is a powerful tool for understanding the connections between people and groups and for tracking the spread of the Gospel.",
+    "installation": "(Required) Install the Disciple.Tools Theme. (Recommended) Install the Disciple.Tools Theme Extensions plugin. (Recommended) Install the Disciple.Tools Theme Extensions - Impact Map plugin.",
     "changelog": ""
   }
 }

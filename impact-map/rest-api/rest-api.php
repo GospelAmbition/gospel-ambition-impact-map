@@ -23,17 +23,6 @@ class GO_Impact_Map_Endpoints
             return false;
         }
 
-        // dt_write_log(get_bloginfo( 'name' ));
-        // dt_write_log(__METHOD__);
-        // dt_write_log($logs);
-
-        // modify time
-//        $current_time = time();
-//
-//        foreach( $logs as $i => $v ) {
-//            $logs[$i]['time'] = $current_time + ( $current_time - (int) $v['time'] );
-//        }
-
         // complete location information
         $ip_list = [];
         $ip_other_list = [];
@@ -449,9 +438,9 @@ class GO_Impact_Map_Endpoints
             $training_items = [
                 '1' => [
                     'key' => 1,
-                    'title' => __( 'God Uses Ordinary People', 'zume' ), // pieces title & SEO title
-                    'description' => __( "You'll see how God uses ordinary people doing simple things to make a big impact.", 'zume' ),
-                    'video_title' => __( 'God Uses Ordinary People', 'zume' ), // video title & training title. simple
+                    'title' => __( 'God Uses Ordinary People', 'impact_map' ), // pieces title & SEO title
+                    'description' => __( "You'll see how God uses ordinary people doing simple things to make a big impact.", 'impact_map' ),
+                    'video_title' => __( 'God Uses Ordinary People', 'impact_map' ), // video title & training title. simple
                     'slug' => 'god-uses-ordinary-people',
                     'video' => 1,
                     'script' => 34,
@@ -461,9 +450,9 @@ class GO_Impact_Map_Endpoints
                 ],
                 '2' => [
                     'key'  => 2,
-                    'title' => __( 'Simple Definition of Disciple and Church', 'zume' ),
-                    'description' => __( 'Discover the essence of being a disciple, making a disciple, and what is the church.', 'zume' ),
-                    'video_title' => __( 'Disciples and the Church', 'zume' ),
+                    'title' => __( 'Simple Definition of Disciple and Church', 'impact_map' ),
+                    'description' => __( 'Discover the essence of being a disciple, making a disciple, and what is the church.', 'impact_map' ),
+                    'video_title' => __( 'Disciples and the Church', 'impact_map' ),
                     'slug' => 'definition-of-disciple-and-church',
                     'video' => 2,
                     'script' => 35,
@@ -473,9 +462,9 @@ class GO_Impact_Map_Endpoints
                 ],
                 '3' => [
                     'key' => 3,
-                    'title' => __( 'Spiritual Breathing is Hearing and Obeying God', 'zume' ),
-                    'description' => __( 'Being a disciple means we hear from God and we obey God.', 'zume' ),
-                    'video_title' => __( 'Hearing and Obeying God', 'zume' ),
+                    'title' => __( 'Spiritual Breathing is Hearing and Obeying God', 'impact_map' ),
+                    'description' => __( 'Being a disciple means we hear from God and we obey God.', 'impact_map' ),
+                    'video_title' => __( 'Hearing and Obeying God', 'impact_map' ),
                     'slug' => 'spiritual-breathing-is-hearing-and-obeying-god',
                     'video' => 3,
                     'script' => 36,
@@ -485,9 +474,9 @@ class GO_Impact_Map_Endpoints
                 ],
                 '4' => [
                     'key' => 4,
-                    'title' => __( 'S.O.A.P.S. Bible Study', 'zume' ),
-                    'description' => __( 'A tool for daily Bible study that helps you understand, obey, and share God’s Word.', 'zume' ),
-                    'video_title' => __( 'S.O.A.P.S. Bible Study', 'zume' ),
+                    'title' => __( 'S.O.A.P.S. Bible Study', 'impact_map' ),
+                    'description' => __( 'A tool for daily Bible study that helps you understand, obey, and share God’s Word.', 'impact_map' ),
+                    'video_title' => __( 'S.O.A.P.S. Bible Study', 'impact_map' ),
                     'slug' => 'soaps-bible-reading',
                     'video' => 4,
                     'script' => 37,
@@ -497,9 +486,9 @@ class GO_Impact_Map_Endpoints
                 ],
                 '5' => [
                     'key' => 5,
-                    'title' => __( 'Accountability Groups', 'zume' ),
-                    'description' => __( 'A tool for two or three people of the same gender to meet weekly and encourage each other in areas that are going well and reveal areas that need correction.', 'zume' ),
-                    'video_title' => __( 'Accountability Groups', 'zume' ),
+                    'title' => __( 'Accountability Groups', 'impact_map' ),
+                    'description' => __( 'A tool for two or three people of the same gender to meet weekly and encourage each other in areas that are going well and reveal areas that need correction.', 'impact_map' ),
+                    'video_title' => __( 'Accountability Groups', 'impact_map' ),
                     'slug' => 'accountability-groups',
                     'video' => 5,
                     'script' => 38,
@@ -509,9 +498,9 @@ class GO_Impact_Map_Endpoints
                 ],
                 '6' => [
                     'key' => 6,
-                    'title' => __( 'Consumer vs Producer Lifestyle', 'zume' ),
-                    'description' => __( "You'll discover the four main ways God makes everyday followers more like Jesus.", 'zume' ),
-                    'video_title' => __( 'Producer not Consumer', 'zume' ),
+                    'title' => __( 'Consumer vs Producer Lifestyle', 'impact_map' ),
+                    'description' => __( "You'll discover the four main ways God makes everyday followers more like Jesus.", 'impact_map' ),
+                    'video_title' => __( 'Producer not Consumer', 'impact_map' ),
                     'slug' => 'consumer-vs-producer-lifestyle',
                     'video' => 6,
                     'script' => 39,
@@ -521,9 +510,9 @@ class GO_Impact_Map_Endpoints
                 ],
                 '7' => [
                     'key' => 7,
-                    'title' => __( 'How to Spend an Hour in Prayer', 'zume' ),
-                    'description' => __( 'See how easy it is to spend an hour in prayer.', 'zume' ),
-                    'video_title' => __( 'How to Spend an Hour in Prayer', 'zume' ),
+                    'title' => __( 'How to Spend an Hour in Prayer', 'impact_map' ),
+                    'description' => __( 'See how easy it is to spend an hour in prayer.', 'impact_map' ),
+                    'video_title' => __( 'How to Spend an Hour in Prayer', 'impact_map' ),
                     'slug' => 'how-to-spend-an-hour-in-prayer',
                     'video' => 7,
                     'script' => 40,
@@ -533,9 +522,9 @@ class GO_Impact_Map_Endpoints
                 ],
                 '8' => [
                     'key' => 8,
-                    'title' => __( 'Relational Stewardship – List of 100', 'zume' ),
-                    'description' => __( 'A tool designed to help you be a good steward of your relationships.', 'zume' ),
-                    'video_title' => __( 'List of 100', 'zume' ),
+                    'title' => __( 'Relational Stewardship – List of 100', 'impact_map' ),
+                    'description' => __( 'A tool designed to help you be a good steward of your relationships.', 'impact_map' ),
+                    'video_title' => __( 'List of 100', 'impact_map' ),
                     'slug' => 'relational-stewardship-list-of-100',
                     'video' => 8,
                     'script' => 41,
@@ -545,9 +534,9 @@ class GO_Impact_Map_Endpoints
                 ],
                 '9' => [
                     'key' => 9,
-                    'title' => __( 'Spiritual Economy', 'zume' ),
-                    'description' => __( "Learn how God's economy is different from the world's. God invests more in those who are faithful with what they've already been given.", 'zume' ),
-                    'video_title' => __( 'Spiritual Economy', 'zume' ),
+                    'title' => __( 'Spiritual Economy', 'impact_map' ),
+                    'description' => __( "Learn how God's economy is different from the world's. God invests more in those who are faithful with what they've already been given.", 'impact_map' ),
+                    'video_title' => __( 'Spiritual Economy', 'impact_map' ),
                     'slug' => 'the-kingdom-economy',
                     'video' => 9,
                     'script' => 42,
@@ -557,9 +546,9 @@ class GO_Impact_Map_Endpoints
                 ],
                 '10' => [
                     'key' => 10,
-                    'title' => __( 'The Gospel and How to Share It', 'zume' ),
-                    'description' => __( 'Learn a way to share God’s Good News from the beginning of humanity all the way to the end of this age.', 'zume' ),
-                    'video_title' => __( 'Sharing God‘s Story', 'zume' ),
+                    'title' => __( 'The Gospel and How to Share It', 'impact_map' ),
+                    'description' => __( 'Learn a way to share God’s Good News from the beginning of humanity all the way to the end of this age.', 'impact_map' ),
+                    'video_title' => __( 'Sharing God‘s Story', 'impact_map' ),
                     'slug' => 'the-gospel-and-how-to-share-it',
                     'video' => 10,
                     'script' => 43,
@@ -569,9 +558,9 @@ class GO_Impact_Map_Endpoints
                 ],
                 '11' => [
                     'key' => 11,
-                    'title' => __( 'Baptism and How To Do It', 'zume' ),
-                    'description' => __( 'Jesus said, “Go and make disciples of all nations, BAPTIZING them in the name of the Father and of the Son and of the Holy Spirit…” Learn how to put this into practice.', 'zume' ),
-                    'video_title' => __( 'Baptism', 'zume' ),
+                    'title' => __( 'Baptism and How To Do It', 'impact_map' ),
+                    'description' => __( 'Jesus said, “Go and make disciples of all nations, BAPTIZING them in the name of the Father and of the Son and of the Holy Spirit…” Learn how to put this into practice.', 'impact_map' ),
+                    'video_title' => __( 'Baptism', 'impact_map' ),
                     'slug' => 'baptism-and-how-to-do-it',
                     'video' => 11,
                     'script' => 44,
@@ -581,9 +570,9 @@ class GO_Impact_Map_Endpoints
                 ],
                 '12' => [
                     'key' => 12,
-                    'title' => __( 'Prepare Your 3-Minute Testimony', 'zume' ),
-                    'description' => __( 'Learn how to share your testimony in three minutes by sharing how Jesus has impacted your life.', 'zume' ),
-                    'video_title' => __( '3-Minute Testimony', 'zume' ),
+                    'title' => __( 'Prepare Your 3-Minute Testimony', 'impact_map' ),
+                    'description' => __( 'Learn how to share your testimony in three minutes by sharing how Jesus has impacted your life.', 'impact_map' ),
+                    'video_title' => __( '3-Minute Testimony', 'impact_map' ),
                     'slug' => 'prepare-your-3-minute-testimony',
                     'video' => 12,
                     'script' => 45,
@@ -593,9 +582,9 @@ class GO_Impact_Map_Endpoints
                 ],
                 '13' => [
                     'key' => 13,
-                    'title' => __( 'Vision Casting the Greatest Blessing', 'zume' ),
-                    'description' => __( 'Learn a simple pattern of making not just one follower of Jesus but entire spiritual families who multiply for generations to come.', 'zume' ),
-                    'video_title' => __( 'Great, Greater, and Greatest Blessing', 'zume' ),
+                    'title' => __( 'Vision Casting the Greatest Blessing', 'impact_map' ),
+                    'description' => __( 'Learn a simple pattern of making not just one follower of Jesus but entire spiritual families who multiply for generations to come.', 'impact_map' ),
+                    'video_title' => __( 'Great, Greater, and Greatest Blessing', 'impact_map' ),
                     'slug' => 'vision-casting-the-greatest-blessing',
                     'video' => 13,
                     'script' => 46,
@@ -605,9 +594,9 @@ class GO_Impact_Map_Endpoints
                 ],
                 '14' => [
                     'key' => 14,
-                    'title' => __( 'Duckling Discipleship – Leading Immediately', 'zume' ),
-                    'description' => __( 'Learn what ducklings have to do with disciple-making.', 'zume' ),
-                    'video_title' => __( 'Duckling Discipleship', 'zume' ),
+                    'title' => __( 'Duckling Discipleship – Leading Immediately', 'impact_map' ),
+                    'description' => __( 'Learn what ducklings have to do with disciple-making.', 'impact_map' ),
+                    'video_title' => __( 'Duckling Discipleship', 'impact_map' ),
                     'slug' => 'duckling-discipleship-leading-sooner',
                     'video' => 14,
                     'script' => 47,
@@ -617,9 +606,9 @@ class GO_Impact_Map_Endpoints
                 ],
                 '15' => [
                     'key' => 15,
-                    'title' => __( 'Eyes to See Where the Kingdom Isn’t', 'zume' ),
-                    'description' => __( 'Begin to see where God’s Kingdom isn’t. These are usually the places where God wants to work the most.', 'zume' ),
-                    'video_title' => __( 'Eyes to See Where the Kingdom Isn’t', 'zume' ),
+                    'title' => __( 'Eyes to See Where the Kingdom Isn’t', 'impact_map' ),
+                    'description' => __( 'Begin to see where God’s Kingdom isn’t. These are usually the places where God wants to work the most.', 'impact_map' ),
+                    'video_title' => __( 'Eyes to See Where the Kingdom Isn’t', 'impact_map' ),
                     'slug' => 'eyes-to-see-where-the-kingdom-isnt',
                     'video' => 15,
                     'script' => 48,
@@ -629,9 +618,9 @@ class GO_Impact_Map_Endpoints
                 ],
                 '16' => [
                     'key' => 16,
-                    'title' => __( 'The Lord’s Supper and How To Lead It', 'zume' ),
-                    'description' => __( 'It’s a simple way to celebrate our intimate connection and ongoing relationship with Jesus. Learn a simple way to celebrate.', 'zume' ),
-                    'video_title' => __( 'The Lord’s Supper', 'zume' ),
+                    'title' => __( 'The Lord’s Supper and How To Lead It', 'impact_map' ),
+                    'description' => __( 'It’s a simple way to celebrate our intimate connection and ongoing relationship with Jesus. Learn a simple way to celebrate.', 'impact_map' ),
+                    'video_title' => __( 'The Lord’s Supper', 'impact_map' ),
                     'slug' => 'the-lords-supper-and-how-to-lead-it',
                     'video' => 16,
                     'script' => 49,
@@ -641,9 +630,9 @@ class GO_Impact_Map_Endpoints
                 ],
                 '17' => [
                     'key' => 17,
-                    'title' => __( 'Prayer Walking and How To Do It', 'zume' ),
-                    'description' => __( 'It‘s a simple way to obey God’s command to pray for others. And it‘s just what it sounds like — praying to God while walking around!', 'zume' ),
-                    'video_title' => __( 'Prayer Walking', 'zume' ),
+                    'title' => __( 'Prayer Walking and How To Do It', 'impact_map' ),
+                    'description' => __( 'It‘s a simple way to obey God’s command to pray for others. And it‘s just what it sounds like — praying to God while walking around!', 'impact_map' ),
+                    'video_title' => __( 'Prayer Walking', 'impact_map' ),
                     'slug' => 'prayer-walking',
                     'video' => 17,
                     'script' => 50,
@@ -653,9 +642,9 @@ class GO_Impact_Map_Endpoints
                 ],
                 '18' => [
                     'key' => 18,
-                    'title' => __( 'A Person of Peace and How To Find One', 'zume' ),
-                    'description' => __( 'Learn who a person of peace might be and how to know when you‘ve found one.', 'zume' ),
-                    'video_title' => __( 'Person of Peace', 'zume' ),
+                    'title' => __( 'A Person of Peace and How To Find One', 'impact_map' ),
+                    'description' => __( 'Learn who a person of peace might be and how to know when you‘ve found one.', 'impact_map' ),
+                    'video_title' => __( 'Person of Peace', 'impact_map' ),
                     'slug' => 'a-person-of-peace-and-how-to-find-one',
                     'video' => 18,
                     'script' => 51,
@@ -665,9 +654,9 @@ class GO_Impact_Map_Endpoints
                 ],
                 '19' => [
                     'key' => 19,
-                    'title' => __( 'Faithfulness is Better Than Knowledge', 'zume' ),
-                    'description' => __( 'It‘s important what disciples know — but it‘s much more important what they DO with what they know.', 'zume' ),
-                    'video_title' => __( 'Faithfulness', 'zume' ),
+                    'title' => __( 'Faithfulness is Better Than Knowledge', 'impact_map' ),
+                    'description' => __( 'It‘s important what disciples know — but it‘s much more important what they DO with what they know.', 'impact_map' ),
+                    'video_title' => __( 'Faithfulness', 'impact_map' ),
                     'slug' => 'faithfulness-is-better-than-knowledge',
                     'video' => 19,
                     'script' => 52,
@@ -677,9 +666,9 @@ class GO_Impact_Map_Endpoints
                 ],
                 '20' => [
                     'key' => 20,
-                    'title' => __( 'The BLESS Prayer Pattern', 'zume' ),
-                    'description' => __( 'Practice a simple mnemonic to remind you of ways to pray for others.', 'zume' ),
-                    'video_title' => __( 'The B.L.E.S.S. Prayer', 'zume' ),
+                    'title' => __( 'The BLESS Prayer Pattern', 'impact_map' ),
+                    'description' => __( 'Practice a simple mnemonic to remind you of ways to pray for others.', 'impact_map' ),
+                    'video_title' => __( 'The B.L.E.S.S. Prayer', 'impact_map' ),
                     'slug' => 'the-bless-prayer-pattern',
                     'video' => false,
                     'script' => false,
@@ -689,9 +678,9 @@ class GO_Impact_Map_Endpoints
                 ],
                 '21' => [
                     'key' => 21,
-                    'title' => __( '3/3 Group Meeting Pattern', 'zume' ),
-                    'description' => __( 'A 3/3 Group is a way for followers of Jesus to meet, pray, learn, grow, fellowship and practice obeying and sharing what they‘ve learned. In this way, a 3/3 Group is not just a small group but a Simple Church.', 'zume' ),
-                    'video_title' => __( '3/3 Group', 'zume' ),
+                    'title' => __( '3/3 Group Meeting Pattern', 'impact_map' ),
+                    'description' => __( 'A 3/3 Group is a way for followers of Jesus to meet, pray, learn, grow, fellowship and practice obeying and sharing what they‘ve learned. In this way, a 3/3 Group is not just a small group but a Simple Church.', 'impact_map' ),
+                    'video_title' => __( '3/3 Group', 'impact_map' ),
                     'slug' => '3-3-group-meeting-pattern',
                     'video' => 21,
                     'script' => 53,
@@ -701,9 +690,9 @@ class GO_Impact_Map_Endpoints
                 ],
                 '22' => [
                     'key' => 22,
-                    'title' => __( 'Training Cycle for Maturing Disciples', 'zume' ),
-                    'description' => __( 'Learn the training cycle and consider how it applies to disciple making.', 'zume' ),
-                    'video_title' => __( 'Training Cycle', 'zume' ),
+                    'title' => __( 'Training Cycle for Maturing Disciples', 'impact_map' ),
+                    'description' => __( 'Learn the training cycle and consider how it applies to disciple making.', 'impact_map' ),
+                    'video_title' => __( 'Training Cycle', 'impact_map' ),
                     'slug' => 'training-cycle-for-maturing-disciples',
                     'video' => 22,
                     'script' => 54,
@@ -713,9 +702,9 @@ class GO_Impact_Map_Endpoints
                 ],
                 '23' => [
                     'key' => 23,
-                    'title' => __( 'Leadership Cells', 'zume' ),
-                    'description' => __( 'A Leadership Cell is a way someone who feels called to lead can develop their leadership by practicing serving.', 'zume' ),
-                    'video_title' => __( 'Leadership Cells', 'zume' ),
+                    'title' => __( 'Leadership Cells', 'impact_map' ),
+                    'description' => __( 'A Leadership Cell is a way someone who feels called to lead can develop their leadership by practicing serving.', 'impact_map' ),
+                    'video_title' => __( 'Leadership Cells', 'impact_map' ),
                     'slug' => 'leadership-cells',
                     'video' => 23,
                     'script' => 55,
@@ -725,9 +714,9 @@ class GO_Impact_Map_Endpoints
                 ],
                 '24' => [
                     'key' => 24,
-                    'title' => __( 'Expect Non-Sequential Growth', 'zume' ),
-                    'description' => __( 'See how disciple making doesn‘t have to be linear. Multiple things can happen at the same time.', 'zume' ),
-                    'video_title' => __( 'Expect Non-Sequential Growth', 'zume' ),
+                    'title' => __( 'Expect Non-Sequential Growth', 'impact_map' ),
+                    'description' => __( 'See how disciple making doesn‘t have to be linear. Multiple things can happen at the same time.', 'impact_map' ),
+                    'video_title' => __( 'Expect Non-Sequential Growth', 'impact_map' ),
                     'slug' => 'expect-non-sequential-growth',
                     'video' => 24,
                     'script' => 56,
@@ -737,9 +726,9 @@ class GO_Impact_Map_Endpoints
                 ],
                 '25' => [
                     'key' => 25,
-                    'title' => __( 'Pace of Multiplication Matters', 'zume' ),
-                    'description' => __( 'Multiplying matters and multiplying quickly matters even more. See why pace matters.', 'zume' ),
-                    'video_title' => __( 'Pace', 'zume' ),
+                    'title' => __( 'Pace of Multiplication Matters', 'impact_map' ),
+                    'description' => __( 'Multiplying matters and multiplying quickly matters even more. See why pace matters.', 'impact_map' ),
+                    'video_title' => __( 'Pace', 'impact_map' ),
                     'slug' => 'pace-of-multiplication-matters',
                     'video' => 25,
                     'script' => 57,
@@ -749,9 +738,9 @@ class GO_Impact_Map_Endpoints
                 ],
                 '26' => [
                     'key' => 26,
-                    'title' => __( 'Always Part of Two Churches', 'zume' ),
-                    'description' => __( 'Learn how to obey Jesus‘ commands by going AND staying.', 'zume' ),
-                    'video_title' => __( 'Always Part of Two Churches', 'zume' ),
+                    'title' => __( 'Always Part of Two Churches', 'impact_map' ),
+                    'description' => __( 'Learn how to obey Jesus‘ commands by going AND staying.', 'impact_map' ),
+                    'video_title' => __( 'Always Part of Two Churches', 'impact_map' ),
                     'slug' => 'always-part-of-two-churches',
                     'video' => 26,
                     'script' => 58,
@@ -762,9 +751,9 @@ class GO_Impact_Map_Endpoints
                 '27' => [
                     'key' => 27,
                     'slug' => 'three-month-plan',
-                    'title' => __( 'Three-Month Plan', 'zume' ),
-                    'description' => __( 'Create and share your plan for how you will implement the Zúme tools over the next three months.', 'zume' ),
-                    'video_title' => __( 'Three-Month Plan', 'zume' ),
+                    'title' => __( 'Three-Month Plan', 'impact_map' ),
+                    'description' => __( 'Create and share your plan for how you will implement the Zúme tools over the next three months.', 'impact_map' ),
+                    'video_title' => __( 'Three-Month Plan', 'impact_map' ),
                     'video' => false,
                     'script' => false,
                     'type' => 'tool',
@@ -773,9 +762,9 @@ class GO_Impact_Map_Endpoints
                 ],
                 '28' => [
                     'key' => 28,
-                    'title' => __( 'Coaching Checklist', 'zume' ),
-                    'description' => __( 'A powerful tool you can use to quickly assess your own strengths and vulnerabilities when it comes to making disciples who multiply.', 'zume' ),
-                    'video_title' => __( 'Coaching Checklist', 'zume' ),
+                    'title' => __( 'Coaching Checklist', 'impact_map' ),
+                    'description' => __( 'A powerful tool you can use to quickly assess your own strengths and vulnerabilities when it comes to making disciples who multiply.', 'impact_map' ),
+                    'video_title' => __( 'Coaching Checklist', 'impact_map' ),
                     'slug' => 'coaching-checklist',
                     'video' => 28,
                     'script' => 60,
@@ -785,9 +774,9 @@ class GO_Impact_Map_Endpoints
                 ],
                 '29' => [
                     'key' => 29,
-                    'title' => __( 'Leadership in Networks', 'zume' ),
-                    'description' => __( 'Learn how multiplying churches stay connected and live life together as an extended, spiritual family.', 'zume' ),
-                    'video_title' => __( 'Leadership in Networks', 'zume' ),
+                    'title' => __( 'Leadership in Networks', 'impact_map' ),
+                    'description' => __( 'Learn how multiplying churches stay connected and live life together as an extended, spiritual family.', 'impact_map' ),
+                    'video_title' => __( 'Leadership in Networks', 'impact_map' ),
                     'slug' => 'leadership-in-networks',
                     'video' => 29,
                     'script' => 61,
@@ -797,9 +786,9 @@ class GO_Impact_Map_Endpoints
                 ],
                 '30' => [
                     'key' => 30,
-                    'title' => __( 'Peer Mentoring Groups', 'zume' ),
-                    'description' => __( 'This is a group that consists of people who are leading and starting 3/3 Groups. It also follows a 3/3 format and is a powerful way to assess the spiritual health of God’s work in your area.', 'zume' ),
-                    'video_title' => __( 'Peer Mentoring', 'zume' ),
+                    'title' => __( 'Peer Mentoring Groups', 'impact_map' ),
+                    'description' => __( 'This is a group that consists of people who are leading and starting 3/3 Groups. It also follows a 3/3 format and is a powerful way to assess the spiritual health of God’s work in your area.', 'impact_map' ),
+                    'video_title' => __( 'Peer Mentoring', 'impact_map' ),
                     'slug' => 'peer-mentoring-groups',
                     'video' => 30,
                     'script' => 62,
@@ -809,9 +798,9 @@ class GO_Impact_Map_Endpoints
                 ],
                 '31' => [
                     'key' => 31,
-                    'title' => __( 'Four Fields Tool', 'zume' ),
-                    'description' => __( 'The four fields diagnostic chart is a simple tool to be used by a leadership cell to reflect on the status of current efforts and the kingdom activity around them.', 'zume' ),
-                    'video_title' => __( 'Four Fields Tool', 'zume' ),
+                    'title' => __( 'Four Fields Tool', 'impact_map' ),
+                    'description' => __( 'The four fields diagnostic chart is a simple tool to be used by a leadership cell to reflect on the status of current efforts and the kingdom activity around them.', 'impact_map' ),
+                    'video_title' => __( 'Four Fields Tool', 'impact_map' ),
                     'slug' => 'four-fields-tool',
                     'video' => false,
                     'script' => false,
@@ -821,9 +810,9 @@ class GO_Impact_Map_Endpoints
                 ],
                 '32' => [
                     'key' => 32,
-                    'title' => __( 'Generational Mapping', 'zume' ),
-                    'description' => __( 'Generation mapping is another simple tool to help leaders in a movement understand the growth around them.', 'zume' ),
-                    'video_title' => __( 'Generational Mapping', 'zume' ),
+                    'title' => __( 'Generational Mapping', 'impact_map' ),
+                    'description' => __( 'Generation mapping is another simple tool to help leaders in a movement understand the growth around them.', 'impact_map' ),
+                    'video_title' => __( 'Generational Mapping', 'impact_map' ),
                     'slug' => 'generational-mapping',
                     'video' => false,
                     'script' => false,
@@ -833,9 +822,9 @@ class GO_Impact_Map_Endpoints
                 ],
                 '33' => [
                     'key' => 33,
-                    'title' => __( '3-Circles Gospel Presentation', 'zume' ),
-                    'description' => __( 'The 3-Circles gospel presentation is a way to tell the gospel using a simple illustration that can be drawn on a piece of paper.', 'zume' ),
-                    'video_title' => __( '3-Circles', 'zume' ),
+                    'title' => __( '3-Circles Gospel Presentation', 'impact_map' ),
+                    'description' => __( 'The 3-Circles gospel presentation is a way to tell the gospel using a simple illustration that can be drawn on a piece of paper.', 'impact_map' ),
+                    'video_title' => __( '3-Circles', 'impact_map' ),
                     'slug' => '3-circles-gospel-presentation',
                     'video' => 33,
                     'script' => 63,

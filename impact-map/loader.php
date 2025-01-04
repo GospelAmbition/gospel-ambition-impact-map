@@ -1,6 +1,4 @@
 <?php
-
-
 if ( ! defined( 'ABSPATH' ) ) {
     exit; // Exit if accessed directly
 }
@@ -12,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @access public
  * @return object|bool
  */
-function ga_impact_map() {
+function go_impact_map() {
     $ga_impact_map_required_dt_theme_version = '1.19';
     $wp_theme = wp_get_theme();
     $version = $wp_theme->version;
@@ -38,7 +36,7 @@ function ga_impact_map() {
 
     return GO_Impact_Map::instance();
 }
-add_action( 'after_setup_theme', 'ga_impact_map', 20 );
+add_action( 'after_setup_theme', 'go_impact_map', 20 );
 
 //register the D.T Plugin
 add_filter( 'dt_plugins', function ( $plugins ){
@@ -69,7 +67,6 @@ class GO_Impact_Map {
 
     private function __construct() {
         $is_rest = dt_is_rest();
-
         if ( $is_rest && strpos( dt_get_url_path(), 'gospel-ambition-impact-map' ) !== false ) {
             require_once( 'rest-api/loader.php' );
         }

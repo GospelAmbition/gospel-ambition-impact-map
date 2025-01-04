@@ -34,11 +34,11 @@ $map_image_url = trailingslashit( plugin_dir_url( __DIR__ ) ) . 'images/'
 <div id="initialize-screen">
     <div id="initialize-spinner-wrapper" class="center">
         <progress class="success initialize-progress" max="46" value="0"></progress><br>
-        <?php echo esc_html__( 'Loading the planet', 'zume' ) ?> ...<br>
-        <span id="initialize-people" style="display:none;"><?php echo esc_html__( 'Locating world population', 'zume' ) ?> ...</span><br>
-        <span id="initialize-activity" style="display:none;"><?php echo esc_html__( 'Calculating movement activity', 'zume' ) ?> ...</span><br>
-        <span id="initialize-coffee" style="display:none;"><?php echo esc_html__( 'Shamelessly brewing coffee', 'zume' ) ?> ...</span><br>
-        <span id="initialize-dothis" style="display:none;"><?php echo esc_html__( 'Let‘s do this', 'zume' ) ?> ...</span><br>
+        <?php echo esc_html__( 'Loading the planet', 'impact_map' ) ?> ...<br>
+        <span id="initialize-people" style="display:none;"><?php echo esc_html__( 'Locating world population', 'impact_map' ) ?> ...</span><br>
+        <span id="initialize-activity" style="display:none;"><?php echo esc_html__( 'Calculating movement activity', 'impact_map' ) ?> ...</span><br>
+        <span id="initialize-coffee" style="display:none;"><?php echo esc_html__( 'Shamelessly brewing coffee', 'impact_map' ) ?> ...</span><br>
+        <span id="initialize-dothis" style="display:none;"><?php echo esc_html__( 'Let‘s do this', 'impact_map' ) ?> ...</span><br>
     </div>
 </div>
 
@@ -53,10 +53,10 @@ $map_image_url = trailingslashit( plugin_dir_url( __DIR__ ) ) . 'images/'
                     <button
                         id="exit-btn"
                         class="btn outline | d-flex gap--2 px-1 py--2 | absolute under left"
-                        aria-label="<?php echo esc_html__( 'Close', 'zume' ) ?>"
+                        aria-label="<?php echo esc_html__( 'Close', 'impact_map' ) ?>"
                         type="button"
                     >
-                        <span><?php echo esc_html__( 'Close', 'zume' ) ?></span><span class="icon z-icon-close"></span>
+                        <span><?php echo esc_html__( 'Close', 'impact_map' ) ?></span><span class="icon z-icon-close"></span>
                     </button>
                     <h3 id="map-header-title"><span class="loading-spinner active"></span></h3>
                     <span id="map-header-description"><span class="loading-spinner active"></span></span>
@@ -70,23 +70,23 @@ $map_image_url = trailingslashit( plugin_dir_url( __DIR__ ) ) . 'images/'
                     <div class="cell">
                         <br></br>
                         <h1 id="title"></h1>
-                        <h3><?php echo esc_html__( 'Population', 'zume' ) ?>: <span id="population">0</span></h3>
+                        <h3><?php echo esc_html__( 'Population', 'impact_map' ) ?>: <span id="population">0</span></h3>
                         <hr>
                     </div>
                     <div class="cell">
                         <h2 id="panel-type-title"></h2>
                     </div>
                     <div class="cell" id="needed-row">
-                        <h3><?php echo esc_html__( 'Needed', 'zume' ) ?>: <span id="needed">0</span></h3>
+                        <h3><?php echo esc_html__( 'Needed', 'impact_map' ) ?>: <span id="needed">0</span></h3>
                     </div>
                     <div class="cell">
-                        <h3><?php echo esc_html__( 'Reported', 'zume' ) ?>: <span id="reported">0</span></h3>
+                        <h3><?php echo esc_html__( 'Reported', 'impact_map' ) ?>: <span id="reported">0</span></h3>
                     </div>
                     <div class="cell">
                         <hr>
                     </div>
                     <div class="cell" id="goal-row">
-                        <h2><?php echo esc_html__( 'Goal', 'zume' ) ?>: <span id="saturation-goal">0</span>%</h2>
+                        <h2><?php echo esc_html__( 'Goal', 'impact_map' ) ?>: <span id="saturation-goal">0</span>%</h2>
                         <meter id="meter" class="meter" value="30" min="0" low="33" high="66" optimum="100" max="100"></meter>
                     </div>
                 </div>
@@ -97,23 +97,23 @@ $map_image_url = trailingslashit( plugin_dir_url( __DIR__ ) ) . 'images/'
                 <div class="grid-x grid-padding-x" >
                     <div class="cell center">
                         <img class="training-screen-image" src="<?php echo esc_url( $map_image_url ) . 'search.svg' ?>" alt="search icon" />
-                        <h2><?php echo esc_html__( 'Search', 'zume' ) ?></h2>
-                        <p><?php echo esc_html__( 'Search for any city or place with the search input.', 'zume' ) ?></p>
+                        <h2><?php echo esc_html__( 'Search', 'impact_map' ) ?></h2>
+                        <p><?php echo esc_html__( 'Search for any city or place with the search input.', 'impact_map' ) ?></p>
                     </div>
                     <div class="cell center">
                         <img class="training-screen-image" src="<?php echo esc_url( $map_image_url ) . 'zoom.svg' ?>" alt="zoom icon"  />
-                        <h2><?php echo esc_html__( 'Zoom', 'zume' ) ?></h2>
-                        <p><?php echo esc_html__( 'Scroll zoom with your mouse or pinch zoom with track pads and phones to focus on sections of the map.', 'zume' ) ?></p>
+                        <h2><?php echo esc_html__( 'Zoom', 'impact_map' ) ?></h2>
+                        <p><?php echo esc_html__( 'Scroll zoom with your mouse or pinch zoom with track pads and phones to focus on sections of the map.', 'impact_map' ) ?></p>
                     </div>
                     <div class="cell center">
                         <img class="training-screen-image" src="<?php echo esc_url( $map_image_url ) . 'drag.svg' ?>" alt="drag icon"  />
-                        <h2><?php echo esc_html__( 'Drag', 'zume' ) ?></h2>
-                        <p><?php echo esc_html__( 'Click and drag the map any direction to look at a different part of the map.', 'zume' ) ?></p>
+                        <h2><?php echo esc_html__( 'Drag', 'impact_map' ) ?></h2>
+                        <p><?php echo esc_html__( 'Click and drag the map any direction to look at a different part of the map.', 'impact_map' ) ?></p>
                     </div>
                     <div class="cell center">
                         <img class="training-screen-image" src="<?php echo esc_url( $map_image_url ) . 'click.svg' ?>" alt="click icon" />
-                        <h2><?php echo esc_html__( 'Click', 'zume' ) ?></h2>
-                        <p><?php echo esc_html__( 'Click a single section and reveal a details panel with more information about the location.', 'zume' ) ?></p>
+                        <h2><?php echo esc_html__( 'Click', 'impact_map' ) ?></h2>
+                        <p><?php echo esc_html__( 'Click a single section and reveal a details panel with more information about the location.', 'impact_map' ) ?></p>
                     </div>
                 </div>
             </div>
@@ -121,23 +121,23 @@ $map_image_url = trailingslashit( plugin_dir_url( __DIR__ ) ) . 'images/'
                 <div class="grid-x grid-padding-x" >
                     <div class="cell center">
                         <img class="training-screen-image" src="<?php echo esc_url( $map_image_url ) . 'search.svg' ?>" alt="search icon" />
-                        <h2><?php echo esc_html__( 'Search', 'zume' ) ?></h2>
-                        <p><?php echo esc_html__( 'Search for any city or place with the search input.', 'zume' ) ?></p>
+                        <h2><?php echo esc_html__( 'Search', 'impact_map' ) ?></h2>
+                        <p><?php echo esc_html__( 'Search for any city or place with the search input.', 'impact_map' ) ?></p>
                     </div>
                     <div class="cell center">
                         <img class="training-screen-image" src="<?php echo esc_url( $map_image_url ) . 'zoom.svg' ?>" alt="zoom icon"  />
-                        <h2><?php echo esc_html__( 'Zoom', 'zume' ) ?></h2>
-                        <p><?php echo esc_html__( 'Scroll zoom with your mouse or pinch zoom with track pads and phones to focus on sections of the map.', 'zume' ) ?></p>
+                        <h2><?php echo esc_html__( 'Zoom', 'impact_map' ) ?></h2>
+                        <p><?php echo esc_html__( 'Scroll zoom with your mouse or pinch zoom with track pads and phones to focus on sections of the map.', 'impact_map' ) ?></p>
                     </div>
                     <div class="cell center">
                         <img class="training-screen-image" src="<?php echo esc_url( $map_image_url ) . 'drag.svg' ?>" alt="drag icon"  />
-                        <h2><?php echo esc_html__( 'Drag', 'zume' ) ?></h2>
-                        <p><?php echo esc_html__( 'Click and drag the map any direction to look at a different part of the map.', 'zume' ) ?></p>
+                        <h2><?php echo esc_html__( 'Drag', 'impact_map' ) ?></h2>
+                        <p><?php echo esc_html__( 'Click and drag the map any direction to look at a different part of the map.', 'impact_map' ) ?></p>
                     </div>
                     <div class="cell center">
                         <img class="training-screen-image" src="<?php echo esc_url( $map_image_url ) . 'click.svg' ?>" alt="click icon" />
-                        <h2><?php echo esc_html__( 'Click', 'zume' ) ?></h2>
-                        <p><?php echo esc_html__( 'Click a single section and reveal a details panel with more information about the location.', 'zume' ) ?></p>
+                        <h2><?php echo esc_html__( 'Click', 'impact_map' ) ?></h2>
+                        <p><?php echo esc_html__( 'Click a single section and reveal a details panel with more information about the location.', 'impact_map' ) ?></p>
                     </div>
                 </div>
             </div>
@@ -174,7 +174,7 @@ $map_image_url = trailingslashit( plugin_dir_url( __DIR__ ) ) . 'images/'
                 <div class="cell">
                     <br></br><!-- remove conflict with close button -->
                     <h1 id="modal_tile"></h1>
-                    <h3><?php echo esc_html__( 'Population', 'zume' ) ?>: <span id="modal_population">0</span></h3>
+                    <h3><?php echo esc_html__( 'Population', 'impact_map' ) ?>: <span id="modal_population">0</span></h3>
                 </div>
             </div>
             <hr>
@@ -184,7 +184,7 @@ $map_image_url = trailingslashit( plugin_dir_url( __DIR__ ) ) . 'images/'
                 <div class="cell medium-6">
                     <div class="grid-x">
                         <div class="cell">
-                            <h3 style="text-transform: uppercase;"><?php echo esc_html__( 'PROGRESS BREAKDOWN', 'zume' ) ?></h3>
+                            <h3 style="text-transform: uppercase;"><?php echo esc_html__( 'PROGRESS BREAKDOWN', 'impact_map' ) ?></h3>
                         </div>
                         <div class="cell" id="progress-content">
                             <div class="grid-x">
@@ -201,7 +201,7 @@ $map_image_url = trailingslashit( plugin_dir_url( __DIR__ ) ) . 'images/'
                 <div class="cell medium-6">
                     <div class="grid-x">
                         <div class="cell">
-                            <h3><?php echo esc_html__( 'ACTIVITY', 'zume' ) ?></h3>
+                            <h3><?php echo esc_html__( 'ACTIVITY', 'impact_map' ) ?></h3>
                         </div>
                         <div class="cell"><hr></div>
                         <div class="cell" id="activity-content">

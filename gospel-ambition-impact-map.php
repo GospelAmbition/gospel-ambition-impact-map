@@ -47,6 +47,7 @@ class GO_Impact_Context_Switcher {
             }
             // kingdom training
             if ( 'Kingdom Training' === $site ) {
+                dt_write_log( 'Kingdom Training Impact Map Loaded' );
                 require_once( 'remote-trackers/kingdom-training.php' );
             }
             // disciple tools

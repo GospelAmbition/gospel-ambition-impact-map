@@ -91,88 +91,88 @@ class GO_Impact_Map_Magic_Map_App extends DT_Magic_Url_Base
                 ],
             ]) ?>][0]
 
-            jQuery(document).ready(function(){
-                window.load_map()
-            })
+            // jQuery(document).ready(function(){
+            //     window.load_map()
+            // })
 
 
-            window.load_map = () => {
-                let spinner = jQuery('.loading-spinner')
+            // window.load_map = () => {
+            //     let spinner = jQuery('.loading-spinner')
 
-                /* set vertical size the form column*/
-                jQuery('#custom-style').append(`
-                  <style>
-                      #map-wrapper {
-                          height: ${window.innerHeight}px !important;
-                      }
-                      #map {
-                          height: ${window.innerHeight}px !important;
-                      }
-                  </style>`)
+            //     /* set vertical size the form column*/
+            //     jQuery('#custom-style').append(`
+            //       <style>
+            //           #map-wrapper {
+            //               height: ${window.innerHeight}px !important;
+            //           }
+            //           #map {
+            //               height: ${window.innerHeight}px !important;
+            //           }
+            //       </style>`)
 
 
-                window.get_geojson().then(function(data){
+            //     window.get_geojson().then(function(data){
 
-                    mapboxgl.accessToken = jsObject.map_key;
-                    var map = new mapboxgl.Map({
-                        container: 'map',
-                        style: 'mapbox://styles/mapbox/light-v10',
-                        center: [0, 0],
-                        minZoom: 0,
-                        zoom: 0
-                    });
+            //         mapboxgl.accessToken = jsObject.map_key;
+            //         var map = new mapboxgl.Map({
+            //             container: 'map',
+            //             style: 'mapbox://styles/mapbox/light-v10',
+            //             center: [0, 0],
+            //             minZoom: 0,
+            //             zoom: 0
+            //         });
 
-                    map.dragRotate.disable();
-                    map.touchZoomRotate.disableRotation();
+            //         map.dragRotate.disable();
+            //         map.touchZoomRotate.disableRotation();
 
-                    map.on('load', function() {
-                        map.addSource('layer-source', {
-                            type: 'geojson',
-                            data: data
-                        });
+            //         map.on('load', function() {
+            //             map.addSource('layer-source', {
+            //                 type: 'geojson',
+            //                 data: data
+            //             });
 
-                        map.addLayer({
-                            id: 'circle-layer',
-                            type: 'circle',
-                            source: 'layer-source',
-                            paint: {
-                                'circle-color': '#00d9ff',
-                                'circle-radius':12,
-                                'circle-stroke-width': 1,
-                                'circle-stroke-color': '#fff'
-                            }
-                        });
+            //             map.addLayer({
+            //                 id: 'circle-layer',
+            //                 type: 'circle',
+            //                 source: 'layer-source',
+            //                 paint: {
+            //                     'circle-color': '#00d9ff',
+            //                     'circle-radius':12,
+            //                     'circle-stroke-width': 1,
+            //                     'circle-stroke-color': '#fff'
+            //                 }
+            //             });
 
-                       // @see https://docs.mapbox.com for all the capacity of mapbox mapping.
+            //            // @see https://docs.mapbox.com for all the capacity of mapbox mapping.
 
-                        spinner.removeClass('active')
+            //             spinner.removeClass('active')
 
-                        var bounds = new mapboxgl.LngLatBounds();
-                        data.features.forEach(function(feature) {
-                            bounds.extend(feature.geometry.coordinates);
-                        });
-                        map.fitBounds(bounds, { padding: {top: 20, bottom:20, left: 20, right: 20 } });
+            //             var bounds = new mapboxgl.LngLatBounds();
+            //             data.features.forEach(function(feature) {
+            //                 bounds.extend(feature.geometry.coordinates);
+            //             });
+            //             map.fitBounds(bounds, { padding: {top: 20, bottom:20, left: 20, right: 20 } });
 
-                    });
-                })
-            }
+            //         });
+            //     })
+            // }
 
-            window.get_geojson = () => {
-                return jQuery.ajax({
-                    type: "POST",
-                    data: JSON.stringify({ action: 'geojson', parts: jsObject.parts }),
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    url: jsObject.root + jsObject.parts.root + '/v1/' + jsObject.parts.type,
-                    beforeSend: function (xhr) {
-                        xhr.setRequestHeader('X-WP-Nonce', jsObject.nonce )
-                    }
-                })
-                    .fail(function(e) {
-                        console.log(e)
-                        jQuery('#error').html(e)
-                    })
-            }
+            // window.get_geojson = () => {
+            //     return jQuery.ajax({
+            //         type: "POST",
+            //         data: JSON.stringify({ action: 'geojson', parts: jsObject.parts }),
+            //         contentType: "application/json; charset=utf-8",
+            //         dataType: "json",
+            //         url: jsObject.root + jsObject.parts.root + '/v1/' + jsObject.parts.type,
+            //         beforeSend: function (xhr) {
+            //             xhr.setRequestHeader('X-WP-Nonce', jsObject.nonce )
+            //         }
+            //     })
+            //         .fail(function(e) {
+            //             console.log(e)
+            //             jQuery('#error').html(e)
+            //         })
+            // }
 
         </script>
         <?php
@@ -184,7 +184,7 @@ class GO_Impact_Map_Magic_Map_App extends DT_Magic_Url_Base
             body {
                 background: white !important;
             }
-            #initialize-screen {
+            /* #initialize-screen {
                 width: 100%;
                 height: 2000px;
                 z-index: 100;
@@ -200,7 +200,7 @@ class GO_Impact_Map_Magic_Map_App extends DT_Magic_Url_Base
                 margin: 0 auto;
                 height:50px;
                 width:300px;
-            }
+            } */
         </style>
         <?php
     }
@@ -211,10 +211,10 @@ class GO_Impact_Map_Magic_Map_App extends DT_Magic_Url_Base
     public function body(){
         DT_Mapbox_API::geocoder_scripts();
         ?>
-        <style id="custom-style"></style>
+        <!-- <style id="custom-style"></style>
         <div id="map-wrapper">
             <div id='map'></div>
-        </div>
+        </div> -->
         <?php
     }
 
