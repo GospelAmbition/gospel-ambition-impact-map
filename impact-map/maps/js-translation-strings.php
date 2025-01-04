@@ -44,14 +44,5 @@ function zume_map_translation_strings() : array {
         'always_report' => __( 'Always report new simple churches that you are starting.', 'zume' ),
 
         'close' => __( 'Close', 'zume' ),
-
-//        '' => __( '', 'zume' ),
-//        '' => __( '', 'zume' ),
-//        '' => __( '', 'zume' ),
-//        '' => __( '', 'zume' ),
-//        '' => __( '', 'zume' ),
-//        '' => __( '', 'zume' ),
-//        '' => __( '', 'zume' ),
-//        '' => __( '', 'zume' ),
     ];
 }

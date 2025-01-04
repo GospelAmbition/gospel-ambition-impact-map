@@ -35,20 +35,6 @@ class GA_Impact_Map_Magic_Home_App extends DT_Magic_Url_Base
         $url = dt_get_url_path();
         if ( empty( $url ) && ! dt_is_rest() ) { // this filter is looking for the root site url without params.
 
-            /**
-             * Redirect to the Impact Map
-             */
-            $redirect_url = 'https://goimpactmap.com/zume_app/last100_hours';
-            if ( wp_redirect( $redirect_url ) ) {
-                exit;
-            }
-            /**
-             * End Redirect
-             */
-
-
-
-
             // register url and access
             add_action( 'template_redirect', [ $this, 'theme_redirect' ] );
             add_filter( 'dt_blank_access', function (){ return true;
@@ -118,9 +104,9 @@ class GA_Impact_Map_Magic_Home_App extends DT_Magic_Url_Base
             body {
                 background-color:white;
             }
-            .top {
-
-            }
+            .top {}
+            .content {}
+            .footer {}
             .right {
                 text-align: end;
             }
@@ -133,21 +119,18 @@ class GA_Impact_Map_Magic_Home_App extends DT_Magic_Url_Base
         <div class="body-wrapper">
             <div class="top">
                 <div class="grid-x grid-padding-x grid-padding-y">
-                    <div class="cell small-6 ">
+                    <div class="cell center">
                         <h1>Gospel Ambition - Impact Maps</h1>
-                    </div>
-                    <div class="cell small-6 right">
-
                     </div>
                 </div>
             </div>
             <div class="content">
                 <div class="grid-x grid-padding-x">
                     <div class="cell">
-                        <iframe src="/zume_app/last100_hours" style="width:100%; height: 800px; border: none;" frameborder="0"></iframe>
+                        <a class="button expanded" href="/zume_app/last100_hours">Map</a>
                     </div>
-                    <div class="cell center">
-                        <h2><a href="/zume_app/last100_hours">Full Map</a></h2>
+                    <div class="cell">
+
                     </div>
                 </div>
             </div>
