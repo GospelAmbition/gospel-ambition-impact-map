@@ -20,7 +20,6 @@ add_action('go_log_trigger', function( $keys ) {
     }
 
     return $keys;
-
 }, 10, 1 );
 
 /**
@@ -61,7 +60,7 @@ add_action('dt_insert_report', function( $args ) {
         }
 
         if ( isset( $payload['selected_times'] ) ) {
-            foreach( $payload['selected_times'] as $time ) {
+            foreach ( $payload['selected_times'] as $time ) {
                 add_log_to_queue( [
                     'post_type' => 'prayer_tools',
                     'type' => 'praying',

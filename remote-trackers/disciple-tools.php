@@ -2,32 +2,31 @@
 if ( !defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly.
 
 // convert the site report log event
- add_action( 'dt_usage_telemetry_insert', function( $args, $result ) {
-    
+add_action( 'dt_usage_telemetry_insert', function( $args, $result ) {
+
     $languages = array_keys( $user_languages );
 
     $site_url = $args['site_url'];
-    $ip = gethostbyname($site_url);
+    $ip = gethostbyname( $site_url );
 
     add_log_to_queue( [
         'post_type' => 'disciple_tools',
         'type' => 'practicing',
         'subtype' => 'site_report',
-        'time' =>  strtotime( $args['timestamp'] ), // time
+        'time' => strtotime( $args['timestamp'] ), // time
         'language_code' => $languages[0] ?? 'en', // language
         'location' => [
             'ip' => $ip,
         ],
     ] );
-
- }, 10, 2 );
+}, 10, 2 );
 
 // record download
 // @todo: add download log event
 
 // record demos launched
 // @todo: add demo log event
- 
+
 
 
 
@@ -85,5 +84,3 @@ if ( !defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly.
     [is_multisite] => 1
 )
  */
-
- 

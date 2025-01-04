@@ -2823,7 +2823,7 @@ class GO_Funnel_App_Heatmap {
                 $list[] = $prepared_array;
             }
             // country & type set
-            else if ('none' === $filters['project'] &&  $prepared_array['country'] === $filters['country'] && 'none' === $filters['language'] && $prepared_array['type'] === $filters['type'] ) {
+            else if ( 'none' === $filters['project'] && $prepared_array['country'] === $filters['country'] && 'none' === $filters['language'] && $prepared_array['type'] === $filters['type'] ) {
                 $list[] = $prepared_array;
             }
             // project & type set
@@ -2897,7 +2897,7 @@ class GO_Funnel_App_Heatmap {
     public static function get_activity_grid_id( $grid_id, $timezone_offset, $language_code ) {
         global $zume_languages_by_code;
         $list = [];
-        switch_to_locale('en_US');
+        switch_to_locale( 'en_US' );
         $training_items = [];
 
         $activity_list = self::query_activity_grid_id( $grid_id, $language_code );
@@ -3211,7 +3211,7 @@ class GO_Funnel_App_Heatmap {
         return $time_string;
     }
 
-    public static function _time_ago($time) {
+    public static function _time_ago( $time ) {
 
         // Calculate difference between current
         // time and given timestamp in seconds
@@ -3221,32 +3221,32 @@ class GO_Funnel_App_Heatmap {
         $sec     = $diff;
 
         // Convert time difference in minutes
-        $min     = round($diff / 60 );
+        $min     = round( $diff / 60 );
 
         // Convert time difference in hours
-        $hrs     = round($diff / 3600);
+        $hrs     = round( $diff / 3600 );
 
         // Convert time difference in days
-        $days     = round($diff / 86400 );
+        $days     = round( $diff / 86400 );
 
         // Convert time difference in weeks
-        $weeks     = round($diff / 604800);
+        $weeks     = round( $diff / 604800 );
 
         // Convert time difference in months
-        $mnths     = round($diff / 2600640 );
+        $mnths     = round( $diff / 2600640 );
 
         // Convert time difference in years
-        $yrs     = round($diff / 31207680 );
+        $yrs     = round( $diff / 31207680 );
 
         // Check for seconds
-        if($sec <= 60) {
+        if ( $sec <= 60 ) {
             return "$sec seconds ago";
         }
 
         // Check for minutes
-        else if($min <= 60) {
-            if($min==1) {
-                return "one minute ago";
+        else if ( $min <= 60 ) {
+            if ( $min ==1 ) {
+                return 'one minute ago';
             }
             else {
                 return "$min minutes ago";
@@ -3254,9 +3254,9 @@ class GO_Funnel_App_Heatmap {
         }
 
         // Check for hours
-        else if($hrs <= 24) {
-            if($hrs == 1) {
-                return "an hour ago";
+        else if ( $hrs <= 24 ) {
+            if ( $hrs == 1 ) {
+                return 'an hour ago';
             }
             else {
                 return "$hrs hours ago";
@@ -3264,9 +3264,9 @@ class GO_Funnel_App_Heatmap {
         }
 
         // Check for days
-        else if($days <= 7) {
-            if($days == 1) {
-                return "Yesterday";
+        else if ( $days <= 7 ) {
+            if ( $days == 1 ) {
+                return 'Yesterday';
             }
             else {
                 return "$days days ago";
@@ -3274,9 +3274,9 @@ class GO_Funnel_App_Heatmap {
         }
 
         // Check for weeks
-        else if($weeks <= 4.3) {
-            if($weeks == 1) {
-                return "a week ago";
+        else if ( $weeks <= 4.3 ) {
+            if ( $weeks == 1 ) {
+                return 'a week ago';
             }
             else {
                 return "$weeks weeks ago";
@@ -3284,9 +3284,9 @@ class GO_Funnel_App_Heatmap {
         }
 
         // Check for months
-        else if($mnths <= 12) {
-            if($mnths == 1) {
-                return "a month ago";
+        else if ( $mnths <= 12 ) {
+            if ( $mnths == 1 ) {
+                return 'a month ago';
             }
             else {
                 return "$mnths months ago";
@@ -3295,8 +3295,8 @@ class GO_Funnel_App_Heatmap {
 
         // Check for years
         else {
-            if($yrs == 1) {
-                return "one year ago";
+            if ( $yrs == 1 ) {
+                return 'one year ago';
             }
             else {
                 return "$yrs years ago";
@@ -3394,7 +3394,7 @@ class GO_Funnel_App_Heatmap {
 
 
     public static function _time_elapsed_string( $datetime, $full = false ) {
-        $now = new DateTime;
+        $now = new DateTime();
         $then = new DateTime( $datetime );
         $diff = (array) $now->diff( $then );
 
@@ -3411,19 +3411,19 @@ class GO_Funnel_App_Heatmap {
             's' => 'second',
         );
 
-        foreach( $string as $k => & $v )
+        foreach ( $string as $k => & $v )
         {
             if ( $diff[$k] )
             {
                 $v = $diff[$k] . ' ' . $v .( $diff[$k] > 1 ? 's' : '' );
             }
-            else
-            {
+            else {
                 unset( $string[$k] );
             }
         }
 
-        if ( ! $full ) $string = array_slice( $string, 0, 1 );
+        if ( ! $full ) { $string = array_slice( $string, 0, 1 );
+        }
         return $string ? implode( ', ', $string ) . ' ago' : 'just now';
     }
 

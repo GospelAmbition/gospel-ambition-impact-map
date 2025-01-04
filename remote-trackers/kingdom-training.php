@@ -18,9 +18,9 @@ add_action( 'user_register', function( $user_id ) {
     }
 });
 // log courses completed
-add_action( "learndash_course_completed", function ( $data ) {
-    $user_id   = $data["user"]->ID;
-    $course_id = $data["course"]->ID;
+add_action( 'learndash_course_completed', function ( $data ) {
+    $user_id   = $data['user']->ID;
+    $course_id = $data['course']->ID;
 
     add_log_to_queue([
         'post_type' => 'kingdom_training',
@@ -38,13 +38,12 @@ add_action( "learndash_course_completed", function ( $data ) {
     // dt_write_log('course completed');
     // dt_write_log( get_the_title( $course_id ) );
     // dt_write_log( $course_id );
-
 }, 5, 1 );
 // log course completed
-add_action( "learndash_lesson_completed", function ( $data ) {
-    $user_id   = $data["user"]->ID;
-    $course_id = $data["course"]->ID;
-    $lesson_id = $data["lesson"]->ID;
+add_action( 'learndash_lesson_completed', function ( $data ) {
+    $user_id   = $data['user']->ID;
+    $course_id = $data['course']->ID;
+    $lesson_id = $data['lesson']->ID;
 
     add_log_to_queue([
         'post_type' => 'kingdom_training',
@@ -64,7 +63,5 @@ add_action( "learndash_lesson_completed", function ( $data ) {
     // dt_write_log( get_the_title( $lesson_id ) );
     // dt_write_log( get_the_title( $course_id ) );
     // dt_write_log( $lesson_id );
-
 }, 5, 1 );
 // log coaching requests
-

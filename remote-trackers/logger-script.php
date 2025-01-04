@@ -26,6 +26,5 @@ function go_url_logger(){
         </script>
         <?php
     }
-
 }
 

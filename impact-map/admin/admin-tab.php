@@ -17,7 +17,7 @@ class Impact_Map_Menu {
         return self::$_instance;
     }
     public function __construct() {
-        add_action( "admin_menu", array( $this, "register_menu" ) );
+        add_action( 'admin_menu', array( $this, 'register_menu' ) );
     }
     public function register_menu() {
         add_submenu_page( 'dt_extensions', $this->page_title, $this->page_title, 'manage_options', $this->token, [ $this, 'content' ] );
@@ -29,8 +29,8 @@ class Impact_Map_Menu {
             wp_die( 'You do not have sufficient permissions to access this page.' );
         }
 
-        if ( isset( $_GET["tab"] ) ) {
-            $tab = sanitize_key( wp_unslash( $_GET["tab"] ) );
+        if ( isset( $_GET['tab'] ) ) {
+            $tab = sanitize_key( wp_unslash( $_GET['tab'] ) );
         } else {
             $tab = 'general';
         }
@@ -47,7 +47,7 @@ class Impact_Map_Menu {
 
             <?php
             switch ( $tab ) {
-                case "general":
+                case 'general':
                     $object = new Impact_Map_Tab_General();
                     $object->content();
                     break;

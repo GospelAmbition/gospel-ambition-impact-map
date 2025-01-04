@@ -27,7 +27,7 @@ class GO_Impact_Map_Endpoints
         $ip_list = [];
         $ip_other_list = [];
         $geocoder = new Location_Grid_Geocoder();
-        foreach( $logs as $i => $v ) {
+        foreach ( $logs as $i => $v ) {
 
             // PRIMARY LOCATION
             $row = [];
@@ -136,14 +136,14 @@ class GO_Impact_Map_Endpoints
             // END ADDITIONAL LOCATION
         }
 
-        foreach( $logs as $i => $v ) {
+        foreach ( $logs as $i => $v ) {
             $logs[$i]['language_code'] = $this->_create_language_code( $v );
             $logs[$i]['payload'] = $this->_create_string( $v );
         }
 
         // dt_write_log( $logs );
 
-        foreach( $logs as $i => $v ) {
+        foreach ( $logs as $i => $v ) {
             $args = [
                 'post_type' => $v['post_type'],
                 'type' => $v['type'],
@@ -168,31 +168,39 @@ class GO_Impact_Map_Endpoints
 
     public function _create_string( $log ) {
 
-       $string = '';
+        $string = '';
 
-       if ( !empty( $string = $this->_strings_for_prayer_global( $log ) ) ) {
+        $string = $this->_strings_for_prayer_global( $log );
+        if ( !empty( $string ) ) {
             return $string;
         }
-        else if ( !empty( $string = $this->_strings_for_prayer_tools( $log ) ) ) {
+
+        $string = $this->_strings_for_prayer_tools( $log );
+        if ( !empty( $string ) ) {
             return $string;
         }
-        else if ( !empty( $string = $this->_strings_for_disciple_tools( $log ) ) ) {
+
+        $string = $this->_strings_for_disciple_tools( $log );
+        if ( !empty( $string ) ) {
             return $string;
         }
-        else if ( !empty( $string = $this->_strings_for_kingdom_training( $log ) ) ) {
+
+        $string = $this->_strings_for_kingdom_training( $log );
+        if ( !empty( $string ) ) {
             return $string;
         }
-        else if ( !empty( $string = $this->_strings_for_zume( $log ) ) ) {
+
+        $string = $this->_strings_for_zume( $log );
+        if ( !empty( $string ) ) {
             return $string;
         }
 
         return $string;
-
     }
     public function _add_language_string( $log ) {
         $langauges = impact_map_languages();
         $string = '';
-        if ( isset( $log['language_code'] ) && ! empty( $log['language_code'] ) && ! in_array( $log['language_code'], ['en', 'en_US', '' ] ) ) {
+        if ( isset( $log['language_code'] ) && ! empty( $log['language_code'] ) && ! in_array( $log['language_code'], [ 'en', 'en_US', '' ] ) ) {
             $string = ' in '.$langauges[$log['language_code']];
         }
         return $string;
@@ -208,7 +216,7 @@ class GO_Impact_Map_Endpoints
     // PRAYER GLOBAL
     public function _strings_for_prayer_global( $log ) {
         $string = '';
-        switch( $log['subtype'] ) {
+        switch ( $log['subtype'] ) {
 
             // PRAYER GLOBAL
             case 'prayer_for_location':
@@ -226,7 +234,7 @@ class GO_Impact_Map_Endpoints
             case 'pg_registered':
                 $string = 'Someone joined Prayer Global'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
                 break;
-             default:
+            default:
                 $string = '';
         }
 
@@ -235,7 +243,7 @@ class GO_Impact_Map_Endpoints
     // PRAYER TOOLS
     public function _strings_for_prayer_tools( $log ) {
         $string = '';
-        switch( $log['subtype'] ) {
+        switch ( $log['subtype'] ) {
 
             // PRAYER TOOLS
             case 'pt_registered':
@@ -250,14 +258,14 @@ class GO_Impact_Map_Endpoints
             default:
                 $string = '';
                 break;
-            }
+        }
 
         return $string;
     }
     // DISCIPLE TOOLS
     public function _strings_for_disciple_tools( $log ) {
         $string = '';
-        switch( $log['subtype'] ) {
+        switch ( $log['subtype'] ) {
             case 'software_downloaded':
                 $string = 'Someone has downloaded Disciple Tools software. ('.$log['label'].')';
                 break;
@@ -276,7 +284,7 @@ class GO_Impact_Map_Endpoints
     // KINGDOM TRAINING
     public function _strings_for_kingdom_training( $log ) {
         $string = '';
-        switch( $log['subtype'] ) {
+        switch ( $log['subtype'] ) {
             case 'kt_registered':
                 $string = 'Someone is joining Kingdom Training'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
                 break;
@@ -288,7 +296,7 @@ class GO_Impact_Map_Endpoints
                 break;
             default:
                 $string = '';
-            }
+        }
 
         return $string;
     }
@@ -300,11 +308,11 @@ class GO_Impact_Map_Endpoints
             $key = (int) $key;
         }
 
-        $training_items = $this->zume_training_items($key);
+        $training_items = $this->zume_training_items( $key );
         $title = $training_items['title'] ?? '';
         $type = $log['type'];
 
-        switch( $type .' '. $value ) {
+        switch ( $type .' '. $value ) {
 
             // ZUME - TRAINING
             case 'training heard':
@@ -345,14 +353,14 @@ class GO_Impact_Map_Endpoints
             case 'training b':
             case 'training c':
                 [ $set_pre, $set_type, $set_number ] = explode( '_', $log['subtype'] );
-                $string = 'A trainee is starting session '.(int) $set_number.' of the Zume Training'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
+                $string = 'A trainee is starting session '. (int) $set_number.' of the Zume Training'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
                 break;
 
             default:
                 break;
         }
 
-        switch( $log['subtype'] ) {
+        switch ( $log['subtype'] ) {
 
             case 'guidebook_10':
                 $string = 'Someone downloaded the 10 session Zume Training guidebook'.$this->_add_language_string( $log ).'. ('.$log['label'].')';
@@ -910,7 +918,6 @@ class GO_Impact_Map_Endpoints
             }
 
             return $list[$item_number] ?? [];
-
     }
 
     public function _create_language_code( $log ) {
@@ -929,7 +936,7 @@ class GO_Impact_Map_Endpoints
     }
     public function __construct() {
         add_action( 'rest_api_init', [ $this, 'add_api_routes' ] );
-        add_filter( 'dt_allow_rest_access', [$this, 'authorize_url'], 10, 1 );
+        add_filter( 'dt_allow_rest_access', [ $this, 'authorize_url' ], 10, 1 );
     }
     public function authorize_url( $authorized )
     {
@@ -938,6 +945,5 @@ class GO_Impact_Map_Endpoints
         }
         return $authorized;
     }
-
 }
 GO_Impact_Map_Endpoints::instance();

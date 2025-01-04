@@ -29,7 +29,7 @@ add_action( 'wp_insert_post', function( $post_ID, $post, $update ) {
 /**
  * updated_post_meta
  */
-add_action( 'updated_post_meta',  function( $meta_id, $object_id, $meta_key, $meta_value, $new = false, $deleted = false ){
+add_action( 'updated_post_meta', function( $meta_id, $object_id, $meta_key, $meta_value, $new = false, $deleted = false ){
     if ( $meta_key === 'status' && $meta_value === 'complete' ) {
         // dt_write_log('updated_post_meta');
         add_log_to_queue( [
@@ -71,7 +71,7 @@ add_action('dt_insert_report', function( $args ) {
 }, 10, 1 );
 
 // trigger on all prayer pages
-add_action('go_log_trigger', function( ) {
+add_action('go_log_trigger', function() {
     $url = dt_get_url_path();
     if ( str_starts_with( $url, 'prayer_app/global' ) || str_starts_with( $url, 'prayer_app/custom' ) ) {
 
@@ -86,5 +86,4 @@ add_action('go_log_trigger', function( ) {
             ],
         ] );
     }
-
 }, 10, 1 );

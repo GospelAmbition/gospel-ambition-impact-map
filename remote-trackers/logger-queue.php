@@ -16,7 +16,7 @@ class GO_Impact_Map_Queue {
     public static function get_queue() {
         return get_post_meta( self::_get_queue_id(), 'log_queue' );
     }
-    public static function add_to_queue( $log_item) {
+    public static function add_to_queue( $log_item ) {
         return add_post_meta( self::_get_queue_id(), 'log_queue', $log_item, false );
     }
     public static function delete_queue() {
@@ -37,7 +37,7 @@ class GO_Impact_Map_Queue {
 
         $body = json_decode( wp_remote_retrieve_body( wp_remote_post( $logger_url, $json_body ) ), true );
 
-        
+
 
         return $body;
     }
@@ -107,7 +107,7 @@ class GO_Impact_Map_Queue {
     }
     public function __construct() {
         add_action( 'rest_api_init', [ $this, 'add_api_routes' ] );
-        add_filter( 'dt_allow_rest_access', [$this, 'authorize_url'], 10, 1 );
+        add_filter( 'dt_allow_rest_access', [ $this, 'authorize_url' ], 10, 1 );
     }
     public function add_api_routes() {
         register_rest_route(

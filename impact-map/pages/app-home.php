@@ -69,26 +69,26 @@ class GO_Impact_Map_Magic_Home_App extends DT_Magic_Url_Base
             $allowed_js[] = 'foundation_js';
             $allowed_js[] = 'foundation_reveal_js';
 
-            $key = array_search('lodash', $allowed_js );
-            if ( $key ) {
-                unset($allowed_js[$key]);
-            }
-            $key = array_search('lodash-core', $allowed_js );
-            if ( $key ) {
-                unset($allowed_js[$key]);
-            }
-            $key = array_search('site-js', $allowed_js );
-            if ( $key ) {
-                unset($allowed_js[$key]);
-            }
-            $key = array_search('moment', $allowed_js );
-            if ( $key ) {
-                unset($allowed_js[$key]);
-            }
-            $key = array_search('datepicker', $allowed_js );
-            if ( $key ) {
-                unset($allowed_js[$key]);
-            }
+            $key = array_search( 'lodash', $allowed_js );
+        if ( $key ) {
+            unset( $allowed_js[$key] );
+        }
+            $key = array_search( 'lodash-core', $allowed_js );
+        if ( $key ) {
+            unset( $allowed_js[$key] );
+        }
+            $key = array_search( 'site-js', $allowed_js );
+        if ( $key ) {
+            unset( $allowed_js[$key] );
+        }
+            $key = array_search( 'moment', $allowed_js );
+        if ( $key ) {
+            unset( $allowed_js[$key] );
+        }
+            $key = array_search( 'datepicker', $allowed_js );
+        if ( $key ) {
+            unset( $allowed_js[$key] );
+        }
 
         return $allowed_js;
     }

@@ -62,7 +62,6 @@ class GO_Impact_Context_Switcher {
             if ( in_array( 'zume-coaching-system/zume-coaching-system.php', $active_plugins ) ) {
                 require_once( 'remote-trackers/zume-training-coaching.php' );
             }
-
         }
     }
 }

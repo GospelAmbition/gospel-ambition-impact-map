@@ -2,7 +2,7 @@
 if ( !defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly.
 
 add_action('zume_log', function( $args ) {
-    if ( in_array( $args['type'], ['system'] ) ) {
+    if ( in_array( $args['type'], [ 'system' ] ) ) {
         return;
     }
 
@@ -16,7 +16,6 @@ add_action('zume_log', function( $args ) {
             'ip' => get_ip_address_for_log()
         ],
     ] );
-
 }, 10, 1 );
 
 add_action('zume_log_anonymous', function( $args ) {
@@ -30,5 +29,4 @@ add_action('zume_log_anonymous', function( $args ) {
             'ip' => get_ip_address_for_log()
         ],
     ] );
-
 }, 10, 1 );
