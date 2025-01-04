@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Gospel Ambition - Impact Map
  * Plugin URI: https://github.com/GospelAmbition/gospel-ambition-impact-map
- * Description: Disciple.Tools - Gospel Ambition Impact Map is intended to help developers and integrator jumpstart their extension of the Disciple.Tools system.
+ * Description: Gospel Ambition - Impact Map shows some of the global activity of the GO digital disciple making activity.
  * Text Domain: gospel-ambition-impact-map
  * Domain Path: /languages
  * Version:  0.1
