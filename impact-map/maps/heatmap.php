@@ -1,7 +1,7 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly
 
-class Zume_Funnel_App_Heatmap {
+class GO_Funnel_App_Heatmap {
 
 
     /**
@@ -1990,14 +1990,14 @@ class Zume_Funnel_App_Heatmap {
     }
 
     public static function clear_practitioner_grid_totals() {
-        delete_transient( 'Zume_Funnel_App_Heatmap::query_practitioner_grid_totals' );
-        delete_transient( 'Zume_Funnel_App_Heatmap::query_practitioner_grid_totalsa0' );
-        delete_transient( 'Zume_Funnel_App_Heatmap::query_practitioner_grid_totalsa1' );
-        delete_transient( 'Zume_Funnel_App_Heatmap::query_practitioner_grid_totalsa2' );
-        delete_transient( 'Zume_Funnel_App_Heatmap::query_practitioner_grid_totalsa3' );
-        delete_transient( 'Zume_Funnel_App_Heatmap::query_practitioner_grid_totalsa4' );
-        delete_transient( 'Zume_Funnel_App_Heatmap::query_practitioner_grid_totalsworld' );
-        delete_transient( 'Zume_Funnel_App_Heatmap::query_practitioner_grid_totalsfull' );
+        delete_transient( 'GO_Funnel_App_Heatmap::query_practitioner_grid_totals' );
+        delete_transient( 'GO_Funnel_App_Heatmap::query_practitioner_grid_totalsa0' );
+        delete_transient( 'GO_Funnel_App_Heatmap::query_practitioner_grid_totalsa1' );
+        delete_transient( 'GO_Funnel_App_Heatmap::query_practitioner_grid_totalsa2' );
+        delete_transient( 'GO_Funnel_App_Heatmap::query_practitioner_grid_totalsa3' );
+        delete_transient( 'GO_Funnel_App_Heatmap::query_practitioner_grid_totalsa4' );
+        delete_transient( 'GO_Funnel_App_Heatmap::query_practitioner_grid_totalsworld' );
+        delete_transient( 'GO_Funnel_App_Heatmap::query_practitioner_grid_totalsfull' );
     }
 
     public static function query_practitioner_grid_totals( $administrative_level = null ) {
@@ -2278,14 +2278,14 @@ class Zume_Funnel_App_Heatmap {
     }
 
     public static function clear_church_grid_totals() {
-        delete_transient( 'Zume_Funnel_App_Heatmap::query_church_grid_totals' );
-        delete_transient( 'Zume_Funnel_App_Heatmap::query_church_grid_totalsa0' );
-        delete_transient( 'Zume_Funnel_App_Heatmap::query_church_grid_totalsa1' );
-        delete_transient( 'Zume_Funnel_App_Heatmap::query_church_grid_totalsa2' );
-        delete_transient( 'Zume_Funnel_App_Heatmap::query_church_grid_totalsa3' );
-        delete_transient( 'Zume_Funnel_App_Heatmap::query_church_grid_totalsa4' );
-        delete_transient( 'Zume_Funnel_App_Heatmap::query_church_grid_totalsworld' );
-        delete_transient( 'Zume_Funnel_App_Heatmap::query_church_grid_totalsfull' );
+        delete_transient( 'GO_Funnel_App_Heatmap::query_church_grid_totals' );
+        delete_transient( 'GO_Funnel_App_Heatmap::query_church_grid_totalsa0' );
+        delete_transient( 'GO_Funnel_App_Heatmap::query_church_grid_totalsa1' );
+        delete_transient( 'GO_Funnel_App_Heatmap::query_church_grid_totalsa2' );
+        delete_transient( 'GO_Funnel_App_Heatmap::query_church_grid_totalsa3' );
+        delete_transient( 'GO_Funnel_App_Heatmap::query_church_grid_totalsa4' );
+        delete_transient( 'GO_Funnel_App_Heatmap::query_church_grid_totalsworld' );
+        delete_transient( 'GO_Funnel_App_Heatmap::query_church_grid_totalsfull' );
     }
 
     public static function query_church_grid_totals( $administrative_level = null ) {
@@ -2304,7 +2304,7 @@ class Zume_Funnel_App_Heatmap {
                     FROM (
                         SELECT lg.admin0_grid_id, lg.admin1_grid_id, lg.admin2_grid_id, lg.admin3_grid_id
                         FROM wp_dt_location_grid_meta lgm
-                        LEFT JOIN zume_postmeta pm ON pm.post_id=lgm.post_id AND pm.meta_key = 'group_type' AND pm.meta_value = 'church'
+                        LEFT JOIN wp_postmeta pm ON pm.post_id=lgm.post_id AND pm.meta_key = 'group_type' AND pm.meta_value = 'church'
                         LEFT JOIN wp_dt_location_grid lg ON lg.grid_id=lgm.grid_id
                         WHERE lgm.post_type = 'groups'
                     ) as t0
@@ -2317,7 +2317,7 @@ class Zume_Funnel_App_Heatmap {
                     FROM (
                         SELECT lg.admin0_grid_id, lg.admin1_grid_id, lg.admin2_grid_id, lg.admin3_grid_id
                         FROM wp_dt_location_grid_meta lgm
-                        LEFT JOIN zume_postmeta pm ON pm.post_id=lgm.post_id AND pm.meta_key = 'group_type' AND pm.meta_value = 'church'
+                        LEFT JOIN wp_postmeta pm ON pm.post_id=lgm.post_id AND pm.meta_key = 'group_type' AND pm.meta_value = 'church'
                         LEFT JOIN wp_dt_location_grid lg ON lg.grid_id=lgm.grid_id
                         WHERE lgm.post_type = 'groups'
                     ) as t1
@@ -2330,7 +2330,7 @@ class Zume_Funnel_App_Heatmap {
                     FROM (
                         SELECT lg.admin0_grid_id, lg.admin1_grid_id, lg.admin2_grid_id, lg.admin3_grid_id
                         FROM wp_dt_location_grid_meta lgm
-                        LEFT JOIN zume_postmeta pm ON pm.post_id=lgm.post_id AND pm.meta_key = 'group_type' AND pm.meta_value = 'church'
+                        LEFT JOIN wp_postmeta pm ON pm.post_id=lgm.post_id AND pm.meta_key = 'group_type' AND pm.meta_value = 'church'
                         LEFT JOIN wp_dt_location_grid lg ON lg.grid_id=lgm.grid_id
                         WHERE lgm.post_type = 'groups'
                     ) as t2
@@ -2343,7 +2343,7 @@ class Zume_Funnel_App_Heatmap {
                     FROM (
                         SELECT lg.admin0_grid_id, lg.admin1_grid_id, lg.admin2_grid_id, lg.admin3_grid_id
                         FROM wp_dt_location_grid_meta lgm
-                        LEFT JOIN zume_postmeta pm ON pm.post_id=lgm.post_id AND pm.meta_key = 'group_type' AND pm.meta_value = 'church'
+                        LEFT JOIN wp_postmeta pm ON pm.post_id=lgm.post_id AND pm.meta_key = 'group_type' AND pm.meta_value = 'church'
                         LEFT JOIN wp_dt_location_grid lg ON lg.grid_id=lgm.grid_id
                         WHERE lgm.post_type = 'groups'
                     ) as t3
@@ -2357,7 +2357,7 @@ class Zume_Funnel_App_Heatmap {
                     FROM (
                         SELECT 'World'
                         FROM wp_dt_location_grid_meta lgm
-                        LEFT JOIN zume_postmeta pm ON pm.post_id=lgm.post_id AND pm.meta_key = 'group_type' AND pm.meta_value = 'church'
+                        LEFT JOIN wp_postmeta pm ON pm.post_id=lgm.post_id AND pm.meta_key = 'group_type' AND pm.meta_value = 'church'
                         LEFT JOIN wp_dt_location_grid lg ON lg.grid_id=lgm.grid_id
                         WHERE lgm.post_type = 'groups'
                          ) as tw
@@ -2371,7 +2371,7 @@ class Zume_Funnel_App_Heatmap {
                     FROM (
                         SELECT lg.admin0_grid_id, lg.admin1_grid_id, lg.admin2_grid_id, lg.admin3_grid_id
                         FROM wp_dt_location_grid_meta lgm
-                        LEFT JOIN zume_postmeta pm ON pm.post_id=lgm.post_id AND pm.meta_key = 'group_type' AND pm.meta_value = 'church'
+                        LEFT JOIN wp_postmeta pm ON pm.post_id=lgm.post_id AND pm.meta_key = 'group_type' AND pm.meta_value = 'church'
                         LEFT JOIN wp_dt_location_grid lg ON lg.grid_id=lgm.grid_id
                         WHERE lgm.post_type = 'groups'
                     ) as t0
@@ -2381,7 +2381,7 @@ class Zume_Funnel_App_Heatmap {
                     FROM (
                         SELECT lg.admin0_grid_id, lg.admin1_grid_id, lg.admin2_grid_id, lg.admin3_grid_id
                         FROM wp_dt_location_grid_meta lgm
-                        LEFT JOIN zume_postmeta pm ON pm.post_id=lgm.post_id AND pm.meta_key = 'group_type' AND pm.meta_value = 'church'
+                        LEFT JOIN wp_postmeta pm ON pm.post_id=lgm.post_id AND pm.meta_key = 'group_type' AND pm.meta_value = 'church'
                         LEFT JOIN wp_dt_location_grid lg ON lg.grid_id=lgm.grid_id
                         WHERE lgm.post_type = 'groups'
                     ) as t1
@@ -2391,7 +2391,7 @@ class Zume_Funnel_App_Heatmap {
                     FROM (
                         SELECT lg.admin0_grid_id, lg.admin1_grid_id, lg.admin2_grid_id, lg.admin3_grid_id
                         FROM wp_dt_location_grid_meta lgm
-                        LEFT JOIN zume_postmeta pm ON pm.post_id=lgm.post_id AND pm.meta_key = 'group_type' AND pm.meta_value = 'church'
+                        LEFT JOIN wp_postmeta pm ON pm.post_id=lgm.post_id AND pm.meta_key = 'group_type' AND pm.meta_value = 'church'
                         LEFT JOIN wp_dt_location_grid lg ON lg.grid_id=lgm.grid_id
                         WHERE lgm.post_type = 'groups'
                     ) as t2
@@ -2401,7 +2401,7 @@ class Zume_Funnel_App_Heatmap {
                     FROM (
                         SELECT lg.admin0_grid_id, lg.admin1_grid_id, lg.admin2_grid_id, lg.admin3_grid_id
                         FROM wp_dt_location_grid_meta lgm
-                        LEFT JOIN zume_postmeta pm ON pm.post_id=lgm.post_id AND pm.meta_key = 'group_type' AND pm.meta_value = 'church'
+                        LEFT JOIN wp_postmeta pm ON pm.post_id=lgm.post_id AND pm.meta_key = 'group_type' AND pm.meta_value = 'church'
                         LEFT JOIN wp_dt_location_grid lg ON lg.grid_id=lgm.grid_id
                         WHERE lgm.post_type = 'groups'
                     ) as t3
@@ -2411,7 +2411,7 @@ class Zume_Funnel_App_Heatmap {
                     FROM (
                         SELECT 'World'
                         FROM wp_dt_location_grid_meta lgm
-                        LEFT JOIN zume_postmeta pm ON pm.post_id=lgm.post_id AND pm.meta_key = 'group_type' AND pm.meta_value = 'church'
+                        LEFT JOIN wp_postmeta pm ON pm.post_id=lgm.post_id AND pm.meta_key = 'group_type' AND pm.meta_value = 'church'
                         LEFT JOIN wp_dt_location_grid lg ON lg.grid_id=lgm.grid_id
                         WHERE lgm.post_type = 'groups'
                          ) as tw

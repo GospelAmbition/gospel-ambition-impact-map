@@ -12,14 +12,14 @@ if ( !defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly.
  * @see https://disciple.tools/plugins/porch/
  * @see https://disciple.tools/plugins/disciple-tools-porch-template/
  */
-class GA_Impact_Map_Magic_Home_App extends DT_Magic_Url_Base
+class GO_Impact_Map_Magic_Home_App extends DT_Magic_Url_Base
 {
     public $magic = false;
     public $parts = false;
     public $page_title = 'Gospel Ambition - Impact Map';
-    public $root = 'go';
+    public $root = 'app';
     public $type = 'home';
-    public static $token = 'go_home';
+    public static $token = 'app_home';
 
     private static $_instance = null;
     public static function instance() {
@@ -125,12 +125,10 @@ class GA_Impact_Map_Magic_Home_App extends DT_Magic_Url_Base
                 </div>
             </div>
             <div class="content">
-                <div class="grid-x grid-padding-x">
-                    <div class="cell">
-                        <a class="button expanded" href="/zume_app/last100_hours">Map</a>
-                    </div>
-                    <div class="cell">
-
+                <div class="grid-x grid-padding-x align-center">
+                    <div class="cell medium-6">
+                        <a class="button large expanded" href="/app/100map">Impact Map (100 Hour)</a>
+                        <a class="button large expanded" href="/app/activity">Activity List (100 Hour)</a><br>
                     </div>
                 </div>
             </div>
@@ -141,4 +139,4 @@ class GA_Impact_Map_Magic_Home_App extends DT_Magic_Url_Base
         <?php
     }
 }
-GA_Impact_Map_Magic_Home_App::instance();
+GO_Impact_Map_Magic_Home_App::instance();

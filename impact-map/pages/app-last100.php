@@ -1,20 +1,20 @@
 <?php
 if ( !defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly.
 
-if ( strpos( dt_get_url_path(), 'zume_app' ) !== false || dt_is_rest() ){
-    Zume_Funnel_Public_Heatmap_100hours_V2::instance();
+if ( strpos( dt_get_url_path(), 'app' ) !== false || dt_is_rest() ){
+    GO_Funnel_Public_Heatmap_100hours_V2::instance();
 }
 
 /**
  * Class Disciple_Tools_Plugin_Starter_Template_Magic_Link
  */
-class Zume_Funnel_Public_Heatmap_100hours_V2 extends DT_Magic_Url_Base {
+class GO_Funnel_Public_Heatmap_100hours_V2 extends DT_Magic_Url_Base {
 
     public $magic = false;
     public $parts = false;
     public $page_title = 'Last 100 Hours';
-    public $root = 'zume_app';
-    public $type = 'last100_hours';
+    public $root = 'app';
+    public $type = '100map';
     public $post_type = 'contacts';
     private $meta_key = '';
 
@@ -71,8 +71,8 @@ class Zume_Funnel_Public_Heatmap_100hours_V2 extends DT_Magic_Url_Base {
     }
 
     public function scripts() {
-        wp_enqueue_script( 'last100-hours-js', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'cluster-1-last100.js', [ 'jquery' ],
-        filemtime( trailingslashit( plugin_dir_path( __FILE__ ) ) .'cluster-1-last100.js' ), true );
+        wp_enqueue_script( 'last100-hours-js', trailingslashit( plugin_dir_url( __DIR__ ) ) . 'maps/cluster-1-last100.js', [ 'jquery' ],
+        filemtime( trailingslashit( plugin_dir_path( __DIR__ ) ) .'maps/cluster-1-last100.js' ), true );
     }
 
     /**
@@ -151,9 +151,9 @@ class Zume_Funnel_Public_Heatmap_100hours_V2 extends DT_Magic_Url_Base {
 
         switch ( $action ) {
             case 'load_geojson':
-                return Zume_Funnel_App_Heatmap::get_activity_geojson( $language_code );
+                return GO_Funnel_App_Heatmap::get_activity_geojson( $language_code );
             case 'activity_list':
-                return Zume_Funnel_App_Heatmap::get_activity_list( $params['data'], true, $language_code );
+                return GO_Funnel_App_Heatmap::get_activity_list( $params['data'], true, $language_code );
             default:
                 return new WP_Error( __METHOD__, 'Missing valid action', [ 'status' => 400 ] );
         }

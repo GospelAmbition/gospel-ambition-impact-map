@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Gets the instance of the `GA_Impact_Map` class.
+ * Gets the instance of the `GO_Impact_Map` class.
  *
  * @since  0.1
  * @access public
@@ -36,7 +36,7 @@ function ga_impact_map() {
         require_once get_template_directory() . '/dt-core/global-functions.php';
     }
 
-    return GA_Impact_Map::instance();
+    return GO_Impact_Map::instance();
 }
 add_action( 'after_setup_theme', 'ga_impact_map', 20 );
 
@@ -57,7 +57,7 @@ add_filter( 'dt_plugins', function ( $plugins ){
  * @since  0.1
  * @access public
  */
-class GA_Impact_Map {
+class GO_Impact_Map {
 
     private static $_instance = null;
     public static function instance() {
@@ -71,12 +71,10 @@ class GA_Impact_Map {
         $is_rest = dt_is_rest();
 
         if ( $is_rest && strpos( dt_get_url_path(), 'gospel-ambition-impact-map' ) !== false ) {
-            require_once( 'rest-api/insert.php' ); // adds starter rest api class
-            require_once( 'rest-api/rest-api.php' ); // adds starter rest api class
+            require_once( 'rest-api/loader.php' );
         }
 
-        require_once( 'pages/magic-link-map.php' );
-        require_once( 'pages/magic-link-home.php' );
+        require_once( 'pages/loader.php' );
         require_once( 'maps/loader.php' );
 
         if ( is_admin() ) { // adds links to the plugin description area in the plugin admin list.
@@ -186,8 +184,8 @@ class GA_Impact_Map {
 
 
 // Register activation hook.
-register_activation_hook( __FILE__, [ 'GA_Impact_Map', 'activation' ] );
-register_deactivation_hook( __FILE__, [ 'GA_Impact_Map', 'deactivation' ] );
+register_activation_hook( __FILE__, [ 'GO_Impact_Map', 'activation' ] );
+register_deactivation_hook( __FILE__, [ 'GO_Impact_Map', 'deactivation' ] );
 
 
 if ( ! function_exists( 'ga_impact_map_hook_admin_notice' ) ) {

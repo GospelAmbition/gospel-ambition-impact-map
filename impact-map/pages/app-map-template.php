@@ -1,22 +1,15 @@
 <?php
 if ( !defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly.
 
-/**
- * Loading the Mapbox Mapping system into a Magic Link is a little tricky, so this starter class helps put in place
- * the key js and css resources needed to do that.
- *
- * @see https://zume.vision/maps/
- * These Zume maps are driven via a magic link from a Disciple Tools system.
- */
-class GA_Impact_Map_Magic_Map_App extends DT_Magic_Url_Base
+class GO_Impact_Map_App_Template extends DT_Magic_Url_Base
 {
     public $magic = false;
     public $parts = false;
     public $page_title = 'Gospel Ambition Impact Map';
-    public $root = 'map';
-    public $type = '100';
+    public $root = 'app';
+    public $type = 'map_template';
     public $type_name = 'Gospel Ambition Impact Map';
-    public static $token = 'map_100';
+    public static $token = 'app_map_template';
 
     private static $_instance = null;
     public static function instance() {
@@ -310,4 +303,4 @@ class GA_Impact_Map_Magic_Map_App extends DT_Magic_Url_Base
         );
     }
 }
-GA_Impact_Map_Magic_Map_App::instance();
+GO_Impact_Map_App_Template::instance();
