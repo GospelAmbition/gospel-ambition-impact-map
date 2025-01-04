@@ -15,7 +15,7 @@
   "license_url": "https://raw.githubusercontent.com/GospelAmbition/gospel-ambition-impact-map/master/LICENSE",
   "readme_url": "https://raw.githubusercontent.com/GospelAmbition/gospel-ambition-impact-map/master/README.md",
   "requires": "4.7",
-  "tested": "6.2",
+  "tested": "6.7.1",
   "upgrade_notice": "Upgrade to get the latest features.",
   "banners": {
     "low": "https://raw.githubusercontent.com/GospelAmbition/gospel-ambition-impact-map/master/documentation/banner.png",
