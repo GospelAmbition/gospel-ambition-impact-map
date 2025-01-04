@@ -5,7 +5,7 @@
  * Description: Gospel Ambition - Impact Map shows some of the global activity of the GO digital disciple making activity.
  * Text Domain: gospel-ambition-impact-map
  * Domain Path: /languages
- * Version:  0.7
+ * Version:  0.7.1
  * Author URI: https://github.com/GospelAmbition
  * GitHub Plugin URI: https://github.com/GospelAmbition/gospel-ambition-impact-map
  * Requires at least: 4.7.0
