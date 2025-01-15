@@ -10,6 +10,7 @@ class GO_Impact_Map_Magic_Map_App extends DT_Magic_Url_Base
     public $type = 'activity';
     public $type_name = 'Impact Activity';
     public static $token = 'app_activity';
+    private $meta_key = '';
 
     private static $_instance = null;
     public static function instance() {
@@ -20,160 +21,120 @@ class GO_Impact_Map_Magic_Map_App extends DT_Magic_Url_Base
     } // End instance()
 
     public function __construct() {
+        $this->meta_key = $this->root . '_' . $this->type . '_magic_key';
         parent::__construct();
 
+        /**
+         * post type and module section
+         */
+        add_action( 'rest_api_init', [ $this, 'add_endpoints' ] );
+
+        /**
+         * tests if other URL
+         */
         $url = dt_get_url_path();
-        if ( ( $this->root . '/' . $this->type ) === $url ) {
-
-            $this->magic = new DT_Magic_URL( $this->root );
-            $this->parts = $this->magic->parse_url_parts();
-
-            // register url and access
-            add_action( 'template_redirect', [ $this, 'theme_redirect' ] );
-            add_filter( 'dt_blank_access', function (){ return true;
-            }, 100, 1 );
-            add_filter( 'dt_allow_non_login_access', function (){ return true;
-            }, 100, 1 );
-            add_filter( 'dt_override_header_meta', function (){ return true;
-            }, 100, 1 );
-
-            // header content
-            add_filter( 'dt_blank_title', [ $this, 'page_tab_title' ] ); // adds basic title to browser tab
-            add_action( 'wp_print_scripts', [ $this, 'print_scripts' ], 1500 ); // authorizes scripts
-            add_action( 'wp_print_styles', [ $this, 'print_styles' ], 1500 ); // authorizes styles
-
-
-            // page content
-            add_action( 'dt_blank_head', [ $this, '_header' ] );
-            add_action( 'dt_blank_footer', [ $this, '_footer' ] );
-            add_action( 'dt_blank_body', [ $this, 'body' ] ); // body for no post key
-
-            add_filter( 'dt_magic_url_base_allowed_css', [ $this, 'dt_magic_url_base_allowed_css' ], 10, 1 );
-            add_filter( 'dt_magic_url_base_allowed_js', [ $this, 'dt_magic_url_base_allowed_js' ], 10, 1 );
-            add_action( 'wp_enqueue_scripts', [ $this, '_wp_enqueue_scripts' ], 100 );
+        if ( strpos( $url, $this->root . '/' . $this->type ) === false ) {
+            return;
+        }
+        /**
+         * tests magic link parts are registered and have valid elements
+         */
+        if ( !$this->check_parts_match( false ) ){
+            return;
         }
 
-        if ( dt_is_rest() ) {
-            add_action( 'rest_api_init', [ $this, 'add_endpoints' ] );
-            add_filter( 'dt_allow_rest_access', [ $this, 'authorize_url' ], 10, 1 );
-        }
+        // load if valid url
+        add_action( 'wp_enqueue_scripts', [ $this, 'scripts' ], 99 );
+        add_action( 'dt_blank_body', [ $this, 'body' ] ); // body for no post key
+        add_filter( 'dt_magic_url_base_allowed_css', [ $this, 'dt_magic_url_base_allowed_css' ], 10, 1 );
+        add_filter( 'dt_magic_url_base_allowed_js', [ $this, 'dt_magic_url_base_allowed_js' ], 10, 1 );
     }
 
     public function dt_magic_url_base_allowed_js( $allowed_js ) {
-        $allowed_js[] = 'jquery-touch-punch';
-        $allowed_js[] = 'mapbox-gl';
         $allowed_js[] = 'jquery-cookie';
         $allowed_js[] = 'mapbox-cookie';
-        $allowed_js[] = 'heatmap-js';
+        $allowed_js[] = 'mapbox-gl';
+        $allowed_js[] = 'last100-hours-js';
         return $allowed_js;
     }
 
     public function dt_magic_url_base_allowed_css( $allowed_css ) {
         $allowed_css[] = 'mapbox-gl-css';
-        $allowed_css[] = 'introjs-css';
-        $allowed_css[] = 'heatmap-css';
-        $allowed_css[] = 'site-css';
+        $allowed_css[] = 'vite_bundle_css';
         return $allowed_css;
+    }
+
+    public function scripts() {
+        // wp_enqueue_script( 'last100-hours-js', trailingslashit( plugin_dir_url( __DIR__ ) ) . 'maps/cluster-1-last100.js', [ 'jquery' ],
+        // filemtime( trailingslashit( plugin_dir_path( __DIR__ ) ) .'maps/cluster-1-last100.js' ), true );
     }
 
     public function header_javascript(){
         ?>
         <script>
-            let jsObject = [<?php echo json_encode([
+            let mapObject = [<?php echo json_encode([
                 'map_key' => DT_Mapbox_API::get_key(),
-                'ipstack' => DT_Ipstack_API::get_key(),
-                'mirror_url' => dt_get_location_grid_mirror( true ),
                 'root' => esc_url_raw( rest_url() ),
                 'nonce' => wp_create_nonce( 'wp_rest' ),
                 'parts' => $this->parts,
-                'translations' => [
-                    'add' => __( 'Add Magic', 'gospel-ambition-impact-map' ),
-                ],
+                'translation' => zume_map_translation_strings(),
             ]) ?>][0]
+            /* <![CDATA[ */
 
-            // jQuery(document).ready(function(){
-            //     window.load_map()
-            // })
+            window.post_request = ( action, data ) => {
+                return jQuery.ajax({
+                    type: "POST",
+                    data: JSON.stringify({ action: action, parts: mapObject.parts, data: data }),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    url: mapObject.root + mapObject.parts.root + '/v1/' + mapObject.parts.type,
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader('X-WP-Nonce', mapObject.nonce )
+                    }
+                })
+                    .fail(function(e) {
+                        console.log(e)
+                        jQuery('#error').html(e)
+                        jQuery('.loading-spinner').removeClass('active')
+                    })
+            }
 
+            let container = jQuery('#activity-list');
+            function load_map_activity() {
 
-            // window.load_map = () => {
-            //     let spinner = jQuery('.loading-spinner')
+                container.empty()
+                let spinner = jQuery('.loading-spinner')
+                spinner.addClass('active')
+                let data = {} // get_filters()
 
-            //     /* set vertical size the form column*/
-            //     jQuery('#custom-style').append(`
-            //       <style>
-            //           #map-wrapper {
-            //               height: ${window.innerHeight}px !important;
-            //           }
-            //           #map {
-            //               height: ${window.innerHeight}px !important;
-            //           }
-            //       </style>`)
+                window.post_request('activity_list', data )
+                .done( data => {
 
+                    let spinner = jQuery('.loading-spinner')
+                    console.log('loaded_map_activity')
+                    console.log(data)
+                    "use strict";
+                    window.activity_list = data
 
-            //     window.get_geojson().then(function(data){
+                    jQuery.each( window.activity_list.list, function(i,v){
+                        if ( '' === v.note ) {
+                            return
+                        }
+                        container.append(`<li class="${v.type} ${v.country} ${v.language}"><strong>(${v.time})</strong> ${v.note} </li>`)
+                    })
 
-            //         mapboxgl.accessToken = jsObject.map_key;
-            //         var map = new mapboxgl.Map({
-            //             container: 'map',
-            //             style: 'mapbox://styles/mapbox/light-v10',
-            //             center: [0, 0],
-            //             minZoom: 0,
-            //             zoom: 0
-            //         });
+                    if ( ! window.activity_list.list  ) {
+                        container.append(`<li><strong>${mapObject.translation.results}</strong> 0</li>`)
+                    }
 
-            //         map.dragRotate.disable();
-            //         map.touchZoomRotate.disableRotation();
+                    if ( window.activity_list.count > 250 ) {
+                        container.append(`<hr><li><strong>${window.activity_list.count - 250} ${mapObject.translation.additional_records}</strong></li><br><br>`)
+                    }
 
-            //         map.on('load', function() {
-            //             map.addSource('layer-source', {
-            //                 type: 'geojson',
-            //                 data: data
-            //             });
-
-            //             map.addLayer({
-            //                 id: 'circle-layer',
-            //                 type: 'circle',
-            //                 source: 'layer-source',
-            //                 paint: {
-            //                     'circle-color': '#00d9ff',
-            //                     'circle-radius':12,
-            //                     'circle-stroke-width': 1,
-            //                     'circle-stroke-color': '#fff'
-            //                 }
-            //             });
-
-            //            // @see https://docs.mapbox.com for all the capacity of mapbox mapping.
-
-            //             spinner.removeClass('active')
-
-            //             var bounds = new mapboxgl.LngLatBounds();
-            //             data.features.forEach(function(feature) {
-            //                 bounds.extend(feature.geometry.coordinates);
-            //             });
-            //             map.fitBounds(bounds, { padding: {top: 20, bottom:20, left: 20, right: 20 } });
-
-            //         });
-            //     })
-            // }
-
-            // window.get_geojson = () => {
-            //     return jQuery.ajax({
-            //         type: "POST",
-            //         data: JSON.stringify({ action: 'geojson', parts: jsObject.parts }),
-            //         contentType: "application/json; charset=utf-8",
-            //         dataType: "json",
-            //         url: jsObject.root + jsObject.parts.root + '/v1/' + jsObject.parts.type,
-            //         beforeSend: function (xhr) {
-            //             xhr.setRequestHeader('X-WP-Nonce', jsObject.nonce )
-            //         }
-            //     })
-            //         .fail(function(e) {
-            //             console.log(e)
-            //             jQuery('#error').html(e)
-            //         })
-            // }
-
+                    spinner.removeClass('active')
+                })
+            }
+            load_map_activity()
         </script>
         <?php
     }
@@ -184,48 +145,40 @@ class GO_Impact_Map_Magic_Map_App extends DT_Magic_Url_Base
             body {
                 background: white !important;
             }
-            /* #initialize-screen {
-                width: 100%;
-                height: 2000px;
-                z-index: 100;
-                background-color: white;
-                position: absolute;
+            #activity-list li {
+              font-size:.8em;
+              list-style-type: none;
             }
-            #initialize-spinner-wrapper{
-                position:relative;
-                top:45%;
+            #activity-list h2 {
+                font-size:1.2em;
+                font-weight:bold;
             }
-            progress {
-                top: 50%;
-                margin: 0 auto;
-                height:50px;
-                width:300px;
-            } */
+            .center {
+                text-align: center;
+            }
         </style>
         <?php
     }
 
-    public function footer_javascript(){
-    }
+    public function footer_javascript(){}
 
     public function body(){
-        DT_Mapbox_API::geocoder_scripts();
         ?>
-        <!-- <style id="custom-style"></style>
-        <div id="map-wrapper">
-            <div id='map'></div>
-        </div> -->
+        <div class="grid-x grid-padding-x align-center">
+            <div class="cell small-6 center">
+                <h1>Impact Activity</h1>
+                <span class="loading-spinner active"></span>
+            </div>
+            <div class="cell medium-6">
+                <div id="activity-wrapper">
+                    <ul id="activity-list"></ul>
+                </div>
+            </div>
+        </div>
         <?php
     }
 
-    public static function _wp_enqueue_scripts(){
-        DT_Mapbox_API::load_mapbox_header_scripts();
-    }
 
-    /**
-     * Register REST Endpoints
-     * @link https://github.com/DiscipleTools/disciple-tools-theme/wiki/Site-to-Site-Link for outside of wordpress authentication
-     */
     public function add_endpoints() {
         $namespace = $this->root . '/v1';
         register_rest_route(
@@ -251,56 +204,13 @@ class GO_Impact_Map_Magic_Map_App extends DT_Magic_Url_Base
         $params = dt_recursive_sanitize_array( $params );
 
         switch ( $params['action'] ) {
-            case 'geojson':
-                return $this->endpoint_geojson( $params['parts'] );
+            case 'activity_list':
+                return GO_Funnel_App_Heatmap::get_activity_list( $params['data'], true, 'en' );
             default:
                 return new WP_Error( __METHOD__, 'Missing valid action parameters', [ 'status' => 400 ] );
         }
     }
 
-    public function endpoint_geojson( $parts ) {
-        global $wpdb;
 
-        $results = $wpdb->get_results(
-        "SELECT * FROM $wpdb->dt_location_grid WHERE level = 0", ARRAY_A );
-
-        if ( empty( $results ) ) {
-            return $this->_empty_geojson();
-        }
-
-        $features = [];
-        foreach ( $results as $result ) {
-            $features[] = array(
-                'type' => 'Feature',
-                'properties' => array(
-                    'grid_id' => $result['grid_id'],
-                    'name' => $result['name'],
-                    'value' => rand( 1, 10 ) // random value
-                ),
-                'geometry' => array(
-                    'type' => 'Point',
-                    'coordinates' => array(
-                        (float) $result['longitude'],
-                        (float) $result['latitude'],
-                        1
-                    ),
-                ),
-            );
-        }
-
-        $geojson = array(
-            'type' => 'FeatureCollection',
-            'features' => $features,
-        );
-
-        return $geojson;
-    }
-
-    private function _empty_geojson() {
-        return array(
-            'type' => 'FeatureCollection',
-            'features' => array()
-        );
-    }
 }
 GO_Impact_Map_Magic_Map_App::instance();
