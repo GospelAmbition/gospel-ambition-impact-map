@@ -81,6 +81,7 @@ class GO_Funnel_Public_Heatmap_100hours_V2 extends DT_Magic_Url_Base {
      * @see DT_Magic_Url_Base()->header_style() for default state
      */
     public function header_style(){
+        impact_map_css_map_site_css_php();
         ?>
         <script>
             let mapObject = [<?php echo json_encode([
@@ -115,6 +116,7 @@ class GO_Funnel_Public_Heatmap_100hours_V2 extends DT_Magic_Url_Base {
 
     public function body(){
         DT_Mapbox_API::geocoder_scripts();
+        impact_map_top();
         ?><div id="chart"></div><?php
     }
 

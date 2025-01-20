@@ -102,7 +102,7 @@ class GO_Impact_Map_Magic_Home_App extends DT_Magic_Url_Base
         <div class="body-wrapper">
             <div class="top">
                 <div class="grid-x grid-padding-x grid-padding-y">
-                    <div class="cell center">
+                    <div class="cell center show-for-medium">
                         <h1>Gospel Ambition - Impact Maps</h1>
                     </div>
                 </div>

@@ -5,6 +5,7 @@ function impact_map_css_map_site_css_php(){
     <style>
         html {
             --primary-color: #b13634 !important;
+            --primary-hover:rgb(220, 73, 71) !important;
             --secondary-color: #8bc34a !important;
             --success-color: #4caf50 !important;
             --warning-color: #ffae00 !important;
@@ -34,6 +35,10 @@ function impact_map_css_map_site_css_php(){
             background-color: var(--primary-color);
             color: var(--white);
         }
+        .button:hover, .button:focus, .button:active {
+            background-color:var(--primary-hover);
+            color:var(--white);
+        }
         body {
             background-color:white;
         }
@@ -52,15 +57,16 @@ function impact_map_top() {
      <div class="top-bar">
             <div class="top-bar-left">
                 <div class="show-for-medium">
-                    <img class="logo-img" src="<?php echo plugin_dir_url(__DIR__)  ?>images/go-circle-logo.png" alt="Gospel Ambition Logo">
-                    <span class="logo-title">Gospel Ambition</span>
+                    <a href="/"><img class="logo-img" src="<?php echo plugin_dir_url(__DIR__)  ?>images/go-circle-logo.png" alt="Gospel Ambition Logo"></a>
+                    <a href="/"><span class="logo-title">Gospel Ambition</span></a>
                 </div>
                 <div class="show-for-small-only">
-                    <img class="logo-mobile" src="<?php echo plugin_dir_url(__DIR__)  ?>images/go-circle-logo.png" alt="Gospel Ambition Logo">
+                    <a href="/"><img class="logo-mobile" src="<?php echo plugin_dir_url(__DIR__)  ?>images/go-circle-logo.png" alt="Gospel Ambition Logo"></a>
+                    <a href="/"><span class="logo-title">Gospel Ambition</span></a>
                 </div>
             </div>
             <div class="top-bar-right">
-                <button class="button small" style="margin:0;">Donate</button>
+                <a href="https://give.gospelambition.org/" target="_blank" class="button small" style="margin:0;">Donate</a>
             </div>
         </div>
     <?php
