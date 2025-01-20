@@ -1,17 +1,6 @@
 <?php
 if ( !defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly.
 
-/**
- * Adds a magic link home page to the Disciple Tools system.
- * @usage This could be used to add a microsite in front of the Disciple Tools system. Or used to hide the
- * Disciple Tools login behind a false store front. Or used to extend an entire application to the public out
- * in front of the Disciple Tools system.
- *
- * @example https://yoursite.com/(empty)
- *
- * @see https://disciple.tools/plugins/porch/
- * @see https://disciple.tools/plugins/disciple-tools-porch-template/
- */
 class GO_Impact_Map_Magic_Home_App extends DT_Magic_Url_Base
 {
     public $magic = false;
@@ -94,27 +83,21 @@ class GO_Impact_Map_Magic_Home_App extends DT_Magic_Url_Base
     }
 
     public function dt_magic_url_base_allowed_css( $allowed_css ) {
+
+        $allowed_css = [];
+        $allowed_css[] = 'foundation-css';
+        $allowed_css[] = 'jquery-ui-site-css';
+        $allowed_css[] = 'site-css';
+
         return $allowed_css;
     }
 
     public function header_style(){
-
-        ?>
-        <style>
-            body {
-                background-color:white;
-            }
-            .top {}
-            .content {}
-            .footer {}
-            .right {
-                text-align: end;
-            }
-        </style>
-        <?php
+        impact_map_css_map_site_css_php();
     }
 
     public function body(){
+        impact_map_top();
         ?>
         <div class="body-wrapper">
             <div class="top">

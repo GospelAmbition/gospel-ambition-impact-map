@@ -88,42 +88,43 @@ jQuery(document).ready(function(){
           .mapboxgl-ctrl-geocoder.mapboxgl-ctrl {
               display: ${mobile_show};
           }
-
-          .stats, .onscreen {
-              float: left;
-              margin-left: 10px;
+          .onscreen {
+              font-weight: bold;
           }
-
-
           .color-block.praying {
               background-color: ${window.color_praying};
               width: 20px;
               height: 20px;
               float: left;
+              margin-right: 5px;
           }
           .color-block.studying {
               background-color: ${window.color_studying};
               width: 20px;
               height: 20px;
               float: left;
+              margin-right: 5px;
           }
           .color-block.training {
               background-color: ${window.color_training};
               width: 20px;
               height: 20px;
               float: left;
+              margin-right: 5px;
           }
           .color-block.practicing {
               background-color: ${window.color_practicing};
               width: 20px;
               height: 20px;
               float: left;
+              margin-right: 5px;
           }
           .color-block.coaching {
               background-color: ${window.color_coaching};
               width: 20px;
               height: 20px;
               float: left;
+              margin-right: 5px;
           }
       </style>
       <div class="grid-x">
@@ -754,32 +755,31 @@ jQuery(document).ready(function(){
     jQuery('#stats-list').empty().append(`
       <div class="grid-x">
         <div class="cell">
-          <strong>ACTIVITIES</strong>
+          <strong>NEW ACTIVITIES in 100 HOURS</strong>
         </div>
-        <div class="cell medium-6">
-          <span><strong>Onscreen:</strong></span><br>
-          <div class="color-block praying"></div> <span class="onscreen praying">${mapObject.translation.praying}: 0</span><br>
-          <div class="color-block studying"></div> <span class="onscreen studying">${mapObject.translation.studying}: 0</span><br>
-          <div class="color-block training"></div> <span class="onscreen training">${mapObject.translation.training}: 0</span><br>
-          <div class="color-block practicing"></div> <span class="onscreen practicing">${mapObject.translation.practicing}: 0</span><br>
-          <div class="color-block coaching"></div> <span class="onscreen coaching">${mapObject.translation.coaching}: 0</span><br>
+        <div class="cell">
+          <div class="color-block praying"></div> <strong>${mapObject.translation.praying}</strong>: <span class="onscreen praying">0</span> (<span class="stats praying">0</span>)<br>
         </div>
-        <div class="cell medium-6">
-          <span><strong>Total</strong> (${window.activity_geojson.total})</span><br>
-          <div class="color-block praying"></div> <span class="stats praying">${mapObject.translation.praying}: 0</span><br>
-          <div class="color-block studying"></div> <span class="stats studying">${mapObject.translation.studying}: 0</span><br>
-          <div class="color-block training"></div> <span class="stats training">${mapObject.translation.training}: 0</span><br>
-          <div class="color-block practicing"></div> <span class="stats practicing">${mapObject.translation.practicing}: 0</span><br>
-          <div class="color-block coaching"></div> <span class="stats coaching">${mapObject.translation.coaching}: 0</span><br>
+        <div class="cell">
+          <div class="color-block studying"></div> <strong>${mapObject.translation.studying}</strong>: <span class="onscreen studying">0</span> (<span class="stats studying">0</span>)<br>
+        </div>
+        <div class="cell">
+          <div class="color-block training"></div> <strong>${mapObject.translation.training}</strong>: <span class="onscreen training">0</span> (<span class="stats training">0</span>)<br>
+        </div>
+        <div class="cell">
+          <div class="color-block practicing"></div> <strong>${mapObject.translation.practicing}</strong>: <span class="onscreen practicing">0</span> (<span class="stats practicing">0</span>)<br>
+        </div>
+        <div class="cell">
+          <div class="color-block coaching"></div> <strong>${mapObject.translation.coaching}</strong>: <span class="onscreen coaching">0</span> (<span class="stats coaching">0</span>)<br>
         </div>
       </div>
       <hr>
       `)
     jQuery.each(window.activity_geojson.types, function(i,v){
-      jQuery('.stats.'+v.code).html(`${v.name}: ${v.count}`)
+      jQuery('.stats.'+v.code).html(`${v.count}`)
     })
     jQuery.each(window.activity_list.types, function(i,v){
-      jQuery('.onscreen.'+v.code).html(`${v.name}: ${v.count}`)
+      jQuery('.onscreen.'+v.code).html(`${v.count}`)
     })
 
     jQuery.each( window.activity_list.list, function(i,v){
