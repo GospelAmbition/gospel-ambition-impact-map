@@ -2709,7 +2709,7 @@ class GO_Funnel_App_Heatmap {
         $countries = [];
         $projects = [];
         $types = [];
-        $utc_time = new DateTime( 'now', new DateTimeZone( $filters['timezone'] ) );
+        $utc_time = new DateTime( 'now', new DateTimeZone( $filters['timezone'] ?? '' ) );
         $timezone_offset = $utc_time->format( 'Z' );
 
         $training_items = [];
@@ -3135,6 +3135,41 @@ class GO_Funnel_App_Heatmap {
 
         $results = $wpdb->get_results( $sql, ARRAY_A );
         // @phpcs:enable
+
+        if ( is_wp_error( $results ) || empty( $results ) ) {
+            return [];
+        }
+        return $results;
+    }
+
+    public static function query_activity_list_simple(): array {
+        global $wpdb;
+        $time_end = strtotime( '-100 hours' );
+        $time_begin = time();
+        // @phpcs:disable
+        $sql = "
+                SELECT *
+                FROM (
+                SELECT r.post_type as project, r.type, r.subtype, r.payload as note, r.value, r.lng, r.lat, r.label, r.time_end, lga0.name as country_name, lga0.country_code, r.language_code, lgn.full_name
+                FROM wp_dt_reports r
+                LEFT JOIN wp_dt_location_grid lg ON lg.grid_id=r.grid_id
+                LEFT JOIN wp_dt_location_grid lga0 ON lga0.grid_id=lg.admin0_grid_id
+                LEFT JOIN location_grid_names lgn ON lgn.grid_id=lg.grid_id AND lgn.language_code = 'en'
+                WHERE r.time_end > $time_end AND r.type != 'system'
+                ) as tb
+                WHERE tb.time_end > $time_end AND tb.time_end < $time_begin
+                ORDER BY tb.time_end DESC
+        ";
+
+        $results = $wpdb->get_results( $sql, ARRAY_A );
+        // @phpcs:enable
+
+        foreach( $results as $key => $record ) {
+            if ( ! $record['note'] ) {
+                unset( $results[$key] );
+            }
+            $results[$key]['time'] = self::_time_ago( $record['time_end'] );
+        }
 
         if ( is_wp_error( $results ) || empty( $results ) ) {
             return [];

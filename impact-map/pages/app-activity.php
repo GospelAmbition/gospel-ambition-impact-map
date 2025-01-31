@@ -70,6 +70,7 @@ class GO_Impact_Map_Magic_Map_App extends DT_Magic_Url_Base
     }
 
     public function header_javascript(){
+        impact_map_css_map_site_css_php();
         ?>
         <script>
             let mapObject = [<?php echo json_encode([
@@ -116,20 +117,14 @@ class GO_Impact_Map_Magic_Map_App extends DT_Magic_Url_Base
                     "use strict";
                     window.activity_list = data
 
-                    jQuery.each( window.activity_list.list, function(i,v){
+                    jQuery.each( window.activity_list, function(i,v){
                         if ( '' === v.note ) {
                             return
                         }
-                        container.append(`<li class="${v.type} ${v.country} ${v.language}"><strong>(${v.time})</strong> ${v.note} </li>`)
+                        console.log(v.note)
+
+                        jQuery('#activity-list').append(`<li class="${v.type} ${v.country_code} ${v.language_code}"><strong>(${v.time})</strong> ${v.note} </li>`)
                     })
-
-                    if ( ! window.activity_list.list  ) {
-                        container.append(`<li><strong>${mapObject.translation.results}</strong> 0</li>`)
-                    }
-
-                    if ( window.activity_list.count > 250 ) {
-                        container.append(`<hr><li><strong>${window.activity_list.count - 250} ${mapObject.translation.additional_records}</strong></li><br><br>`)
-                    }
 
                     spinner.removeClass('active')
                 })
@@ -148,6 +143,7 @@ class GO_Impact_Map_Magic_Map_App extends DT_Magic_Url_Base
             #activity-list li {
               font-size:.8em;
               list-style-type: none;
+                /* margin: 0.5em 0; */
             }
             #activity-list h2 {
                 font-size:1.2em;
@@ -163,9 +159,10 @@ class GO_Impact_Map_Magic_Map_App extends DT_Magic_Url_Base
     public function footer_javascript(){}
 
     public function body(){
+        impact_map_top();
         ?>
         <div class="grid-x grid-padding-x align-center">
-            <div class="cell small-6 center">
+            <div class="cell center">
                 <h1>Impact Activity</h1>
                 <span class="loading-spinner active"></span>
             </div>
@@ -205,7 +202,7 @@ class GO_Impact_Map_Magic_Map_App extends DT_Magic_Url_Base
 
         switch ( $params['action'] ) {
             case 'activity_list':
-                return GO_Funnel_App_Heatmap::get_activity_list( $params['data'], true, 'en' );
+                return GO_Funnel_App_Heatmap::query_activity_list_simple();
             default:
                 return new WP_Error( __METHOD__, 'Missing valid action parameters', [ 'status' => 400 ] );
         }

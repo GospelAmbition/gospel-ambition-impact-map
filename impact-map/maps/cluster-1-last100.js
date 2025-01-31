@@ -214,8 +214,6 @@ jQuery(document).ready(function(){
       clusterRadius: 50
     });
 
-
-
     // prayer geojson source and cluster
     map.addSource('layer-source-geojson-praying', {
       type: 'geojson',
@@ -751,7 +749,6 @@ jQuery(document).ready(function(){
     container.empty()
     let spinner = jQuery('.loading-spinner')
 
-
     jQuery('#stats-list').empty().append(`
       <div class="grid-x">
         <div class="cell">
@@ -796,8 +793,6 @@ jQuery(document).ready(function(){
     if ( window.activity_list.count > 250 ) {
       container.append(`<hr><li><strong>${window.activity_list.count - 250} ${mapObject.translation.additional_records}</strong></li><br><br>`)
     }
-
-
 
     spinner.removeClass('active')
   }
