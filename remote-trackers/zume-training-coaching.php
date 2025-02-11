@@ -7,7 +7,7 @@ add_action('zume_log', function( $args ) {
     }
 
     add_log_to_queue( [
-        'post_type' => 'impact_map',
+        'post_type' => 'zume',
         'type' => $args['type'],
         'subtype' => $args['subtype'],
         'time' => time(),
@@ -20,7 +20,7 @@ add_action('zume_log', function( $args ) {
 
 add_action('zume_log_anonymous', function( $args ) {
     add_log_to_queue( [
-        'post_type' => 'impact_map',
+        'post_type' => 'zume',
         'type' => $args['type'],
         'subtype' => $args['subtype'],
         'time' => time(),
