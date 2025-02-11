@@ -1,15 +1,15 @@
 <?php
 if ( !defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly.
 
-class GO_Impact_Map_App_Template extends DT_Magic_Url_Base
+class GO_Impact_Map_Globe extends DT_Magic_Url_Base
 {
     public $magic = false;
     public $parts = false;
     public $page_title = 'Gospel Ambition Impact Map';
     public $root = 'app';
-    public $type = 'map_template';
+    public $type = 'globe';
     public $type_name = 'Gospel Ambition Impact Map';
-    public static $token = 'app_map_template';
+    public static $token = 'app_globe';
 
     private static $_instance = null;
     public static function instance() {
@@ -261,58 +261,15 @@ class GO_Impact_Map_App_Template extends DT_Magic_Url_Base
         }
 
         $params = dt_recursive_sanitize_array( $params );
+        $action = sanitize_text_field( wp_unslash( $params['action'] ) );
+        $language_code = 'en';
 
-        switch ( $params['action'] ) {
+        switch ( $action ) {
             case 'geojson':
-                return $this->endpoint_geojson( $params['parts'] );
+                return GO_Funnel_App_Heatmap::get_activity_geojson( $language_code );
             default:
-                return new WP_Error( __METHOD__, 'Missing valid action parameters', [ 'status' => 400 ] );
+                return new WP_Error( __METHOD__, 'Missing valid action', [ 'status' => 400 ] );
         }
-    }
-
-    public function endpoint_geojson( $parts ) {
-        global $wpdb;
-
-        $results = $wpdb->get_results(
-        "SELECT * FROM $wpdb->dt_location_grid WHERE level = 0", ARRAY_A );
-
-        if ( empty( $results ) ) {
-            return $this->_empty_geojson();
-        }
-
-        $features = [];
-        foreach ( $results as $result ) {
-            $features[] = array(
-                'type' => 'Feature',
-                'properties' => array(
-                    'grid_id' => $result['grid_id'],
-                    'name' => $result['name'],
-                    'value' => rand( 1, 10 ) // random value
-                ),
-                'geometry' => array(
-                    'type' => 'Point',
-                    'coordinates' => array(
-                        (float) $result['longitude'],
-                        (float) $result['latitude'],
-                        1
-                    ),
-                ),
-            );
-        }
-
-        $geojson = array(
-            'type' => 'FeatureCollection',
-            'features' => $features,
-        );
-
-        return $geojson;
-    }
-
-    private function _empty_geojson() {
-        return array(
-            'type' => 'FeatureCollection',
-            'features' => array()
-        );
     }
 }
-GO_Impact_Map_App_Template::instance();
+GO_Impact_Map_Globe::instance();

@@ -126,13 +126,22 @@ jQuery(document).ready(function(){
               float: left;
               margin-right: 5px;
           }
+          .coaching, .practicing {
+              display:none;
+          }
+          .cell .practicing {
+              display:none;
+          }
+          .cell .coaching {
+              display:none;
+          }
       </style>
       <div class="grid-x">
         <div class="medium-9 cell">
             <div id="map-wrapper">
                 <div id='map'></div>
                 <div id="map-header">
-                  <h3>${mapObject.translation.last_100}</h3>
+                  <h3>Movement Activities</h3>
                   ${mapObject.translation.countries}: <span id="country_count">0</span> | ${mapObject.translation.languages}: <span id="languages_count">0</span>
                 </div>
             </div>
@@ -763,10 +772,10 @@ jQuery(document).ready(function(){
         <div class="cell">
           <div class="color-block training"></div> <strong>${mapObject.translation.training}</strong>: <span class="onscreen training">0</span> (<span class="stats training">0</span>)<br>
         </div>
-        <div class="cell">
+        <div class="cell practicing">
           <div class="color-block practicing"></div> <strong>${mapObject.translation.practicing}</strong>: <span class="onscreen practicing">0</span> (<span class="stats practicing">0</span>)<br>
         </div>
-        <div class="cell">
+        <div class="cell coaching">
           <div class="color-block coaching"></div> <strong>${mapObject.translation.coaching}</strong>: <span class="onscreen coaching">0</span> (<span class="stats coaching">0</span>)<br>
         </div>
       </div>
