@@ -649,7 +649,7 @@ class GO_Impact_Map_Globe extends DT_Magic_Url_Base
         </div>
         <div id="legend">
             <div><strong>Movement Activities</strong></div>
-            <div><strong>Last Month</strong></div>
+            <div><strong>30 Days</strong></div>
             <div><div class="color-block praying"></div> Praying: <span id="legend_praying"></span></div>
             <div><div class="color-block studying"></div> Studying: <span id="legend_studying"></span></div>
             <div><div class="color-block training"></div> Training: <span id="legend_training"></span></div>
