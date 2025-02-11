@@ -1,0 +1,23 @@
+adjust hours (24 instead of 100)?
+--- Waha’s Mapbox visual?
+--- https://dashboard.waha.app/?time=allTime&insights=countryInfo_uniqueCountriesAndLanguages
+--- giving options
+--- waiting to publish some of our terrible stats
+--- change “Onscreen vs Total” to “X of Y global”? 
+--- showing intercessor locations vs. places prayed for?
+integrating giving into this
+
+
+From AdHoc review: - change it to “Activity Map”
+--- change “Activities” to “New Activities”
+go for 1 month if it’s not too weighty 
+mobile that has a globe + activity feed
+make an “Impact Map” that shows more of the ongoing, progressive impact of what we’re doing
+---- change “Onscreen vs Total” to “X of Y global”? 
+look for way to not double count intercessors based on when they are signing up and when they pray
+
+conclusion: Complicated 
+
+KK - I’m a little skeptical still about the same #s and dots representing both the intercessors and the places being interceded for.. AH and I lean toward showing intercessor locations 
+
+Should the countries and languages update in the top left map legend area?
