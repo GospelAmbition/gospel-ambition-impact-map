@@ -484,123 +484,123 @@ class GO_Impact_Map_Globe extends DT_Magic_Url_Base
                     });
 
 
-                    map.addSource('layer-source-geojson-practicing', {
-                    type: 'geojson',
-                    data: window.activity_geojson_practicing,
-                    cluster: true,
-                    clusterMaxZoom: 20,
-                    clusterRadius: 50
-                    });
-                    map.addLayer({
-                    id: 'clusters-practicing',
-                    type: 'circle',
-                    source: 'layer-source-geojson-practicing',
-                    filter: ['has', 'point_count'],
-                    paint: {
-                        'circle-color': [
-                        'step',
-                        ['get', 'point_count'],
-                        window.color_practicing,
-                        20,
-                        window.color_practicing,
-                        150,
-                        window.color_practicing
-                        ],
-                        'circle-radius': [
-                        'step',
-                        ['get', 'point_count'],
-                        20,
-                        100,
-                        30,
-                        750,
-                        40
-                        ]
-                    }
-                    });
-                    map.addLayer({
-                    id: 'cluster-count-practicing',
-                    type: 'symbol',
-                    source: 'layer-source-geojson-practicing',
-                    filter: ['has', 'point_count'],
-                    layout: {
-                        'text-field': '{point_count_abbreviated}',
-                        'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
-                        'text-size': 12
-                    }
-                    });
-                    map.addLayer({
-                    id: 'unclustered-point-practicing',
-                    type: 'circle',
-                    source: 'layer-source-geojson-practicing',
-                    filter: ['!', ['has', 'point_count'] ],
-                    paint: {
-                        'circle-color': window.color_practicing,
-                        'circle-radius':12,
-                        'circle-stroke-width': 1,
-                        'circle-stroke-color': '#fff'
-                    }
-                    });
+                    // map.addSource('layer-source-geojson-practicing', {
+                    // type: 'geojson',
+                    // data: window.activity_geojson_practicing,
+                    // cluster: true,
+                    // clusterMaxZoom: 20,
+                    // clusterRadius: 50
+                    // });
+                    // map.addLayer({
+                    // id: 'clusters-practicing',
+                    // type: 'circle',
+                    // source: 'layer-source-geojson-practicing',
+                    // filter: ['has', 'point_count'],
+                    // paint: {
+                    //     'circle-color': [
+                    //     'step',
+                    //     ['get', 'point_count'],
+                    //     window.color_practicing,
+                    //     20,
+                    //     window.color_practicing,
+                    //     150,
+                    //     window.color_practicing
+                    //     ],
+                    //     'circle-radius': [
+                    //     'step',
+                    //     ['get', 'point_count'],
+                    //     20,
+                    //     100,
+                    //     30,
+                    //     750,
+                    //     40
+                    //     ]
+                    // }
+                    // });
+                    // map.addLayer({
+                    // id: 'cluster-count-practicing',
+                    // type: 'symbol',
+                    // source: 'layer-source-geojson-practicing',
+                    // filter: ['has', 'point_count'],
+                    // layout: {
+                    //     'text-field': '{point_count_abbreviated}',
+                    //     'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
+                    //     'text-size': 12
+                    // }
+                    // });
+                    // map.addLayer({
+                    // id: 'unclustered-point-practicing',
+                    // type: 'circle',
+                    // source: 'layer-source-geojson-practicing',
+                    // filter: ['!', ['has', 'point_count'] ],
+                    // paint: {
+                    //     'circle-color': window.color_practicing,
+                    //     'circle-radius':12,
+                    //     'circle-stroke-width': 1,
+                    //     'circle-stroke-color': '#fff'
+                    // }
+                    // });
 
 
-                    map.addSource('layer-source-geojson-coaching', {
-                    type: 'geojson',
-                    data: window.activity_geojson_coaching,
-                    cluster: true,
-                    clusterMaxZoom: 20,
-                    clusterRadius: 50
-                    });
-                    map.addLayer({
-                    id: 'clusters-coaching',
-                    type: 'circle',
-                    source: 'layer-source-geojson-coaching',
-                    filter: ['has', 'point_count'],
-                    paint: {
-                        'circle-color': [
-                        'step',
-                        ['get', 'point_count'],
-                        window.color_coaching,
-                        20,
-                        window.color_coaching,
-                        150,
-                        window.color_coaching
-                        ],
-                        'circle-radius': [
-                        'step',
-                        ['get', 'point_count'],
-                        20,
-                        100,
-                        30,
-                        750,
-                        40
-                        ]
-                    }
-                    });
-                    map.addLayer({
-                    id: 'cluster-count-coaching',
-                    type: 'symbol',
-                    source: 'layer-source-geojson-coaching',
-                    filter: ['has', 'point_count'],
-                    layout: {
-                    'text-field': '{point_count_abbreviated}',
-                    'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
-                    'text-size': 12,
-                    },
-                    paint: {
-                        'text-color': '#FFF'
-                    }
-                    });
-                    map.addLayer({
-                    id: 'unclustered-point-coaching',
-                    type: 'circle',
-                    source: 'layer-source-geojson-coaching',
-                    filter: ['!', ['has', 'point_count'] ],
-                    paint: {
-                        'circle-color': window.color_coaching,
-                        'circle-radius':12,
-                        'circle-stroke-width': 1,
-                        'circle-stroke-color': '#fff'
-                    }
-                    });
+                    // map.addSource('layer-source-geojson-coaching', {
+                    // type: 'geojson',
+                    // data: window.activity_geojson_coaching,
+                    // cluster: true,
+                    // clusterMaxZoom: 20,
+                    // clusterRadius: 50
+                    // });
+                    // map.addLayer({
+                    // id: 'clusters-coaching',
+                    // type: 'circle',
+                    // source: 'layer-source-geojson-coaching',
+                    // filter: ['has', 'point_count'],
+                    // paint: {
+                    //     'circle-color': [
+                    //     'step',
+                    //     ['get', 'point_count'],
+                    //     window.color_coaching,
+                    //     20,
+                    //     window.color_coaching,
+                    //     150,
+                    //     window.color_coaching
+                    //     ],
+                    //     'circle-radius': [
+                    //     'step',
+                    //     ['get', 'point_count'],
+                    //     20,
+                    //     100,
+                    //     30,
+                    //     750,
+                    //     40
+                    //     ]
+                    // }
+                    // });
+                    // map.addLayer({
+                    // id: 'cluster-count-coaching',
+                    // type: 'symbol',
+                    // source: 'layer-source-geojson-coaching',
+                    // filter: ['has', 'point_count'],
+                    // layout: {
+                    // 'text-field': '{point_count_abbreviated}',
+                    // 'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
+                    // 'text-size': 12,
+                    // },
+                    // paint: {
+                    //     'text-color': '#FFF'
+                    // }
+                    // });
+                    // map.addLayer({
+                    // id: 'unclustered-point-coaching',
+                    // type: 'circle',
+                    // source: 'layer-source-geojson-coaching',
+                    // filter: ['!', ['has', 'point_count'] ],
+                    // paint: {
+                    //     'circle-color': window.color_coaching,
+                    //     'circle-radius':12,
+                    //     'circle-stroke-width': 1,
+                    //     'circle-stroke-color': '#fff'
+                    // }
+                    // });
                 })
             });
 
