@@ -148,13 +148,14 @@ class GO_Funnel_Public_Heatmap_100hours_V2 extends DT_Magic_Url_Base {
         $params = dt_recursive_sanitize_array( $params );
         $action = sanitize_text_field( wp_unslash( $params['action'] ) );
         $language_code = 'en';
+        $hours = 100;
 
 
         switch ( $action ) {
             case 'load_geojson':
-                return GO_Funnel_App_Heatmap::get_activity_geojson( $language_code );
+                return GO_Funnel_App_Heatmap::get_activity_geojson( $language_code, $hours );
             case 'activity_list':
-                return GO_Funnel_App_Heatmap::get_activity_list( $params['data'], true, $language_code );
+                return GO_Funnel_App_Heatmap::get_activity_list( $params['data'], true, $language_code, $hours );
             default:
                 return new WP_Error( __METHOD__, 'Missing valid action', [ 'status' => 400 ] );
         }

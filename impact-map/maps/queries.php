@@ -214,4 +214,66 @@ class GO_Queries {
             return 0;
         }
     }
+
+    public static function get_activity_geojson( $language_code = 'en', $hours = null ) {
+        ini_set('memory_limit', -1);
+
+        $languages_by_code = impact_map_languages();
+        $list = self::query_activity_geojson( $language_code, $hours );
+
+        if ( empty( $list ) ) {
+            $list = [];
+        }
+
+        $features = [];
+        foreach ( $list as $record ) {
+            $features[] = array(
+                'type' => 'Feature',
+                'properties' => [
+                    'type' => $record['type'],
+                ],
+                'geometry' => array(
+                    'type' => 'Point',
+                    'coordinates' => array(
+                        (float) $record['lng'],
+                        (float) $record['lat'],
+                        1,
+                    ),
+                ),
+            );
+
+            $records++;
+
+        } // end foreach loop
+
+        $new_data = array(
+            'type' => 'FeatureCollection',
+            'features' => $features,
+        );
+
+        return $new_data;
+    }
+
+    public static function query_activity_geojson( $language_code = 'en', $hours = null ): array {
+        global $wpdb;
+        $time_string = '-100 hours';
+        if ( $hours ) {
+            $time_string = '-'.$hours.' hours';
+        }
+        $time_begin = strtotime( $time_string );
+        $time_end = time();
+        $results = $wpdb->get_results( $wpdb->prepare( "
+                SELECT *
+                FROM (
+                SELECT r.type, r.lng, r.lat, r.time_end
+                FROM wp_dt_reports r
+                LEFT JOIN wp_dt_location_grid lg ON lg.grid_id=r.grid_id
+                LEFT JOIN wp_dt_location_grid lga0 ON lga0.grid_id=lg.admin0_grid_id
+                WHERE r.time_end > %d AND r.time_end < %d AND r.type != 'system'
+                ) as tb
+                ORDER BY tb.time_end DESC
+                ", $time_begin, $time_end ), ARRAY_A );
+
+        return $results;
+    }
 }

@@ -2699,7 +2699,7 @@ class GO_Funnel_App_Heatmap {
     }
 
 
-    public static function get_activity_list( $filters, $limit = false, $language_code = 'en' ) {
+    public static function get_activity_list( $filters, $limit = false, $language_code = 'en', $hours = null ) {
 
         // dt_write_log( __METHOD__ );
         // dt_write_log( $filters );
@@ -2720,7 +2720,7 @@ class GO_Funnel_App_Heatmap {
         // $practicing_count = 0;
         // $coaching_count = 0;
 
-        $activity_list = self::query_activity_list( $filters, $language_code );
+        $activity_list = self::query_activity_list( $filters, $language_code, $hours );
         $list = [];
 
         foreach ( $activity_list as $record ) {
@@ -2939,9 +2939,9 @@ class GO_Funnel_App_Heatmap {
         ];
     }
 
-    public static function get_activity_geojson( $language_code = 'en' ) {
+    public static function get_activity_geojson( $language_code = 'en', $hours = null ) {
         $languages_by_code = impact_map_languages();
-        $list = self::query_activity_geojson( $language_code );
+        $list = self::query_activity_geojson( $language_code, $hours );
 
         if ( empty( $list ) ) {
             $list = [];
@@ -3093,7 +3093,7 @@ class GO_Funnel_App_Heatmap {
         return $list;
     }
 
-    public static function query_activity_list( $filters, $language_code = 'en' ): array {
+    public static function query_activity_list( $filters, $language_code = 'en', $time = null ): array {
         global $wpdb;
         $additional_where = '';
         if ( ! empty( $filters['bounds'] ) && is_array( $filters['bounds'] ) && $filters['zoom'] > 1.5 ) {
@@ -3115,8 +3115,12 @@ class GO_Funnel_App_Heatmap {
             $additional_where .= " AND tb.country_code = '" .$filters['country']. "'";
         }
 
-        $time_end = strtotime( '-100 hours' );
-        $time_begin = time();
+        $time_string = '-100 hours';
+        if ( $hours ) {
+            $time_string = '-'.$hours.' hours';
+        }
+        $time_begin = strtotime( $time_string );
+        $time_end = time();
         // @phpcs:disable
         $sql = "
                 SELECT *
@@ -3126,9 +3130,9 @@ class GO_Funnel_App_Heatmap {
                 LEFT JOIN wp_dt_location_grid lg ON lg.grid_id=r.grid_id
                 LEFT JOIN wp_dt_location_grid lga0 ON lga0.grid_id=lg.admin0_grid_id
                 LEFT JOIN location_grid_names lgn ON lgn.grid_id=lg.grid_id AND lgn.language_code = 'en'
-                WHERE r.time_end > $time_end AND r.type != 'system'
+                WHERE r.time_end > $time_begin AND r.type != 'system'
                 ) as tb
-                WHERE tb.time_end > $time_end AND tb.time_end < $time_begin
+                WHERE tb.time_end > $time_begin AND tb.time_end < $time_end
                 $additional_where
                 ORDER BY tb.time_end DESC
         ";
@@ -3142,10 +3146,15 @@ class GO_Funnel_App_Heatmap {
         return $results;
     }
 
-    public static function query_activity_list_simple(): array {
+    public static function query_activity_list_simple( $hours = null ): array {
         global $wpdb;
-        $time_end = strtotime( '-100 hours' );
-        $time_begin = time();
+        $time_string = '-100 hours';
+        if ( $hours ) {
+            $time_string = '-'.$hours.' hours';
+        }
+        $time_begin = strtotime( $time_string );
+        $time_end = time();
+
         // @phpcs:disable
         $sql = "
                 SELECT *
@@ -3155,9 +3164,9 @@ class GO_Funnel_App_Heatmap {
                 LEFT JOIN wp_dt_location_grid lg ON lg.grid_id=r.grid_id
                 LEFT JOIN wp_dt_location_grid lga0 ON lga0.grid_id=lg.admin0_grid_id
                 LEFT JOIN location_grid_names lgn ON lgn.grid_id=lg.grid_id AND lgn.language_code = 'en'
-                WHERE r.time_end > $time_end AND r.type != 'system'
+                WHERE r.time_end > $time_begin AND r.type != 'system'
                 ) as tb
-                WHERE tb.time_end > $time_end AND tb.time_end < $time_begin
+                WHERE tb.time_end > $time_begin AND tb.time_end < $time_end
                 ORDER BY tb.time_end DESC
         ";
 
@@ -3177,10 +3186,14 @@ class GO_Funnel_App_Heatmap {
         return $results;
     }
 
-    public static function query_activity_geojson( $language_code = 'en' ) {
+    public static function query_activity_geojson( $language_code = 'en', $hours = null ): array {
         global $wpdb;
-        $time_end = strtotime( '-100 hours' );
-        $time_begin = time();
+        $time_string = '-100 hours';
+        if ( $hours ) {
+            $time_string = '-'.$hours.' hours';
+        }
+        $time_begin = strtotime( $time_string );
+        $time_end = time();
         $results = $wpdb->get_results( $wpdb->prepare( "
                 SELECT *
                 FROM (
@@ -3192,7 +3205,8 @@ class GO_Funnel_App_Heatmap {
                 WHERE r.time_end > %d AND r.time_end < %d AND r.type != 'system'
                 ) as tb
                 ORDER BY tb.time_end DESC
-                ", $time_end, $time_begin), ARRAY_A );
+                ", $time_begin, $time_end ), ARRAY_A );
+                dt_write_log( count( $results ) );
         return $results;
     }
 
