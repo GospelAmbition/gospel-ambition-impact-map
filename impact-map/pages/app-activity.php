@@ -64,10 +64,7 @@ class GO_Impact_Map_Magic_Map_App extends DT_Magic_Url_Base
         return $allowed_css;
     }
 
-    public function scripts() {
-        // wp_enqueue_script( 'last100-hours-js', trailingslashit( plugin_dir_url( __DIR__ ) ) . 'maps/cluster-1-last100.js', [ 'jquery' ],
-        // filemtime( trailingslashit( plugin_dir_path( __DIR__ ) ) .'maps/cluster-1-last100.js' ), true );
-    }
+    public function scripts() {}
 
     public function header_javascript(){
         impact_map_css_map_site_css_php();

@@ -3177,7 +3177,7 @@ class GO_Funnel_App_Heatmap {
             if ( ! $record['note'] ) {
                 unset( $results[$key] );
             }
-            $results[$key]['time'] = self::_time_ago( $record['time_end'] );
+            $results[$key]['time'] = self::_time_ago_detailed( $record['time_end'] );
         }
 
         if ( is_wp_error( $results ) || empty( $results ) ) {
@@ -3351,6 +3351,61 @@ class GO_Funnel_App_Heatmap {
                 return "$yrs years ago";
             }
         }
+    }
+
+    public static function _time_ago_detailed( $time ) {
+
+        // Calculate difference between current
+        // time and given timestamp in seconds
+        $diff     = time() - $time;
+
+        // Time difference in seconds
+        $sec     = $diff;
+
+        // Convert time difference in minutes
+        $min     = round( $diff / 60 );
+
+        // Convert time difference in hours
+        $hrs     = round( $diff / 3600 );
+
+        // Convert time difference in days
+        $days     = round( $diff / 86400 );
+
+        // Convert time difference in weeks
+        $weeks     = round( $diff / 604800 );
+
+        // Convert time difference in months
+        $mnths     = round( $diff / 2600640 );
+
+        // Convert time difference in years
+        $yrs     = round( $diff / 31207680 );
+
+        // Check for seconds
+        if ( $sec <= 60 ) {
+            return "$sec seconds ago";
+        }
+
+        // Check for minutes
+        else if ( $min <= 60 ) {
+            if ( $min ==1 ) {
+                return 'one minute ago';
+            }
+            else {
+                return "$min minutes ago";
+            }
+        }
+
+        // Check for hours
+        else {
+            if ( $hrs == 1 ) {
+                return 'an hour ago';
+            }
+            else {
+                return "$hrs hours ago";
+            }
+        }
+
+       
     }
 
     public static function _create_in_language_string( $data, $languages ): string {
