@@ -103,7 +103,7 @@ class GO_Impact_Map_App_Template extends DT_Magic_Url_Base
                         }
                     </style>`)
 
-                mapboxgl.accessToken = 'pk.eyJ1IjoiY2hyaXNjaGFzbSIsImEiOiJjajZyc2poNmEwZTdqMnFuenB0ODI5dWduIn0.6wKrDTf2exQJY-MY7Q1kRQ';
+                mapboxgl.accessToken = jsObject.map_key;
                 const map = new mapboxgl.Map({
                     container: 'map',
                     style: 'mapbox://styles/mapbox/streets-v9',

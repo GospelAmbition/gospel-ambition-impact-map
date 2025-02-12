@@ -216,7 +216,7 @@ class GO_Queries {
     }
 
     public static function get_activity_geojson( $language_code = 'en', $hours = null ) {
-        ini_set('memory_limit', -1);
+        ini_set('memory_limit', -1); // remove memory limit
 
         $languages_by_code = impact_map_languages();
         $list = self::query_activity_geojson( $language_code, $hours );
@@ -241,9 +241,6 @@ class GO_Queries {
                     ),
                 ),
             );
-
-            $records++;
-
         } // end foreach loop
 
         $new_data = array(
@@ -269,7 +266,10 @@ class GO_Queries {
                 FROM wp_dt_reports r
                 LEFT JOIN wp_dt_location_grid lg ON lg.grid_id=r.grid_id
                 LEFT JOIN wp_dt_location_grid lga0 ON lga0.grid_id=lg.admin0_grid_id
-                WHERE r.time_end > %d AND r.time_end < %d AND r.type != 'system'
+                WHERE r.time_end > %d
+                AND r.time_end < %d
+                AND r.type != 'system'
+                AND r.subtype != 'prayer_for_location'
                 ) as tb
                 ORDER BY tb.time_end DESC
                 ", $time_begin, $time_end ), ARRAY_A );

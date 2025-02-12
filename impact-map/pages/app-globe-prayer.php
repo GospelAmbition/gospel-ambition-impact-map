@@ -1,15 +1,15 @@
 <?php
 if ( !defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly.
 
-class GO_Impact_Map_Globe extends DT_Magic_Url_Base
+class GO_Impact_Map_Globe_Prayer extends DT_Magic_Url_Base
 {
     public $magic = false;
     public $parts = false;
     public $page_title = 'Gospel Ambition Impact Map';
     public $root = 'app';
-    public $type = 'globe';
-    public $type_name = 'Gospel Ambition Impact Map';
-    public static $token = 'app_globe';
+    public $type = 'globe_prayer';
+    public $type_name = 'Gospel Ambition Impact Map - Prayer';
+    public static $token = 'app_globe_prayer';
 
     private static $_instance = null;
     public static function instance() {
@@ -127,6 +127,7 @@ class GO_Impact_Map_Globe extends DT_Magic_Url_Base
                 "features": []
             }
             window.color_praying = '#FF3131'
+            window.color_prayed_for = '#FF3131'
             window.color_studying = '#FFBF00'
             window.color_training = '#98FB98'
             window.color_downloading = '#00BFFF'
@@ -134,6 +135,7 @@ class GO_Impact_Map_Globe extends DT_Magic_Url_Base
             window.color_coaching = '#355E3B'
 
             window.praying_count = 0
+            window.prayed_for_count = 0
             window.studying_count = 0
             window.training_count = 0
             window.downloading_count = 0
@@ -162,6 +164,13 @@ class GO_Impact_Map_Globe extends DT_Magic_Url_Base
                         }
                          .color-block.praying {
                             background-color: ${window.color_praying};
+                            width: 20px;
+                            height: 20px;
+                            float: left;
+                            margin-right: 5px;
+                        }
+                         .color-block.praying {
+                            background-color: ${window.color_prayed_for};
                             width: 20px;
                             height: 20px;
                             float: left;
@@ -276,8 +285,15 @@ class GO_Impact_Map_Globe extends DT_Magic_Url_Base
                     window.activity_geojson = data
                     data.features.forEach( (v) => {
                     if ( 'praying' === v.properties.type ) {
+                        v.geometry.coordinates[0] = v.geometry.coordinates[0] + 0.002 // layer shift so that they don't overlap
                         window.activity_geojson_praying.features.push(v)
                         window.praying_count++
+                    }
+                    else if ( 'prayed_for' === v.properties.type ) {
+                        v.geometry.coordinates[0] = v.geometry.coordinates[0] + 0.002 // layer shift so that they don't overlap
+                        v.geometry.coordinates[1] = v.geometry.coordinates[1] + 0.001
+                        window.activity_geojson_prayed_for.features.push(v)
+                        window.prayed_for_count++
                     }
                     else if ( 'studying' === v.properties.type ) {
                         v.geometry.coordinates[0] = v.geometry.coordinates[0] + 0.002 // layer shift so that they don't overlap
@@ -295,16 +311,16 @@ class GO_Impact_Map_Globe extends DT_Magic_Url_Base
                         window.activity_geojson_downloading.features.push(v)
                         window.downloading_count++
                     }
-                    // else if ( 'practicing' === v.properties.type ) {
-                    //     v.geometry.coordinates[1] = v.geometry.coordinates[1] + 0.002 // layer shift so that they don't overlap
-                    //     window.activity_geojson_practicing.features.push(v)
-                    //     window.practicing_count++
-                    // }
-                    // else if ( 'coaching' === v.properties.type ) {
-                    //     v.geometry.coordinates[1] = v.geometry.coordinates[1] - 0.002 // layer shift so that they don't overlap
-                    //     window.activity_geojson_coaching.features.push(v)
-                    //     window.coaching_count++
-                    // }
+                    else if ( 'practicing' === v.properties.type ) {
+                        v.geometry.coordinates[1] = v.geometry.coordinates[1] + 0.002 // layer shift so that they don't overlap
+                        window.activity_geojson_practicing.features.push(v)
+                        window.practicing_count++
+                    }
+                    else if ( 'coaching' === v.properties.type ) {
+                        v.geometry.coordinates[1] = v.geometry.coordinates[1] - 0.002 // layer shift so that they don't overlap
+                        window.activity_geojson_coaching.features.push(v)
+                        window.coaching_count++
+                    }
                     })
 
                     jQuery('#legend_praying').html(numberWithCommas(window.praying_count))
@@ -775,7 +791,7 @@ class GO_Impact_Map_Globe extends DT_Magic_Url_Base
         $action = sanitize_text_field( wp_unslash( $params['action'] ) );
 
         $language_code = 'en';
-        $hours = 720;
+        $hours = 720; // 30 days
 
         switch ( $action ) {
             case 'geojson':
@@ -785,4 +801,4 @@ class GO_Impact_Map_Globe extends DT_Magic_Url_Base
         }
     }
 }
-GO_Impact_Map_Globe::instance();
+GO_Impact_Map_Globe_Prayer::instance();
