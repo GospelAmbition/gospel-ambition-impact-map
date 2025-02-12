@@ -71,3 +71,6 @@ function impact_map_top() {
         </div>
     <?php
 }
+
+
+

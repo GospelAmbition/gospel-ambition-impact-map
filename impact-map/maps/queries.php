@@ -231,6 +231,7 @@ class GO_Queries {
                 'type' => 'Feature',
                 'properties' => [
                     'type' => $record['type'],
+                    'subtype' => $record['subtype'],
                 ],
                 'geometry' => array(
                     'type' => 'Point',
@@ -262,14 +263,13 @@ class GO_Queries {
         $results = $wpdb->get_results( $wpdb->prepare( "
                 SELECT *
                 FROM (
-                SELECT r.type, r.lng, r.lat, r.time_end
+                SELECT r.type, r.subtype, r.lng, r.lat, r.time_end
                 FROM wp_dt_reports r
                 LEFT JOIN wp_dt_location_grid lg ON lg.grid_id=r.grid_id
                 LEFT JOIN wp_dt_location_grid lga0 ON lga0.grid_id=lg.admin0_grid_id
                 WHERE r.time_end > %d
                 AND r.time_end < %d
                 AND r.type != 'system'
-                AND r.subtype != 'prayer_for_location'
                 ) as tb
                 ORDER BY tb.time_end DESC
                 ", $time_begin, $time_end ), ARRAY_A );
