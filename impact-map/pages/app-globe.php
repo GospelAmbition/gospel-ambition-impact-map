@@ -156,9 +156,9 @@ class GO_Impact_Map_Globe extends DT_Magic_Url_Base
                             position: absolute;
                             top: 70px;
                             left: 10px;
-                            width: 200px;
+                            width: 250px;
                             background-color: white;
-                            padding: 20px;
+                            padding: 0 20px 10px;
                         }
                          .color-block.praying {
                             background-color: ${window.color_praying};
@@ -201,6 +201,9 @@ class GO_Impact_Map_Globe extends DT_Magic_Url_Base
                             height: 20px;
                             float: left;
                             margin-right: 5px;
+                        }
+                        .click-hide {
+                            display: none;
                         }
                     </style>`)
                 let zoom = 2.5
@@ -275,11 +278,11 @@ class GO_Impact_Map_Globe extends DT_Magic_Url_Base
                 window.get_geojson().then(function(data){
                     window.activity_geojson = data
                     data.features.forEach( (v) => {
-                    if ( 'praying' === v.properties.type ) {
+                    if ( 'praying' === v.properties.type && 'prayer_for_location' !== v.properties.subtype ) {
                         window.activity_geojson_praying.features.push(v)
                         window.praying_count++
                     }
-                    else if ( 'studying' === v.properties.type ) {
+                    else if ( 'studying' === v.properties.type  ) {
                         v.geometry.coordinates[0] = v.geometry.coordinates[0] + 0.002 // layer shift so that they don't overlap
                         window.activity_geojson_studying.features.push(v)
                         window.studying_count++
@@ -681,6 +684,10 @@ class GO_Impact_Map_Globe extends DT_Magic_Url_Base
                     // });
 
                 })
+
+                jQuery('#legend').on('click', function(){
+                    jQuery('.click-hide').toggle()
+                })
             });
 
             window.get_geojson = () => {
@@ -727,6 +734,7 @@ class GO_Impact_Map_Globe extends DT_Magic_Url_Base
             <div id='map'></div>
         </div>
         <div id="legend">
+            <div class="right"><i class="medium fi-info" style="color: #b13634; cursor:pointer;"></i></div>
             <div><strong>In the last 30 Days</strong></div>
             <div><strong>someone has ...</strong></div>
             <div><div class="color-block praying"></div> Prayed: <span id="legend_praying"></span></div>
@@ -735,8 +743,11 @@ class GO_Impact_Map_Globe extends DT_Magic_Url_Base
             <div><div class="color-block downloading"></div> Downloaded: <span id="legend_downloading"></span></div>
             <!-- <div><div class="color-block practicing"></div> Downloaded: <span id="legend_practicing"></span></div> -->
             <!-- <div><div class="color-block coaching"></div> Downloaded: <span id="legend_coaching"></span></div> -->
-            <div><hr></div>
-            <div>Each count represents a single action done by someone. Each person can generate many actions.</div>
+            <div class="click-hide"><hr></div>
+            <div class="click-hide"><strong>Prayed</strong> - Someone has prayed in this location.</div>
+            <div class="click-hide"><strong>Studied</strong> - Someone has studied disciple making ideas in this location.</div>
+            <div class="click-hide"><strong>Trained</strong> - Someone has recieved or given training on disciple making skills in this location.</div>
+            <div class="click-hide"><strong>Downloaded</strong> - Someone has downloaded training materials or tools.</div>
         </div>
         <?php
     }

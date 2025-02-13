@@ -166,7 +166,7 @@ class GO_Impact_Map_Globe_Prayer extends DT_Magic_Url_Base
                             left: 10px;
                             width: 250px;
                             background-color: white;
-                            padding: 20px;
+                            padding: 0 20px 10px;
                         }
                          .color-block.praying {
                             background-color: ${window.color_praying};
@@ -216,6 +216,9 @@ class GO_Impact_Map_Globe_Prayer extends DT_Magic_Url_Base
                             height: 20px;
                             float: left;
                             margin-right: 5px;
+                        }
+                        .click-hide {
+                            display: none;
                         }
                     </style>`)
                 let zoom = 2.5
@@ -780,6 +783,10 @@ class GO_Impact_Map_Globe_Prayer extends DT_Magic_Url_Base
                     }
 
                 })
+
+                jQuery('#legend').on('click', function(){
+                    jQuery('.click-hide').toggle()
+                })
             });
 
             window.get_geojson = () => {
@@ -801,6 +808,8 @@ class GO_Impact_Map_Globe_Prayer extends DT_Magic_Url_Base
             function numberWithCommas(x) {
                 return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             }
+
+
         </script>
         <?php
     }
@@ -826,6 +835,7 @@ class GO_Impact_Map_Globe_Prayer extends DT_Magic_Url_Base
             <div id='map'></div>
         </div>
         <div id="legend">
+            <div class="right"><i class="medium fi-info" style="color: #b13634; cursor:pointer;"></i></div>
             <div><strong>In the last 30 days...</strong></div>
             <div><div class="color-block praying"></div> Prayers: <span id="legend_praying"></span></div>
             <div><div class="color-block prayed_for"></div> Locations Covered: <span id="legend_prayed_for"></span></div>
@@ -834,9 +844,9 @@ class GO_Impact_Map_Globe_Prayer extends DT_Magic_Url_Base
             <!-- <div><div class="color-block downloading"></div> Downloaded: <span id="legend_downloading"></span></div> -->
             <!-- <div><div class="color-block practicing"></div> Downloaded: <span id="legend_practicing"></span></div> -->
             <!-- <div><div class="color-block coaching"></div> Downloaded: <span id="legend_coaching"></span></div> -->
-            <div><hr></div>
-            <div><strong>Prayers</strong> - These are times of prayer set aside to pray for the advance of the gospel.</div>
-            <div><strong>Locations Covered</strong> - These are locations that have been covered in prayer by name using strategic information about the spiritual state of this location.</div>
+            <div class="click-hide"><hr></div>
+            <div class="click-hide"><strong>Prayers</strong> - These are times of prayer set aside to pray for the advance of the gospel.</div>
+            <div class="click-hide"><strong>Locations Covered</strong> - These are locations that have been covered in prayer by name using strategic information about the spiritual state of this location.</div>
         </div>
         <?php
     }

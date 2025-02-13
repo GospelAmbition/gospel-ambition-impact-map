@@ -108,8 +108,8 @@ class GO_Impact_Map_Magic_Home_App extends DT_Magic_Url_Base
                 </div>
             </div>
             <div class="content">
-                <div class="grid-x grid-padding-x align-center">
-                    <div class="cell medium-6">
+                <div class="grid-x grid-padding-x grid-padding-y align-center">
+                    <div class="cell medium-6 small-12">
                         <a class="button large expanded" href="/app/100map">Movement Activities Map (100 Hour)</a>
                         <a class="button large expanded" href="/app/activity">Movement Activities List (100 Hour)</a>
                         <a class="button large expanded" href="/app/globe">Globe (30 Days)</a>
