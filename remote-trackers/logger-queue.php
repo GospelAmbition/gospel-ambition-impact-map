@@ -37,8 +37,6 @@ class GO_Impact_Map_Queue {
 
         $body = json_decode( wp_remote_retrieve_body( wp_remote_post( $logger_url, $json_body ) ), true );
 
-
-
         return $body;
     }
 

@@ -1,26 +1,26 @@
 <?php
 if ( !defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly.
 
-add_action('go_log_trigger', function( $keys ) {
-    $url = dt_get_url_path();
+// add_action('go_log_trigger', function( $keys ) {
+//     $url = dt_get_url_path();
 
-    // trigger on all prayer pages
-    if ( str_contains( $url, 'fuel' ) ) {
-        // dt_write_log('prayer_person_location');
-        add_log_to_queue( [
-            'post_type' => 'prayer_tools',
-            'type' => 'praying',
-            'subtype' => 'actively_praying',
-            'time' => time(),
-            'language_code' => get_locale(),
-            'location' => [
-                'ip' => get_ip_address_for_log(),
-            ],
-        ] );
-    }
+//     // trigger on all prayer pages
+//     if ( str_contains( $url, 'fuel' ) ) {
+//         // dt_write_log('prayer_person_location');
+//         add_log_to_queue( [
+//             'post_type' => 'prayer_tools',
+//             'type' => 'praying',
+//             'subtype' => 'actively_praying',
+//             'time' => time(),
+//             'language_code' => get_locale(),
+//             'location' => [
+//                 'ip' => get_ip_address_for_log(),
+//             ],
+//         ] );
+//     }
 
-    return $keys;
-}, 10, 1 );
+//     return $keys;
+// }, 10, 1 );
 
 /**
  * wp_insert_post - Registration Event
