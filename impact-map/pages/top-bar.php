@@ -66,7 +66,7 @@ function impact_map_top() {
                 </div>
             </div>
             <div class="top-bar-right">
-                <a href="https://give.gospelambition.org/" target="_blank" class="button small" style="margin:0;">Donate</a>
+                <a href="https://gospelambition.org/giving/" target="_blank" class="button small" style="margin:0;">Donate</a>
             </div>
         </div>
     <?php
