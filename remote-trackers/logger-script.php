@@ -21,7 +21,6 @@ function go_url_logger(){
                     }
                 })
                     .then((response) => response.json())
-                    .then((json) => console.log(json));
             }
         </script>
         <?php
