@@ -23,7 +23,7 @@ class GO_Impact_Map_Globe extends DT_Magic_Url_Base
         parent::__construct();
 
         $url = dt_get_url_path();
-        if ( ( $this->root . '/' . $this->type ) === $url ) {
+        if ( str_starts_with( $url, $this->root . '/' . $this->type ) ) {
 
             $this->magic = new DT_Magic_URL( $this->root );
             $this->parts = $this->magic->parse_url_parts();
