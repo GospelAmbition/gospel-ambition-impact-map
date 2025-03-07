@@ -40,28 +40,6 @@ add_action( 'wp_insert_post', function( $post_ID, $post, $update ) {
     }
 }, 10, 3 );
 
-/**
- * When a lap is completed, log the event
- */
-add_action( 'updated_post_meta', function( $meta_id, $object_id, $meta_key, $meta_value, $new = false, $deleted = false ){
-    //@todo add to update-location.php
-    if ( $meta_key === 'status' && $meta_value === 'complete' ) {
-        // dt_write_log('updated_post_meta');
-        add_log_to_queue( [
-            'post_type' => 'prayer_global',
-            'type' => 'praying',
-            'subtype' => 'lap_completed',
-            'time' => time(),
-            'language_code' => get_locale(),
-            'location' => [
-                'ip' => get_ip_address_for_log(),
-            ],
-        ] );
-    }
-}, 10, 4 );
-
-
-
 
 function pg_reports_go_map_cron_send(){
     if ( ( defined( 'WP_DEBUG' ) && WP_DEBUG ) || home_url() !== 'https://prayer.global' ) {
@@ -127,6 +105,30 @@ function pg_reports_go_map_cron_send(){
     update_option( 'go_logger_last_sent', $last_id_sent );
 
 
+    /**
+     * Report completed laps
+     */
+    $last_completed_lap_id = get_option( 'go_logger_last_completed_lap_id', 0 );
+    $completed_laps = $wpdb->get_results( $wpdb->prepare( "
+        SELECT * FROM $wpdb->dt_reports
+        WHERE post_type = 'pg_relays'
+        AND type = 'lap_completed'
+        AND id > %d
+    ", $last_completed_lap_id ), ARRAY_A );
+    foreach ( $completed_laps as $lap ){
+        $data[] = [
+            'post_type' => 'prayer_global',
+            'type' => 'praying',
+            'subtype' => 'lap_completed',
+            'time' => time()
+        ];
+    }
+    $last_completed_lap_id = $completed_laps ? $completed_laps[ count( $completed_laps ) - 1 ]['id'] : $last_completed_lap_id;
+    update_option( 'go_logger_last_completed_lap_id', $last_completed_lap_id );
+
+    /**
+     * Send off
+     */
     if ( !empty( $data ) ) {
         GO_Impact_Map_Queue::send_data( $data );
     }
