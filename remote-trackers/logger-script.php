@@ -4,6 +4,10 @@ if ( !defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly.
 add_action( 'wp_head', 'go_url_logger' );
 // add_action( 'zume_head', 'go_url_logger' );
 function go_url_logger(){
+    //filter to conditionally disable the logger
+    if ( apply_filters( 'go_impact_map_disable_logger', false ) ) {
+        return;
+    }
     // page load logger
     do_action( 'go_log_trigger' );
 
@@ -21,10 +25,8 @@ function go_url_logger(){
                     }
                 })
                     .then((response) => response.json())
-                    .then((json) => console.log(json));
             }
         </script>
         <?php
     }
 }
-
