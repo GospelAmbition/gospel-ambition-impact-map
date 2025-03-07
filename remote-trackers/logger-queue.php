@@ -40,6 +40,16 @@ class GO_Impact_Map_Queue {
         return $body;
     }
 
+    public static function send_data( $data ) {
+        $logger_url = 'https://goimpactmap.com/wp-json/gospel-ambition-impact-map/v1/endpoint';
+
+        $json_body = [ 'method' => 'POST', 'body' => $data ];
+
+        $body = json_decode( wp_remote_retrieve_body( wp_remote_post( $logger_url, $json_body ) ), true );
+
+        return $body;
+    }
+
     /** QUEUE STORAGE */
     public static function _get_queue_id() {
         $queue_id = get_option( 'go_logger_queue_id' );
