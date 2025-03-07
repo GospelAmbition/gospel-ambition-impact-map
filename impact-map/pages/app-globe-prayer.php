@@ -7,9 +7,9 @@ class GO_Impact_Map_Globe_Prayer extends DT_Magic_Url_Base
     public $parts = false;
     public $page_title = 'Gospel Ambition Impact Map';
     public $root = 'app';
-    public $type = 'globe-prayer';
+    public $type = 'prayerglobe';
     public $type_name = 'Gospel Ambition Impact Map - Prayer';
-    public static $token = 'app_globe_prayer';
+    public static $token = 'app_prayerglobe';
 
     private static $_instance = null;
     public static function instance() {
