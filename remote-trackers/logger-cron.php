@@ -12,7 +12,7 @@ class GO_Impact_Map_Cron {
 
     public function action(){
         // dt_write_log(get_bloginfo( 'name' ) . ' ' . __METHOD__);
-        GO_Impact_Send_Queue::send_queue();
+        GO_Impact_Map_Queue::send_queue();
     }
 }
 new GO_Impact_Map_Cron();
