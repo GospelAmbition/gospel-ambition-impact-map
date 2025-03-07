@@ -53,6 +53,10 @@ function impact_map_css_map_site_css_php(){
 }
 
 function impact_map_top() {
+    // Check if 'no_top' parameter exists in the URL
+    if (isset($_GET['no_top'])) {
+        return; // Don't display the top bar if 'no_top' parameter is present
+    }
     ?>
      <div class="top-bar">
             <div class="top-bar-left">
@@ -66,7 +70,7 @@ function impact_map_top() {
                 </div>
             </div>
             <div class="top-bar-right">
-                <a href="https://give.gospelambition.org/" target="_blank" class="button small" style="margin:0;">Donate</a>
+                <a href="https://gospelambition.org/giving/" target="_blank" class="button small" style="margin:0;">Donate</a>
             </div>
         </div>
     <?php

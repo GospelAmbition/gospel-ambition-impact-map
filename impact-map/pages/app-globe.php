@@ -23,7 +23,7 @@ class GO_Impact_Map_Globe extends DT_Magic_Url_Base
         parent::__construct();
 
         $url = dt_get_url_path();
-        if ( ( $this->root . '/' . $this->type ) === $url ) {
+        if ( str_starts_with( $url, $this->root . '/' . $this->type ) ) {
 
             $this->magic = new DT_Magic_URL( $this->root );
             $this->parts = $this->magic->parse_url_parts();
@@ -96,6 +96,7 @@ class GO_Impact_Map_Globe extends DT_Magic_Url_Base
                 || /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(navigator.userAgent.substr(0,4))) {
                 isMobile = true;
             }
+            const urlParams = new URLSearchParams(window.location.search);
 
             window.activity_list = {}
             window.activity_geojson = {
@@ -146,19 +147,25 @@ class GO_Impact_Map_Globe extends DT_Magic_Url_Base
                 jQuery('#custom-style').append(`
                     <style>
                         #map-wrapper {
-                            height: ${window.innerHeight - 50}px !important;
+                            height: ${urlParams.has('no_top') ? window.innerHeight : window.innerHeight - 50}px !important;
                         }
                         #map {
-                            height: ${window.innerHeight - 50}px !important;
+                            height: ${urlParams.has('no_top') ? window.innerHeight : window.innerHeight - 50}px !important;
                         }
                         #legend {
+                            opacity: 0.8;
                             z-index: 1;
                             position: absolute;
                             top: 70px;
                             left: 10px;
-                            width: 250px;
+                            width: 230px;
                             background-color: white;
                             padding: 0 20px 10px;
+                        }
+                        @media (max-width: 639px) {
+                            #legend {
+                                opacity: 0.8;
+                            }
                         }
                          .color-block.praying {
                             background-color: ${window.color_praying};
@@ -205,6 +212,76 @@ class GO_Impact_Map_Globe extends DT_Magic_Url_Base
                         .click-hide {
                             display: none;
                         }
+                        #donation {
+                            display: none; /* Hidden by default, will be shown via JavaScript */
+                            opacity: 0.8;
+                            position: absolute;
+                            top: 70px;
+                            bottom: 40px;
+                            right: 10px;
+                            width: 200px;
+                            background-color: white;
+                            z-index: 1;
+                        }
+                         @media (min-width: 640px) {
+                            #donation {
+                                width: 350px;
+                            }
+                        }
+                        @media (max-width: 639px) {
+                            #donation {
+                               display: none;
+                            }
+                        }
+                        #qr {
+                            display: none; /* Hidden by default, will be shown via JavaScript */
+                            position: absolute;
+                            bottom: 40px;
+                            left: 10px;
+                            width: 200px;
+                            height: 200px;
+                            background-color: white;
+                            z-index: 1;
+                        }
+                        @media (min-width: 640px) {
+                            #qr {
+                                width: 300px;
+                                height: 300px;
+                            }
+                        }
+                        @media (max-width: 639px) {
+                            #qr {
+                                display: none;
+                            }
+                        }
+                        #qr-donate {
+                            display: none; /* Hidden by default, will be shown via JavaScript */
+                            position: absolute;
+                            bottom: 40px;
+                            left: 10px;
+                            width: 200px;
+                            height: 200px;
+                            background-color: white;
+                            z-index: 1;
+                        }
+                        @media (min-width: 640px) {
+                            #qr-donate {
+                                width: 300px;
+                                height: 300px;
+                            }
+                        }
+                        @media (max-width: 639px) {
+                            #qr-donate {
+                                display: none;
+                            }
+                        }
+                        #gear-menu {
+                            position: absolute;
+                            top: 10px;
+                            right: 10px;
+                            z-index: 1;
+                            opacity: 0.8;
+                        }
                     </style>`)
                 let zoom = 2.5
                 if ( isMobile && window.innerWidth < 640 ) {
@@ -225,7 +302,6 @@ class GO_Impact_Map_Globe extends DT_Magic_Url_Base
 
                 // map.addControl(new mapboxgl.NavigationControl());
                 // map.scrollZoom.disable();
-
 
                 map.on('style.load', () => {
                     map.setFog({}); // Set the default atmosphere style
@@ -298,16 +374,6 @@ class GO_Impact_Map_Globe extends DT_Magic_Url_Base
                         window.activity_geojson_downloading.features.push(v)
                         window.downloading_count++
                     }
-                    // else if ( 'practicing' === v.properties.type ) {
-                    //     v.geometry.coordinates[1] = v.geometry.coordinates[1] + 0.002 // layer shift so that they don't overlap
-                    //     window.activity_geojson_practicing.features.push(v)
-                    //     window.practicing_count++
-                    // }
-                    // else if ( 'coaching' === v.properties.type ) {
-                    //     v.geometry.coordinates[1] = v.geometry.coordinates[1] - 0.002 // layer shift so that they don't overlap
-                    //     window.activity_geojson_coaching.features.push(v)
-                    //     window.coaching_count++
-                    // }
                     })
 
                     jQuery('#legend_praying').html(numberWithCommas(window.praying_count))
@@ -562,132 +628,41 @@ class GO_Impact_Map_Globe extends DT_Magic_Url_Base
                         'circle-stroke-color': '#fff'
                     }
                     });
-
-                    // practicing
-                    // map.addSource('layer-source-geojson-practicing', {
-                    // type: 'geojson',
-                    // data: window.activity_geojson_practicing,
-                    // cluster: true,
-                    // clusterMaxZoom: 20,
-                    // clusterRadius: 50
-                    // });
-                    // map.addLayer({
-                    // id: 'clusters-practicing',
-                    // type: 'circle',
-                    // source: 'layer-source-geojson-practicing',
-                    // filter: ['has', 'point_count'],
-                    // paint: {
-                    //     'circle-color': [
-                    //     'step',
-                    //     ['get', 'point_count'],
-                    //     window.color_practicing,
-                    //     20,
-                    //     window.color_practicing,
-                    //     150,
-                    //     window.color_practicing
-                    //     ],
-                    //     'circle-radius': [
-                    //     'step',
-                    //     ['get', 'point_count'],
-                    //     20,
-                    //     100,
-                    //     30,
-                    //     750,
-                    //     40
-                    //     ]
-                    // }
-                    // });
-                    // map.addLayer({
-                    // id: 'cluster-count-practicing',
-                    // type: 'symbol',
-                    // source: 'layer-source-geojson-practicing',
-                    // filter: ['has', 'point_count'],
-                    // layout: {
-                    //     'text-field': '{point_count_abbreviated}',
-                    //     'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
-                    //     'text-size': 12
-                    // }
-                    // });
-                    // map.addLayer({
-                    // id: 'unclustered-point-practicing',
-                    // type: 'circle',
-                    // source: 'layer-source-geojson-practicing',
-                    // filter: ['!', ['has', 'point_count'] ],
-                    // paint: {
-                    //     'circle-color': window.color_practicing,
-                    //     'circle-radius':12,
-                    //     'circle-stroke-width': 1,
-                    //     'circle-stroke-color': '#fff'
-                    // }
-                    // });
-
-
-                    // coaching
-                    // map.addSource('layer-source-geojson-coaching', {
-                    // type: 'geojson',
-                    // data: window.activity_geojson_coaching,
-                    // cluster: true,
-                    // clusterMaxZoom: 20,
-                    // clusterRadius: 50
-                    // });
-                    // map.addLayer({
-                    // id: 'clusters-coaching',
-                    // type: 'circle',
-                    // source: 'layer-source-geojson-coaching',
-                    // filter: ['has', 'point_count'],
-                    // paint: {
-                    //     'circle-color': [
-                    //     'step',
-                    //     ['get', 'point_count'],
-                    //     window.color_coaching,
-                    //     20,
-                    //     window.color_coaching,
-                    //     150,
-                    //     window.color_coaching
-                    //     ],
-                    //     'circle-radius': [
-                    //     'step',
-                    //     ['get', 'point_count'],
-                    //     20,
-                    //     100,
-                    //     30,
-                    //     750,
-                    //     40
-                    //     ]
-                    // }
-                    // });
-                    // map.addLayer({
-                    // id: 'cluster-count-coaching',
-                    // type: 'symbol',
-                    // source: 'layer-source-geojson-coaching',
-                    // filter: ['has', 'point_count'],
-                    // layout: {
-                    // 'text-field': '{point_count_abbreviated}',
-                    // 'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
-                    // 'text-size': 12,
-                    // },
-                    // paint: {
-                    //     'text-color': '#FFF'
-                    // }
-                    // });
-                    // map.addLayer({
-                    // id: 'unclustered-point-coaching',
-                    // type: 'circle',
-                    // source: 'layer-source-geojson-coaching',
-                    // filter: ['!', ['has', 'point_count'] ],
-                    // paint: {
-                    //     'circle-color': window.color_coaching,
-                    //     'circle-radius':12,
-                    //     'circle-stroke-width': 1,
-                    //     'circle-stroke-color': '#fff'
-                    // }
-                    // });
-
                 })
 
                 jQuery('#legend').on('click', function(){
                     jQuery('.click-hide').toggle()
                 })
+
+                // Toggle gear dropdown
+                jQuery('.fi-widget').click(function() {
+                    jQuery('#gear-dropdown').toggle();
+                });
+
+                // Launch button click handler
+                jQuery('#launch-btn').click(function() {
+                    let params = [];
+
+                    if(jQuery('#qr-donate-toggle').is(':checked')) {
+                        params.push('qr-donate');
+                    }
+                    if(jQuery('#qr-toggle').is(':checked')) {
+                        params.push('qr');
+                    }
+                    if(jQuery('#donation-toggle').is(':checked')) {
+                        params.push('donation');
+                    }
+                    if(jQuery('#no-top-toggle').is(':checked')) {
+                        params.push('no_top');
+                    }
+
+                    let url = 'https://goimpactmap.com/app/globe';
+                    if(params.length > 0) {
+                        url += '?' + params.join('&');
+                    }
+
+                    window.open(url, '_blank');
+                });
             });
 
             window.get_geojson = () => {
@@ -709,6 +684,37 @@ class GO_Impact_Map_Globe extends DT_Magic_Url_Base
             function numberWithCommas(x) {
                 return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             }
+
+            // Function to check URL parameters and show/hide elements
+            function checkURLParameters() {
+                const urlParams = new URLSearchParams(window.location.search);
+
+                // Check for 'donation' parameter
+                if (urlParams.has('donation')) {
+                    jQuery('#donation').show();
+                } else {
+                    jQuery('#donation').hide();
+                }
+
+                // Check for 'qr' parameter
+                if (urlParams.has('qr')) {
+                    jQuery('#qr').show();
+                } else {
+                    jQuery('#qr').hide();
+                }
+
+                // Check for 'qr-donate' parameter
+                if (urlParams.has('qr-donate')) {
+                    jQuery('#qr-donate').show();
+                } else {
+                    jQuery('#qr-donate').hide();
+                }
+            }
+
+            // Run the check when the page loads
+            jQuery(document).ready(function() {
+                checkURLParameters();
+            });
         </script>
         <?php
     }
@@ -732,10 +738,30 @@ class GO_Impact_Map_Globe extends DT_Magic_Url_Base
         <style id="custom-style"></style>
         <div id="map-wrapper">
             <div id='map'></div>
+            <div id="gear-menu">
+                <i class="fi-widget" style="font-size: 24px; color: #666; cursor: pointer;"></i>
+                <div id="gear-dropdown" style="display: none; background: white; padding: 10px; margin-top: 5px; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
+                    <div style="margin-bottom: 10px;">
+                        <input type="checkbox" id="qr-donate-toggle"> Show Donate QR
+                    </div>
+                    <div style="margin-bottom: 10px;">
+                        <input type="checkbox" id="qr-toggle"> Show Mobile Map QR
+                    </div>
+                    <div style="margin-bottom: 10px;">
+                        <input type="checkbox" id="donation-toggle"> Hide Donation Panel
+                    </div>
+                    <div style="margin-bottom: 10px;">
+                        <input type="checkbox" id="no-top-toggle"> Remove Top Bar
+                    </div>
+                    <button id="launch-btn" style="width: 100%; background: #b13634; color: white; border: none; padding: 5px; border-radius: 4px; cursor: pointer;">Launch</button>
+                </div>
+            </div>
         </div>
         <div id="legend">
-            <div class="right"><i class="medium fi-info" style="color: #b13634; cursor:pointer;"></i></div>
-            <div><strong>In the last 30 Days</strong></div>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div><strong>In the last 30 Days</strong></div>
+                <i class="medium fi-info" style="color: #b13634; cursor:pointer;"></i>
+            </div>
             <div><strong>someone has ...</strong></div>
             <div><div class="color-block praying"></div> Prayed: <span id="legend_praying"></span></div>
             <div><div class="color-block studying"></div> Studied: <span id="legend_studying"></span></div>
@@ -749,6 +775,17 @@ class GO_Impact_Map_Globe extends DT_Magic_Url_Base
             <div class="click-hide"><strong>Trained</strong> - Someone has recieved or given training on disciple making skills in this location.</div>
             <div class="click-hide"><strong>Downloaded</strong> - Someone has downloaded training materials or tools.</div>
         </div>
+        <div id="donation">
+            <div id="donation-content"></div>
+        </div>
+        <div id="qr">
+            <img src="<?php echo plugin_dir_url(__DIR__)  ?>images/qr-app-globe.png" alt="QR Code">
+        </div>
+        <div id="qr-donate">
+            <img src="<?php echo plugin_dir_url(__DIR__)  ?>images/qr-donate.png" alt="QR Code">
+        </div>
+
+
         <?php
     }
 
