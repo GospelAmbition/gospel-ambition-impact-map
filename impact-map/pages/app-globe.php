@@ -216,7 +216,7 @@ class GO_Impact_Map_Globe extends DT_Magic_Url_Base
                             display: none; /* Hidden by default, will be shown via JavaScript */
                             opacity: 0.8;
                             position: absolute;
-                            top: 70px;
+                            top: 100px;
                             bottom: 40px;
                             right: 10px;
                             width: 200px;
@@ -262,7 +262,7 @@ class GO_Impact_Map_Globe extends DT_Magic_Url_Base
                             width: 200px;
                             height: 200px;
                             background-color: white;
-                            z-index: 1;
+                            z-index: 2;
                         }
                         @media (min-width: 640px) {
                             #qr-donate {
@@ -279,7 +279,7 @@ class GO_Impact_Map_Globe extends DT_Magic_Url_Base
                             position: absolute;
                             top: 10px;
                             right: 10px;
-                            z-index: 1;
+                            z-index: 11;
                             opacity: 0.8;
                         }
                     </style>`)
@@ -738,9 +738,9 @@ class GO_Impact_Map_Globe extends DT_Magic_Url_Base
         <style id="custom-style"></style>
         <div id="map-wrapper">
             <div id='map'></div>
-            <div id="gear-menu">
+            <div id="gear-menu" style="z-index: 11;">
                 <i class="fi-widget" style="font-size: 24px; color: #666; cursor: pointer;"></i>
-                <div id="gear-dropdown" style="display: none; background: white; padding: 10px; margin-top: 5px; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
+                <div id="gear-dropdown" style="display: none; background: white; padding: 10px; margin-top: 5px; border-radius: 4px;  box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
                     <div style="margin-bottom: 10px;">
                         <input type="checkbox" id="qr-donate-toggle"> Show Donate QR
                     </div>
@@ -775,7 +775,7 @@ class GO_Impact_Map_Globe extends DT_Magic_Url_Base
             <div class="click-hide"><strong>Trained</strong> - Someone has recieved or given training on disciple making skills in this location.</div>
             <div class="click-hide"><strong>Downloaded</strong> - Someone has downloaded training materials or tools.</div>
         </div>
-        <div id="donation">
+        <div id="donation" style="z-index: 10;">
             <div id="donation-content"></div>
         </div>
         <div id="qr">
