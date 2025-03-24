@@ -865,69 +865,76 @@ jQuery(document).ready(function(){
       jQuery('.dd.'+v.code).val(v.code).html(`${v.name} (${v.count})`)
     })
 
-
-    let ids = [
-      'clusters-praying',
-      'cluster-count-praying',
-      'unclustered-point-prayer',
-      'clusters-studying',
-      'cluster-count-studying',
-      'unclustered-point-studying',
-      'clusters-training',
-      'cluster-count-training',
-      'unclustered-point-training',
-      'clusters-practicing',
-      'cluster-count-practicing',
-      'unclustered-point-practicing',
-      'clusters-coaching',
-      'cluster-count-coaching',
-      'unclustered-point-coaching'
-    ]
-    jQuery.each(ids, function(i,v){
-      map.setLayoutProperty(v, 'visibility', 'none');
-    })
-    console.log(window.selected_type)
-    if ( 'praying' === window.selected_type ) {
-      map.setLayoutProperty('clusters-praying', 'visibility', 'visible');
-      map.setLayoutProperty('cluster-count-praying', 'visibility', 'visible');
-      map.setLayoutProperty('unclustered-point-prayer', 'visibility', 'visible');
-    }
-    else if ( 'studying' === window.selected_type ) {
-      map.setLayoutProperty('clusters-studying', 'visibility', 'visible');
-      map.setLayoutProperty('cluster-count-studying', 'visibility', 'visible');
-      map.setLayoutProperty('unclustered-point-studying', 'visibility', 'visible');
-    }
-    else if ( 'training' === window.selected_type ) {
-      map.setLayoutProperty('clusters-training', 'visibility', 'visible');
-      map.setLayoutProperty('cluster-count-training', 'visibility', 'visible');
-      map.setLayoutProperty('unclustered-point-training', 'visibility', 'visible');
-    }
-    else if ( 'practicing' === window.selected_type ) {
-      map.setLayoutProperty('clusters-practicing', 'visibility', 'visible');
-      map.setLayoutProperty('cluster-count-practicing', 'visibility', 'visible');
-      map.setLayoutProperty('unclustered-point-practicing', 'visibility', 'visible');
-    }
-    else if ( 'coaching' === window.selected_type ) {
-      map.setLayoutProperty('clusters-coaching', 'visibility', 'visible');
-      map.setLayoutProperty('cluster-count-coaching', 'visibility', 'visible');
-      map.setLayoutProperty('unclustered-point-coaching', 'visibility', 'visible');
-    }
-    else {
-      map.setLayoutProperty('clusters-praying', 'visibility', 'visible');
-      map.setLayoutProperty('cluster-count-praying', 'visibility', 'visible');
-      map.setLayoutProperty('unclustered-point-prayer', 'visibility', 'visible');
-      map.setLayoutProperty('clusters-studying', 'visibility', 'visible');
-      map.setLayoutProperty('cluster-count-studying', 'visibility', 'visible');
-      map.setLayoutProperty('unclustered-point-studying', 'visibility', 'visible');
-      map.setLayoutProperty('clusters-training', 'visibility', 'visible');
-      map.setLayoutProperty('cluster-count-training', 'visibility', 'visible');
-      map.setLayoutProperty('unclustered-point-training', 'visibility', 'visible');
-      map.setLayoutProperty('clusters-practicing', 'visibility', 'visible');
-      map.setLayoutProperty('cluster-count-practicing', 'visibility', 'visible');
-      map.setLayoutProperty('unclustered-point-practicing', 'visibility', 'visible');
-      map.setLayoutProperty('clusters-coaching', 'visibility', 'visible');
-      map.setLayoutProperty('cluster-count-coaching', 'visibility', 'visible');
-      map.setLayoutProperty('unclustered-point-coaching', 'visibility', 'visible');
+    // Only proceed with style modifications if the map style is loaded
+    if (map.isStyleLoaded()) {
+      let ids = [
+        'clusters-praying',
+        'cluster-count-praying',
+        'unclustered-point-prayer',
+        'clusters-studying',
+        'cluster-count-studying',
+        'unclustered-point-studying',
+        'clusters-training',
+        'cluster-count-training',
+        'unclustered-point-training',
+        'clusters-practicing',
+        'cluster-count-practicing',
+        'unclustered-point-practicing',
+        'clusters-coaching',
+        'cluster-count-coaching',
+        'unclustered-point-coaching'
+      ]
+      jQuery.each(ids, function(i,v){
+        map.setLayoutProperty(v, 'visibility', 'none');
+      })
+      console.log(window.selected_type)
+      if ( 'praying' === window.selected_type ) {
+        map.setLayoutProperty('clusters-praying', 'visibility', 'visible');
+        map.setLayoutProperty('cluster-count-praying', 'visibility', 'visible');
+        map.setLayoutProperty('unclustered-point-prayer', 'visibility', 'visible');
+      }
+      else if ( 'studying' === window.selected_type ) {
+        map.setLayoutProperty('clusters-studying', 'visibility', 'visible');
+        map.setLayoutProperty('cluster-count-studying', 'visibility', 'visible');
+        map.setLayoutProperty('unclustered-point-studying', 'visibility', 'visible');
+      }
+      else if ( 'training' === window.selected_type ) {
+        map.setLayoutProperty('clusters-training', 'visibility', 'visible');
+        map.setLayoutProperty('cluster-count-training', 'visibility', 'visible');
+        map.setLayoutProperty('unclustered-point-training', 'visibility', 'visible');
+      }
+      else if ( 'practicing' === window.selected_type ) {
+        map.setLayoutProperty('clusters-practicing', 'visibility', 'visible');
+        map.setLayoutProperty('cluster-count-practicing', 'visibility', 'visible');
+        map.setLayoutProperty('unclustered-point-practicing', 'visibility', 'visible');
+      }
+      else if ( 'coaching' === window.selected_type ) {
+        map.setLayoutProperty('clusters-coaching', 'visibility', 'visible');
+        map.setLayoutProperty('cluster-count-coaching', 'visibility', 'visible');
+        map.setLayoutProperty('unclustered-point-coaching', 'visibility', 'visible');
+      }
+      else {
+        map.setLayoutProperty('clusters-praying', 'visibility', 'visible');
+        map.setLayoutProperty('cluster-count-praying', 'visibility', 'visible');
+        map.setLayoutProperty('unclustered-point-prayer', 'visibility', 'visible');
+        map.setLayoutProperty('clusters-studying', 'visibility', 'visible');
+        map.setLayoutProperty('cluster-count-studying', 'visibility', 'visible');
+        map.setLayoutProperty('unclustered-point-studying', 'visibility', 'visible');
+        map.setLayoutProperty('clusters-training', 'visibility', 'visible');
+        map.setLayoutProperty('cluster-count-training', 'visibility', 'visible');
+        map.setLayoutProperty('unclustered-point-training', 'visibility', 'visible');
+        map.setLayoutProperty('clusters-practicing', 'visibility', 'visible');
+        map.setLayoutProperty('cluster-count-practicing', 'visibility', 'visible');
+        map.setLayoutProperty('unclustered-point-practicing', 'visibility', 'visible');
+        map.setLayoutProperty('clusters-coaching', 'visibility', 'visible');
+        map.setLayoutProperty('cluster-count-coaching', 'visibility', 'visible');
+        map.setLayoutProperty('unclustered-point-coaching', 'visibility', 'visible');
+      }
+    } else {
+      // If style is not loaded, wait for it to load before setting properties
+      map.once('style.load', () => {
+        load_type_dropdown();
+      });
     }
   }
   function load_title_stats() {

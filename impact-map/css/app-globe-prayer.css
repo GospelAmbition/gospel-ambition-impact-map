@@ -1,0 +1,155 @@
+/**
+ * Prayer Globe Map Styles
+ */
+
+#map-wrapper {
+    position: relative;
+}
+
+#map {
+    width: 100%;
+}
+
+.color-block.praying {
+    background-color: #FF3131;
+    width: 20px;
+    height: 20px;
+    float: left;
+    margin-right: 5px;
+}
+
+.color-block.prayed_for {
+    background-color: #FFBF00;
+    width: 20px;
+    height: 20px;
+    float: left;
+    margin-right: 5px;
+}
+
+.click-hide {
+    display: none;
+}
+
+#donation {
+    display: none;
+    opacity: 0.8;
+    position: absolute;
+    top: 100px;
+    bottom: 40px;
+    right: 10px;
+    width: 200px;
+    background-color: white;
+    z-index: 10;
+}
+
+@media (min-width: 640px) {
+    #donation {
+        width: 350px;
+    }
+}
+
+@media (max-width: 639px) {
+    #donation {
+        display: none;
+    }
+}
+
+#qr {
+    display: none;
+    position: absolute;
+    bottom: 40px;
+    left: 10px;
+    width: 200px;
+    height: 200px;
+    background-color: white;
+    z-index: 10;
+}
+
+@media (min-width: 640px) {
+    #qr {
+        width: 300px;
+        height: 300px;
+    }
+}
+
+@media (max-width: 639px) {
+    #qr {
+        display: none;
+    }
+}
+
+#qr-donate {
+    display: none;
+    position: absolute;
+    bottom: 40px;
+    left: 10px;
+    width: 200px;
+    height: 200px;
+    background-color: white;
+    z-index: 10;
+}
+
+@media (min-width: 640px) {
+    #qr-donate {
+        width: 300px;
+        height: 300px;
+    }
+}
+
+@media (max-width: 639px) {
+    #qr-donate {
+        display: none;
+    }
+}
+
+#legend-div {
+    z-index: 5;
+    position: absolute;
+    top: 70px !important;
+    left: 10px;
+    width: 250px;
+    background-color: white;
+    padding: 0 20px 10px;
+}
+
+#gear-menu {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 20;
+    opacity: 0.8;
+}
+
+#gear-menu .fi-widget {
+    font-size: 24px;
+    color: #666;
+    cursor: pointer;
+}
+
+#gear-dropdown {
+    display: none;
+    background: white;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.error-message {
+    padding: 10px;
+    background-color: #ffebee;
+    color: #c62828;
+    border: 1px solid #ef9a9a;
+    border-radius: 4px;
+    margin: 10px 0;
+}
+
+#launch-btn {
+    width: 100%;
+    background: #b13634;
+    color: white;
+    border: none;
+    padding: 5px;
+    border-radius: 4px;
+    cursor: pointer;
+} 
