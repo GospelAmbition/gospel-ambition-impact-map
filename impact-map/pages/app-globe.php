@@ -999,9 +999,9 @@ class GO_Impact_Map_Globe extends DT_Magic_Url_Base
 
                 // Check for 'donation' parameter
                 if (urlParams.has('donation')) {
-                    jQuery('#donation').show();
-                } else {
                     jQuery('#donation').hide();
+                } else {
+                    jQuery('#donation').show();
                 }
 
                 // Check for 'qr' parameter
