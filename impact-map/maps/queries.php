@@ -218,38 +218,13 @@ class GO_Queries {
     public static function get_activity_geojson( $language_code = 'en', $hours = null ) {
         ini_set('memory_limit', -1); // remove memory limit
 
-        $languages_by_code = impact_map_languages();
         $list = self::query_activity_geojson( $language_code, $hours );
 
         if ( empty( $list ) ) {
             $list = [];
         }
 
-        $features = [];
-        foreach ( $list as $record ) {
-            $features[] = array(
-                'type' => 'Feature',
-                'properties' => [
-                    'type' => $record['type'],
-                    'subtype' => $record['subtype'],
-                ],
-                'geometry' => array(
-                    'type' => 'Point',
-                    'coordinates' => array(
-                        (float) $record['lng'],
-                        (float) $record['lat'],
-                        1,
-                    ),
-                ),
-            );
-        } // end foreach loop
-
-        $new_data = array(
-            'type' => 'FeatureCollection',
-            'features' => $features,
-        );
-
-        return $new_data;
+        return $list;
     }
 
     public static function query_activity_geojson( $language_code = 'en', $hours = null ): array {

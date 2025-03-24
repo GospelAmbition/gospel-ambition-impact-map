@@ -797,6 +797,29 @@ class GO_Impact_Map_Globe_Prayer extends DT_Magic_Url_Base
                         xhr.setRequestHeader('X-WP-Nonce', jsObject.nonce )
                     }
                 })
+                .then(function(data) {
+                    // Construct GeoJSON from raw data
+                    const features = data.map(record => ({
+                        type: 'Feature',
+                        properties: {
+                            type: record.type,
+                            subtype: record.subtype
+                        },
+                        geometry: {
+                            type: 'Point',
+                            coordinates: [
+                                parseFloat(record.lng),
+                                parseFloat(record.lat),
+                                1
+                            ]
+                        }
+                    }));
+
+                    return {
+                        type: 'FeatureCollection',
+                        features: features
+                    };
+                })
                 .fail(function(e) {
                     console.error("Error loading map data:", e);
                     if (jQuery('#error').length) {
