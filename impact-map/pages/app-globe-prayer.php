@@ -888,7 +888,13 @@ class GO_Impact_Map_Globe_Prayer extends DT_Magic_Url_Base
         </div>
 
         <div id="donation" style="z-index: 10;">
-            <div id="donation-content"></div>
+            <div id="donation-content">
+                <div>
+                    <p class="desktop-text"><strong>Join Gospel Ambition in fulfilling the great commission in this generation together.</strong> There has never been a decade in human history where a small group of talented people could have this level of global impact on the world. Join us. Sieze this moment in history with us.</p>
+                    <p class="mobile-text"><strong>Join Gospel Ambition in fulfilling the great commission in this generation together.</strong></p>
+                </div>
+                <a href="https://gospelambition.org/giving/" target="_blank" class="donate-btn">Donate</a>
+            </div>
         </div>
         <div id="qr">
             <img src="<?php echo plugin_dir_url(__DIR__)  ?>images/qr-app-globe.png" alt="QR Code">
@@ -896,6 +902,53 @@ class GO_Impact_Map_Globe_Prayer extends DT_Magic_Url_Base
         <div id="qr-donate">
             <img src="<?php echo plugin_dir_url(__DIR__)  ?>images/qr-donate.png" alt="QR Code">
         </div>
+
+        <style>
+            #donation-content .donate-btn {
+                background-color: #b13634;
+                color: white;
+                border: none;
+                padding: 15px 30px;
+                font-size: 18px;
+                font-weight: bold;
+                border-radius: 4px;
+                cursor: pointer;
+                width: 100%;
+                transition: background-color 0.3s ease;
+                text-align: center;
+            }
+            #donation {
+                display: none; /* Hidden by default, will be shown via JavaScript */
+                opacity: 0.8;
+                position: absolute;
+                top: 100px;
+                right: 10px;
+                width: 200px;
+                background-color: white;
+                z-index: 1;
+                padding: 20px;
+                box-sizing: border-box;
+            }
+            #donation-content {
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+            }
+            @media (max-width: 639px) {
+                #donation {
+                    top: auto;
+                    bottom: 0;
+                    right: 0;
+                    width: 100%;
+                    height: 15vh;
+                    opacity: 0.9;
+                }
+                #donation-content {
+                    height: 100%;
+                    justify-content: space-between;
+                }
+            }
+        </style>
 
         <?php
     }

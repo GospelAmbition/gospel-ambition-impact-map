@@ -270,11 +270,63 @@ class GO_Impact_Map_Globe extends DT_Magic_Url_Base
                             opacity: 0.8;
                             position: absolute;
                             top: 100px;
-                            bottom: 40px;
                             right: 10px;
                             width: 200px;
                             background-color: white;
                             z-index: 1;
+                            padding: 20px;
+                            box-sizing: border-box;
+                        }
+                        #donation-content {
+                            display: flex;
+                            flex-direction: column;
+                            gap: 20px;
+                        }
+                        @media (max-width: 639px) {
+                            #donation {
+                                top: auto;
+                                bottom: 0;
+                                right: 0;
+                                width: 100%;
+                                height: 15vh;
+                                opacity: 0.9;
+                            }
+                            #donation-content {
+                                height: 100%;
+                                justify-content: space-between;
+                            }
+                        }
+                        #donation-content p {
+                            margin: 0 0 20px 0;
+                            line-height: 1.5;
+                            color: #333;
+                        }
+                        #donation-content .mobile-text {
+                            display: none;
+                        }
+                        @media (max-width: 639px) {
+                            #donation-content .desktop-text {
+                                display: none;
+                            }
+                            #donation-content .mobile-text {
+                                display: block;
+                            }
+                        }
+                        #donation-content .donate-btn {
+                            background-color: #b13634;
+                            color: white;
+                            border: none;
+                            padding: 15px 30px;
+                            font-size: 18px;
+                            font-weight: bold;
+                            border-radius: 4px;
+                            cursor: pointer;
+                            width: 100%;
+                            transition: background-color 0.3s ease;
+                            text-align: center;
+                        }
+                        #donation-content .donate-btn:hover {
+                            background-color: #8f2a28;
                         }
                          @media (min-width: 640px) {
                             #donation {
@@ -283,7 +335,12 @@ class GO_Impact_Map_Globe extends DT_Magic_Url_Base
                         }
                         @media (max-width: 639px) {
                             #donation {
-                               display: none;
+                                top: auto;
+                                bottom: 0;
+                                right: 0;
+                                width: 100%;
+                                height: 25vh;
+                                opacity: 0.9;
                             }
                         }
                         #qr {
@@ -1026,7 +1083,13 @@ class GO_Impact_Map_Globe extends DT_Magic_Url_Base
             <div class="click-hide"><strong>Downloaded</strong> - Someone has downloaded training materials or tools.</div>
         </div>
         <div id="donation" style="z-index: 10;">
-            <div id="donation-content"></div>
+            <div id="donation-content">
+                <div>
+                    <p class="desktop-text"><strong>Join Gospel Ambition in fulfilling the great commission in this generation together.</strong> There has never been a decade in human history where a small group of talented people could have this level of global impact on the world. Join us. Sieze this moment in history with us.</p>
+                    <p class="mobile-text"><strong>Join Gospel Ambition in fulfilling the great commission in this generation together.</strong></p>
+                </div>
+                <a href="https://gospelambition.org/giving/" target="_blank" class="donate-btn">Donate</a>
+            </div>
         </div>
         <div id="qr">
             <img src="<?php echo plugin_dir_url(__DIR__)  ?>images/qr-app-globe.png" alt="QR Code">
