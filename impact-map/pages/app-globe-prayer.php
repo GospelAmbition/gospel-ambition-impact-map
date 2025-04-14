@@ -748,7 +748,7 @@ class GO_Impact_Map_Globe_Prayer extends DT_Magic_Url_Base
                         params.push('no_top');
                     }
 
-                    let url = 'https://goimpactmap.com/app/prayerglobe';
+                    let url = 'https://impact.gospelambition.org/app/prayerglobe';
                     if(params.length > 0) {
                         url += '?' + params.join('&');
                     }

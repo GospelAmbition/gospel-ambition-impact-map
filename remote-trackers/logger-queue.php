@@ -25,7 +25,7 @@ class GO_Impact_Map_Queue {
     public static function send_queue() {
         // dt_write_log(get_bloginfo( 'name' ) . ' ' . __METHOD__);
 
-        $logger_url = 'https://goimpactmap.com/wp-json/gospel-ambition-impact-map/v1/endpoint';
+        $logger_url = 'https://impact.gospelambition.org/wp-json/gospel-ambition-impact-map/v1/endpoint';
 
         $queue = self::get_queue();
         if ( empty( $queue ) ) {
@@ -41,7 +41,7 @@ class GO_Impact_Map_Queue {
     }
 
     public static function send_data( $data ) {
-        $logger_url = 'https://goimpactmap.com/wp-json/gospel-ambition-impact-map/v1/endpoint';
+        $logger_url = 'https://impact.gospelambition.org/wp-json/gospel-ambition-impact-map/v1/endpoint';
 
         $json_body = [ 'method' => 'POST', 'body' => $data ];
 
