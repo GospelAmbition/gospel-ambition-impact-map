@@ -1,10 +1,26 @@
 <?php
 if ( !defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly.
 
+/**
+ * Class GO_Impact_Map_Endpoints
+ * 
+ * Handles the REST API endpoints for the Impact Map.
+ * Processes incoming data, geocodes locations, and stores records in the database.
+ *
+ * @since 0.1
+ */
 class GO_Impact_Map_Endpoints
 {
     private static $_instance = null;
     public $namespace = 'gospel-ambition-impact-map/v1';
+    
+    /**
+     * Registers the REST API routes.
+     *
+     * @since  0.1
+     * @access public
+     * @return void
+     */
     public function add_api_routes() {
         $namespace = $this->namespace;
 
@@ -16,6 +32,18 @@ class GO_Impact_Map_Endpoints
             ]
         );
     }
+    
+    /**
+     * Handles the main endpoint requests.
+     * 
+     * Processes incoming log data, enhances it with location information,
+     * and stores it in the database.
+     *
+     * @since  0.1
+     * @access public
+     * @param  WP_REST_Request $request The request object.
+     * @return bool True on success, false on failure.
+     */
     public function endpoint( WP_REST_Request $request ) {
         $logs = dt_recursive_sanitize_array( $request->get_params() );
 
@@ -166,6 +194,16 @@ class GO_Impact_Map_Endpoints
         return true;
     }
 
+    /**
+     * Creates a string representation of the log for storage.
+     * 
+     * Determines the source of the log and calls the appropriate string formatter.
+     *
+     * @since  0.1
+     * @access public
+     * @param  array $log The log data.
+     * @return string The formatted string representation.
+     */
     public function _create_string( $log ) {
 
         $string = '';
@@ -483,7 +521,7 @@ class GO_Impact_Map_Endpoints
                 '4' => [
                     'key' => 4,
                     'title' => __( 'S.O.A.P.S. Bible Study', 'impact_map' ),
-                    'description' => __( 'A tool for daily Bible study that helps you understand, obey, and share God’s Word.', 'impact_map' ),
+                    'description' => __( 'A tool for daily Bible study that helps you understand, obey, and share God's Word.', 'impact_map' ),
                     'video_title' => __( 'S.O.A.P.S. Bible Study', 'impact_map' ),
                     'slug' => 'soaps-bible-reading',
                     'video' => 4,
@@ -555,8 +593,8 @@ class GO_Impact_Map_Endpoints
                 '10' => [
                     'key' => 10,
                     'title' => __( 'The Gospel and How to Share It', 'impact_map' ),
-                    'description' => __( 'Learn a way to share God’s Good News from the beginning of humanity all the way to the end of this age.', 'impact_map' ),
-                    'video_title' => __( 'Sharing God‘s Story', 'impact_map' ),
+                    'description' => __( 'Learn a way to share God's Good News from the beginning of humanity all the way to the end of this age.', 'impact_map' ),
+                    'video_title' => __( 'Sharing God's Story', 'impact_map' ),
                     'slug' => 'the-gospel-and-how-to-share-it',
                     'video' => 10,
                     'script' => 43,
@@ -567,7 +605,7 @@ class GO_Impact_Map_Endpoints
                 '11' => [
                     'key' => 11,
                     'title' => __( 'Baptism and How To Do It', 'impact_map' ),
-                    'description' => __( 'Jesus said, “Go and make disciples of all nations, BAPTIZING them in the name of the Father and of the Son and of the Holy Spirit…” Learn how to put this into practice.', 'impact_map' ),
+                    'description' => __( 'Jesus said, "Go and make disciples of all nations, BAPTIZING them in the name of the Father and of the Son and of the Holy Spirit…" Learn how to put this into practice.', 'impact_map' ),
                     'video_title' => __( 'Baptism', 'impact_map' ),
                     'slug' => 'baptism-and-how-to-do-it',
                     'video' => 11,
@@ -614,9 +652,9 @@ class GO_Impact_Map_Endpoints
                 ],
                 '15' => [
                     'key' => 15,
-                    'title' => __( 'Eyes to See Where the Kingdom Isn’t', 'impact_map' ),
-                    'description' => __( 'Begin to see where God’s Kingdom isn’t. These are usually the places where God wants to work the most.', 'impact_map' ),
-                    'video_title' => __( 'Eyes to See Where the Kingdom Isn’t', 'impact_map' ),
+                    'title' => __( 'Eyes to See Where the Kingdom Isn't', 'impact_map' ),
+                    'description' => __( 'Begin to see where God's Kingdom isn't. These are usually the places where God wants to work the most.', 'impact_map' ),
+                    'video_title' => __( 'Eyes to See Where the Kingdom Isn't', 'impact_map' ),
                     'slug' => 'eyes-to-see-where-the-kingdom-isnt',
                     'video' => 15,
                     'script' => 48,
@@ -626,9 +664,9 @@ class GO_Impact_Map_Endpoints
                 ],
                 '16' => [
                     'key' => 16,
-                    'title' => __( 'The Lord’s Supper and How To Lead It', 'impact_map' ),
-                    'description' => __( 'It’s a simple way to celebrate our intimate connection and ongoing relationship with Jesus. Learn a simple way to celebrate.', 'impact_map' ),
-                    'video_title' => __( 'The Lord’s Supper', 'impact_map' ),
+                    'title' => __( 'The Lord's Supper and How To Lead It', 'impact_map' ),
+                    'description' => __( 'It's a simple way to celebrate our intimate connection and ongoing relationship with Jesus. Learn a simple way to celebrate.', 'impact_map' ),
+                    'video_title' => __( 'The Lord's Supper', 'impact_map' ),
                     'slug' => 'the-lords-supper-and-how-to-lead-it',
                     'video' => 16,
                     'script' => 49,
@@ -639,7 +677,7 @@ class GO_Impact_Map_Endpoints
                 '17' => [
                     'key' => 17,
                     'title' => __( 'Prayer Walking and How To Do It', 'impact_map' ),
-                    'description' => __( 'It‘s a simple way to obey God’s command to pray for others. And it‘s just what it sounds like — praying to God while walking around!', 'impact_map' ),
+                    'description' => __( 'It's a simple way to obey God's command to pray for others. And it's just what it sounds like — praying to God while walking around!', 'impact_map' ),
                     'video_title' => __( 'Prayer Walking', 'impact_map' ),
                     'slug' => 'prayer-walking',
                     'video' => 17,
@@ -651,7 +689,7 @@ class GO_Impact_Map_Endpoints
                 '18' => [
                     'key' => 18,
                     'title' => __( 'A Person of Peace and How To Find One', 'impact_map' ),
-                    'description' => __( 'Learn who a person of peace might be and how to know when you‘ve found one.', 'impact_map' ),
+                    'description' => __( 'Learn who a person of peace might be and how to know when you've found one.', 'impact_map' ),
                     'video_title' => __( 'Person of Peace', 'impact_map' ),
                     'slug' => 'a-person-of-peace-and-how-to-find-one',
                     'video' => 18,
@@ -663,7 +701,7 @@ class GO_Impact_Map_Endpoints
                 '19' => [
                     'key' => 19,
                     'title' => __( 'Faithfulness is Better Than Knowledge', 'impact_map' ),
-                    'description' => __( 'It‘s important what disciples know — but it‘s much more important what they DO with what they know.', 'impact_map' ),
+                    'description' => __( 'It's important what disciples know — but it's much more important what they DO with what they know.', 'impact_map' ),
                     'video_title' => __( 'Faithfulness', 'impact_map' ),
                     'slug' => 'faithfulness-is-better-than-knowledge',
                     'video' => 19,
@@ -687,7 +725,7 @@ class GO_Impact_Map_Endpoints
                 '21' => [
                     'key' => 21,
                     'title' => __( '3/3 Group Meeting Pattern', 'impact_map' ),
-                    'description' => __( 'A 3/3 Group is a way for followers of Jesus to meet, pray, learn, grow, fellowship and practice obeying and sharing what they‘ve learned. In this way, a 3/3 Group is not just a small group but a Simple Church.', 'impact_map' ),
+                    'description' => __( 'A 3/3 Group is a way for followers of Jesus to meet, pray, learn, grow, fellowship and practice obeying and sharing what they've learned. In this way, a 3/3 Group is not just a small group but a Simple Church.', 'impact_map' ),
                     'video_title' => __( '3/3 Group', 'impact_map' ),
                     'slug' => '3-3-group-meeting-pattern',
                     'video' => 21,
@@ -723,7 +761,7 @@ class GO_Impact_Map_Endpoints
                 '24' => [
                     'key' => 24,
                     'title' => __( 'Expect Non-Sequential Growth', 'impact_map' ),
-                    'description' => __( 'See how disciple making doesn‘t have to be linear. Multiple things can happen at the same time.', 'impact_map' ),
+                    'description' => __( 'See how disciple making doesn't have to be linear. Multiple things can happen at the same time.', 'impact_map' ),
                     'video_title' => __( 'Expect Non-Sequential Growth', 'impact_map' ),
                     'slug' => 'expect-non-sequential-growth',
                     'video' => 24,
@@ -747,7 +785,7 @@ class GO_Impact_Map_Endpoints
                 '26' => [
                     'key' => 26,
                     'title' => __( 'Always Part of Two Churches', 'impact_map' ),
-                    'description' => __( 'Learn how to obey Jesus‘ commands by going AND staying.', 'impact_map' ),
+                    'description' => __( 'Learn how to obey Jesus' commands by going AND staying.', 'impact_map' ),
                     'video_title' => __( 'Always Part of Two Churches', 'impact_map' ),
                     'slug' => 'always-part-of-two-churches',
                     'video' => 26,
@@ -795,7 +833,7 @@ class GO_Impact_Map_Endpoints
                 '30' => [
                     'key' => 30,
                     'title' => __( 'Peer Mentoring Groups', 'impact_map' ),
-                    'description' => __( 'This is a group that consists of people who are leading and starting 3/3 Groups. It also follows a 3/3 format and is a powerful way to assess the spiritual health of God’s work in your area.', 'impact_map' ),
+                    'description' => __( 'This is a group that consists of people who are leading and starting 3/3 Groups. It also follows a 3/3 format and is a powerful way to assess the spiritual health of God's work in your area.', 'impact_map' ),
                     'video_title' => __( 'Peer Mentoring', 'impact_map' ),
                     'slug' => 'peer-mentoring-groups',
                     'video' => 30,

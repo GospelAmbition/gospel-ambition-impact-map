@@ -1,6 +1,14 @@
 <?php
 if ( !defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly.
 
+/**
+ * Class GO_Impact_Map_Globe
+ * 
+ * Handles the main globe visualization showing all types of activities.
+ * Extends DT_Magic_Url_Base to create a custom frontend for Globe visualization.
+ *
+ * @since 0.1
+ */
 class GO_Impact_Map_Globe extends DT_Magic_Url_Base
 {
     public $magic = false;
@@ -12,6 +20,14 @@ class GO_Impact_Map_Globe extends DT_Magic_Url_Base
     public static $token = 'app_globe';
 
     private static $_instance = null;
+    
+    /**
+     * Returns a singleton instance of this class.
+     *
+     * @since  0.1
+     * @access public
+     * @return GO_Impact_Map_Globe|null
+     */
     public static function instance() {
         if ( is_null( self::$_instance ) ) {
             self::$_instance = new self();
@@ -19,6 +35,14 @@ class GO_Impact_Map_Globe extends DT_Magic_Url_Base
         return self::$_instance;
     } // End instance()
 
+    /**
+     * Constructor for GO_Impact_Map_Globe
+     * 
+     * Sets up the magic link, registers necessary hooks, actions, and filters for the globe page.
+     *
+     * @since  0.1
+     * @access public
+     */
     public function __construct() {
         parent::__construct();
 
@@ -59,6 +83,14 @@ class GO_Impact_Map_Globe extends DT_Magic_Url_Base
         }
     }
 
+    /**
+     * Allowed javascript files for this magic link page.
+     *
+     * @since  0.1
+     * @access public
+     * @param  array $allowed_js Array of allowed javascript files.
+     * @return array Modified array of allowed javascript files.
+     */
     public function dt_magic_url_base_allowed_js( $allowed_js ) {
         $allowed_js[] = 'jquery-touch-punch';
         $allowed_js[] = 'mapbox-gl';
@@ -68,6 +100,14 @@ class GO_Impact_Map_Globe extends DT_Magic_Url_Base
         return $allowed_js;
     }
 
+    /**
+     * Allowed CSS files for this magic link page.
+     *
+     * @since  0.1
+     * @access public
+     * @param  array $allowed_css Array of allowed CSS files.
+     * @return array Modified array of allowed CSS files.
+     */
     public function dt_magic_url_base_allowed_css( $allowed_css ) {
         $allowed_css[] = 'mapbox-gl-css';
         $allowed_css[] = 'introjs-css';
@@ -77,6 +117,14 @@ class GO_Impact_Map_Globe extends DT_Magic_Url_Base
         return $allowed_css;
     }
 
+    /**
+     * Outputs the JavaScript for the header.
+     * 
+     * Defines global variables, initializes the map, and sets up event handlers.
+     *
+     * @since  0.1
+     * @access public
+     */
     public function header_javascript(){
         ?>
         <script>
@@ -1028,12 +1076,30 @@ class GO_Impact_Map_Globe extends DT_Magic_Url_Base
         <?php
     }
 
+    /**
+     * Outputs the CSS styles for the header.
+     *
+     * @since  0.1
+     * @access public
+     */
     public function header_style() {
         impact_map_css_map_site_css_php();
     }
 
+    /**
+     * Outputs the JavaScript for the footer.
+     *
+     * @since  0.1
+     * @access public
+     */
     public function footer_javascript(){}
 
+    /**
+     * Outputs the main body content for the globe visualization.
+     *
+     * @since  0.1
+     * @access public
+     */
     public function body(){
         // DT_Mapbox_API::geocoder_scripts();
         ?>
@@ -1045,9 +1111,9 @@ class GO_Impact_Map_Globe extends DT_Magic_Url_Base
         <style id="custom-style"></style>
         <div id="map-wrapper">
             <div id='map'></div>
-            <div id="gear-menu">
-                <i class="fi-widget"></i>
-                <div id="gear-dropdown">
+            <div id="gear-menu" style="z-index: 11;">
+                <i class="fi-widget" style="font-size: 24px; color: #666; cursor: pointer;"></i>
+                <div id="gear-dropdown" style="display: none; background: white; padding: 10px; margin-top: 5px; border-radius: 4px;  box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
                     <div style="margin-bottom: 10px;">
                         <input type="checkbox" id="qr-donate-toggle"> Show Donate QR
                     </div>
@@ -1060,7 +1126,7 @@ class GO_Impact_Map_Globe extends DT_Magic_Url_Base
                     <div style="margin-bottom: 10px;">
                         <input type="checkbox" id="no-top-toggle"> Remove Top Bar
                     </div>
-                    <button id="launch-btn">Launch</button>
+                    <button id="launch-btn" style="width: 100%; background: #b13634; color: white; border: none; padding: 5px; border-radius: 4px; cursor: pointer;">Launch</button>
                 </div>
             </div>
         </div>
@@ -1083,13 +1149,7 @@ class GO_Impact_Map_Globe extends DT_Magic_Url_Base
             <div class="click-hide"><strong>Downloaded</strong> - Someone has downloaded training materials or tools.</div>
         </div>
         <div id="donation" style="z-index: 10;">
-            <div id="donation-content">
-                <div>
-                    <p class="desktop-text"><strong>Join Gospel Ambition in fulfilling the great commission in this generation together.</strong> There has never been a decade in human history where a small group of talented people could have this level of global impact on the world. Join us. Sieze this moment in history with us.</p>
-                    <p class="mobile-text"><strong>Join Gospel Ambition in fulfilling the great commission in this generation together.</strong></p>
-                </div>
-                <a href="https://gospelambition.org/giving/" target="_blank" class="donate-btn">Donate</a>
-            </div>
+            <div id="donation-content"></div>
         </div>
         <div id="qr">
             <img src="<?php echo plugin_dir_url(__DIR__)  ?>images/qr-app-globe.png" alt="QR Code">
@@ -1102,6 +1162,12 @@ class GO_Impact_Map_Globe extends DT_Magic_Url_Base
         <?php
     }
 
+    /**
+     * Enqueues scripts needed for the page.
+     *
+     * @since  0.1
+     * @access public static
+     */
     public static function _wp_enqueue_scripts(){
         DT_Mapbox_API::load_mapbox_header_scripts();
         wp_enqueue_style( 'app-globe-prayer-css', plugin_dir_url(__DIR__) . 'css/app-globe-prayer.css', [], filemtime( plugin_dir_path(__DIR__) . 'css/app-globe-prayer.css' ) );
@@ -1109,6 +1175,11 @@ class GO_Impact_Map_Globe extends DT_Magic_Url_Base
 
     /**
      * Register REST Endpoints
+     * 
+     * Registers custom REST API endpoints for the globe visualization.
+     *
+     * @since  0.1
+     * @access public
      * @link https://github.com/DiscipleTools/disciple-tools-theme/wiki/Site-to-Site-Link for outside of wordpress authentication
      */
     public function add_endpoints() {
@@ -1126,6 +1197,14 @@ class GO_Impact_Map_Globe extends DT_Magic_Url_Base
         );
     }
 
+    /**
+     * Handles the REST endpoint request.
+     *
+     * @since  0.1
+     * @access public
+     * @param  WP_REST_Request $request The REST request.
+     * @return WP_REST_Response|WP_Error Response or error.
+     */
     public function endpoint( WP_REST_Request $request ) {
         $params = $request->get_params();
 
@@ -1137,7 +1216,7 @@ class GO_Impact_Map_Globe extends DT_Magic_Url_Base
         $action = sanitize_text_field( wp_unslash( $params['action'] ) );
 
         $language_code = 'en';
-        $hours = 720; // 30 days
+        $hours = 720;
 
         switch ( $action ) {
             case 'geojson':

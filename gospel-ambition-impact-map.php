@@ -18,14 +18,38 @@
  *          https://www.gnu.org/licenses/gpl-2.0.html
  */
 
+/**
+ * Class GO_Impact_Context_Switcher
+ * 
+ * Main controller class that determines the plugin's behavior based on the site context.
+ */
 class GO_Impact_Context_Switcher {
     private static $instance = null;
+    
+    /**
+     * Returns the singleton instance of this class.
+     *
+     * @since  0.1
+     * @access public
+     * @return GO_Impact_Context_Switcher|null The instance of this class.
+     */
     public static function instance() {
         if ( is_null( self::$instance ) ) {
             self::$instance = new self();
         }
         return self::$instance;
     }
+    
+    /**
+     * Constructor for the GO_Impact_Context_Switcher class.
+     * 
+     * Determines the site context and loads the appropriate functionality based on that context.
+     * If the site is 'GO Impact Map', it loads the impact map functionality.
+     * Otherwise, it loads various remote trackers based on active plugins.
+     *
+     * @since  0.1
+     * @access public
+     */
     public function __construct(){
 
         $site = get_bloginfo();
@@ -68,6 +92,13 @@ class GO_Impact_Context_Switcher {
 add_action( 'after_setup_theme', [ 'GO_Impact_Context_Switcher', 'instance' ], 10 );
 
 if ( ! function_exists( 'ga_impact_map_hook_admin_notice' ) ) {
+    /**
+     * Displays an admin notice when the Disciple.Tools theme is not active or is outdated.
+     *
+     * @since  0.1
+     * @access public
+     * @return void
+     */
     function ga_impact_map_hook_admin_notice() {
         global $ga_impact_map_required_dt_theme_version;
         $wp_theme = wp_get_theme();
@@ -101,6 +132,10 @@ if ( ! function_exists( 'ga_impact_map_hook_admin_notice' ) ) {
 
 /**
  * AJAX handler to store the state of dismissible notices.
+ *
+ * @since  0.1
+ * @access public
+ * @return void
  */
 if ( !function_exists( 'dt_hook_ajax_notice_handler' ) ){
     function dt_hook_ajax_notice_handler(){
@@ -112,6 +147,13 @@ if ( !function_exists( 'dt_hook_ajax_notice_handler' ) ){
     }
 }
 
+/**
+ * Sets up the plugin update checker to keep the plugin up to date.
+ *
+ * @since  0.1
+ * @access public
+ * @return void
+ */
 add_action( 'plugins_loaded', function (){
     if ( ( is_admin() && !( is_multisite() && class_exists( 'DT_Multisite' ) ) ) || ( wp_doing_cron() ) ) {
         // Check for plugin updates

@@ -1,7 +1,36 @@
 <?php
+/**
+ * REST API Insert Class
+ *
+ * Handles inserting activity data into the database.
+ *
+ * @package  GO_Impact_Map
+ * @since    0.1
+ */
 
+/**
+ * Class GO_Impact_Map_Insert
+ * 
+ * Provides functionality for inserting activity records into the database.
+ *
+ * @since 0.1
+ */
 class GO_Impact_Map_Insert
 {
+    /**
+     * Inserts an activity record into the database.
+     *
+     * Accepts an array of activity data and inserts it into the wp_dt_reports table.
+     * Can check for duplicates based on hash and prevent them from being inserted.
+     *
+     * @since  0.1
+     * @access public static
+     * 
+     * @param  array $args           The activity data to insert.
+     * @param  bool  $save_hash      Whether to save a hash of the data for duplicate checking. Default true.
+     * @param  bool  $duplicate_check Whether to check for duplicates before inserting. Default true.
+     * @return int|false             The inserted record ID, or false on failure.
+     */
     public static function insert( array $args, bool $save_hash = true, bool $duplicate_check = true )
     {
         // dt_write_log(get_bloginfo( 'name' ) . ' ' . __METHOD__);
