@@ -235,6 +235,17 @@ class GO_Impact_Map_Endpoints
 
         return $string;
     }
+    /**
+     * Creates string representations for different log types.
+     * 
+     * The following methods (_strings_for_*) handle formatting logs from different
+     * sources into human-readable strings for display and storage.
+     * 
+     * Each method processes a specific application's logs based on the subtype
+     * and returns an appropriate string description of the activity.
+     * 
+     * The language string helper adds localization context when applicable.
+     */
     public function _add_language_string( $log ) {
         $langauges = impact_map_languages();
         $string = '';
@@ -252,6 +263,20 @@ class GO_Impact_Map_Endpoints
     */
 
     // PRAYER GLOBAL
+    /**
+     * Creates string representations for Prayer Global logs.
+     * 
+     * Processes Prayer Global application logs based on the subtype
+     * and returns an appropriate string description of the activity.
+     * 
+     * Handles various prayer activities such as location-based prayers,
+     * prayer laps, and user registrations.
+     *
+     * @since  0.1
+     * @access public
+     * @param  array $log The log data to process.
+     * @return string The formatted string representation of the log.
+     */
     public function _strings_for_prayer_global( $log ) {
         $string = '';
         switch ( $log['subtype'] ) {
